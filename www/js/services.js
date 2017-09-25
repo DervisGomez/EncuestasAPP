@@ -1,50 +1,112 @@
-angular.module('starter.services', [])
+var app = angular.module('ionium.services', []);
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+app.service('DashList', function($state) {
+    var ruta="";
+    var ruta2="";
+    var ruta3="";
+    var ruta4="";
+    var ruta5="";
+  if($state.current.name == "app.promociones" || $state.current.name == "app.home" && $state.current.name != "app.red" & $state.current.name != "nuestrared" && $state.current.name != "app.radio"){
+    //ruta="/android_asset/www/img/Promo_punto.png";
+    ruta="/android_asset/www/img/Promo_punto.png";
+  }
+  else{
+    ruta="/android_asset/www/img/Promo.png";
+  }
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
+  if($state.current.name == "app.red" && $state.current.name != "app.promociones" && $state.current.name != "app.nuestrared" && $state.current.name != "app.radio"){
+    ruta2="/android_asset/www/img/Categorias_Punto.png";
+  }
+  else{
+    ruta2="/android_asset/www/img/Categorias.png";
+  }
+
+  if($state.current.name == "nuestrared" && $state.current.name != "app.red" && $state.current.name != "app.radio" && $state.current.name != "app.promociones" ){
+    ruta3="/android_asset/www/img/Nuestra_red_punto.png";
+  }
+  else{
+    ruta3="/android_asset/www/img/Nuestra_red.png";
+  }
+
+  if($state.current.name == "nuestrared" && $state.current.name != "app.red" && $state.current.name == "app.radio" && $state.current.name != "app.promociones" ){
+    ruta4="/android_asset/www/img/Radio_punto.png";
+  }
+  else{
+    ruta4="/android_asset/www/img/Radio.png";
+  }
+
+
+
+
+
+
+  var menu = [
+
+
+      {
+        id: 61,
+        title: 'Promociones',
+        icon: ruta,
+        state: 'promociones()',
+        authenticate:'isAuthenticated',
+        idclass:'linea1',
+        idclass2:'linea6',
+
+      },{
+        id: 62,
+        title: 'Nuestra RED',
+        icon: ruta2,
+        state: 'categorias()',
+        authenticate:'isAuthenticated',
+        idclass:'linea2',
+        idclass2:'linea7',
+      },{
+        id: 63,
+        title: 'Facebook',
+        icon: ruta3,
+        state: 'nuestrared()',
+        authenticate:'isAuthenticated',
+        idclass:'linea3',
+        idclass2:'linea8',
+      },
+
+      {
+        id: 65,
+        title: 'Radio',
+        icon: ruta4,
+        state: 'radio()',
+        authenticate:'!isAuthenticated',
+        idclass:'linea4',
+        idclass2:'linea9',
+      },
+
+      {
+        id: 66,
+        title: 'Cerrar sesión',
+        icon: '/android_asset/www/img/Cerrar_sesion.png',
+        state: 'showConfirmCerraSession()',
+        authenticate:'!isAuthenticated',
+        idclass:'linea5',
+        idclass2:'linea10',
+      },
+
+    ];
+
+  var getMenuById = function(id){
+    for(var i in menu){
+      if(menu[i].id == id)
+        return menu[i];
+    }
+  };
+
+  var getAllMenu  = function(){
+    return menu;
+  }
+
+console.log($state.current.name);
 
   return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
-    }
+    getMenuById: getMenuById,
+    getAllMenu : getAllMenu
   };
 });

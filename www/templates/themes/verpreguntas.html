@@ -1,0 +1,116 @@
+
+<ion-view  hide-nav-bar="true" view-title="Iniciar sesión" class="login-bg3">
+
+<style>
+
+.login2 {
+    text-align: center;
+    position: absolute;
+    transition: none;
+}
+
+input[placeholder], [placeholder], *[placeholder] {
+    color: white !important;
+    font-size: 20px;
+}
+
+#item16{
+  background-color: #ccc;
+}
+
+/* do not group these rules */
+*::-webkit-input-placeholder {
+    color: red;
+}
+*:-moz-placeholder {
+    /* FF 4-18 */
+    color: red;
+}
+*::-moz-placeholder {
+    /* FF 19+ */
+    color: red;
+}
+*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: red;
+}
+
+.login .content img {
+    width: 100%;
+    height: auto;
+    top: -200px;
+    position: relative;
+}
+
+.login .button {
+    text-transform: none;
+    font-size: 16px;
+    padding: 0 20px;
+    min-width: 120px;
+    margin-top: 20px;
+}
+
+#navlist li
+{
+display: inline;
+list-style-type: none;
+padding-right: 20px;
+}
+
+</style>
+  <ion-content class="login">
+
+    <div class="content">
+        <img src="http://sistemex.com/apps/jappy/source/img/campanias/{{dataPreguntas.cintillo}}" />
+        <div>
+            <h1 style="color:#f16920;position: relative;
+    top: -100px;">{{dataPreguntas.pregunta}}</h1>
+        </div>
+<ion-list style="    position: relative;
+   top: -70px;">
+
+  <div>
+
+<ul id="navlist">
+<li ><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 1);" style="    width: 10%;
+  height: auto;
+  top: 0px;
+  position: relative;" src="{{CaritaUrl}}/Muy_Mal.png"></li>
+<li><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 2);" style="    width: 10%;
+  height: auto;
+  top: 0px;
+  position: relative;" src="{{CaritaUrl}}/Mal.png"></li>
+<li><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 3);" style="    width: 10%;
+  height: auto;
+  top: 0px;
+  position: relative;" src="{{CaritaUrl}}/Regular.png"></li>
+<li><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 4);" style="    width: 10%;
+  height: auto;
+  top: 0px;
+  position: relative;" src="{{CaritaUrl}}/Bien.png"></li>
+<li><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 5);"  style="    width: 10%;
+  height: auto;
+  top: 0px;
+  position: relative;" src="{{CaritaUrl}}/Muy_Bien.png"></li>
+</ul>
+</div>
+
+ </ion-list>
+
+
+
+
+
+
+
+
+
+
+
+
+  </ion-content>
+
+
+
+
+</ion-view>

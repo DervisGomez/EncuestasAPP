@@ -1,0 +1,71 @@
+
+<ion-view style="background: rgb(196, 58, 70);" view-title="Categorías">
+<style>
+.item h2 {
+    margin: 0 0 12px 0;
+    font-size: 14px; !important
+    font-weight: normal;
+}
+
+
+
+.item{
+  background: rgb(196, 58, 70);
+  opacity: 1;
+}
+
+.my-col-50{float:left;width:50%;}
+
+.cuadrado-3 {
+
+     border: 1px solid #fff;
+     background: rgb(196, 58, 70); 
+
+}
+
+
+
+</style>
+  <ion-content style="background: rgb(196, 58, 70);"  >
+    <ion-refresher pulling-text="Pull To Refresh" on-refresh="refreshTasks()"
+            refreshing-text="Actualizando ..." refreshing-icon="ion-loading-b"
+          ></ion-refresher>
+<!--div class="list card">
+  	<div class="list">
+      <div  class="item item-avatar" ui-sref="app.ecommerce-product">
+        <div class="product">
+
+            <div class="img" style="background-image: url(img/ecommerce/coffee.jpg)"></div>
+            <div class="box">
+                <h1 style="color:#fff; text-align:left">Buceo</h1>
+
+
+            </div>
+        </div>
+      </div>
+
+
+
+    </div>
+
+  </div-->
+
+  <div ng-if="giro.activo == 1" style="background: rgb(196, 58, 70);"  ng-repeat="giro in giros track by $index"   class="list item  my-col-50 cuadrado-3 ">
+
+      <!--.....................loop........................................................-->
+              <a    ng-click="empresa(giro.id)" style="background: rgb(196, 58, 70);" class="item item-icon-right item-thumbnail-left ">
+
+                  <img style="border-radius: 100%;"  src="http://webpro.com.mx/asite/redConcreta/public/img/giros/{{giro.img}}">
+
+              </a>
+              <h5 style="color:white;font-family: Montserrat;font-size:large;text-align:center">{{giro.nombre}}</h5>
+
+      <!--.....................loop........................................................-->
+
+</div>
+
+
+  </ion-content>
+
+
+</ion-view>

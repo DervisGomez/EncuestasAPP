@@ -1,0 +1,37 @@
+
+
+<ion-view  hide-back-button="false" view-title="Promociones">
+<style>
+.gallery {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.item{
+  background: white; !important
+
+}
+
+
+</style>
+  <ion-content style="background: white;" class="ecommerce">
+
+    <ion-refresher pulling-text="Pull To Refresh" on-refresh="refreshTasks()"
+            refreshing-text="Actualizando" refreshing-icon="ion-loading-b"
+          ></ion-refresher>
+
+
+<div class="item item-image button-flat" ng-click="verpromocion(promocion.id)" ng-repeat="promocion in data">
+  <div class="product">
+
+      <div class="img"  style="background-image: url(http://webpro.com.mx/asite/redConcreta/public/img/promociones/{{promocion.urlpromocion}})"></div>
+      <div class="box">
+          <h1 style="color:#fff">{{promocion.razon_social}}</h1>
+
+      </div>
+  </div>
+</div>
+
+
+  </ion-content>
+</ion-view>

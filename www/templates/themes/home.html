@@ -1,0 +1,103 @@
+
+<ion-view  hide-nav-bar="true" view-title="Iniciar sesión" class="login-bg3">
+
+<style>
+
+.login2 {
+    text-align: center;
+    position: absolute;
+    transition: none;
+}
+
+input[placeholder], [placeholder], *[placeholder] {
+    color: white !important;
+    font-size: 20px;
+}
+
+#item16{
+  background-color: #ccc;
+}
+
+/* do not group these rules */
+*::-webkit-input-placeholder {
+    color: red;
+}
+*:-moz-placeholder {
+    /* FF 4-18 */
+    color: red;
+}
+*::-moz-placeholder {
+    /* FF 19+ */
+    color: red;
+}
+*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: red;
+}
+
+.login .content img {
+    width: 100%;
+    height: auto;
+    top: -200px;
+    position: relative;
+}
+
+
+
+</style>
+  <ion-content class="login">
+
+    <div class="content">
+        <img src="http://sistemex.com/apps/jappy/source/img/empresas/{{dataCintillo}}" />
+<div style="    position: relative;
+  top: -100px;">
+<h2 style="color:#f16920">Bienvenido {{usuarioEmail}}</h2>
+<br>
+<img style="width: 5%;
+    height: auto;
+    top: 0px;
+    position: relative;" src="img/Sucursal.png" />
+
+<br>
+ <ion-list>
+
+            <div  class="list list-inset">
+
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Selecciona la sucursal
+                    </div>
+
+                    <select ng-options="sucursal.id as sucursal.nombre for sucursal in dataSucursales" ng-model="sucursal" ng-change="verCampania(sucursal)">
+                        <option></option>
+                    </select>
+                </label>
+
+            </div>
+
+        </ion-list>
+        </div >
+
+<div>
+<img ng-click="showConfirmCerraSession()"  style="width: 7%;
+    height: auto;
+    top: -20px;
+    position: relative;
+    left: 200px;" src="img/Salir.png">
+</div>
+
+
+
+
+
+    </div>
+
+
+
+
+  </ion-content>
+
+
+
+
+</ion-view>
