@@ -71,7 +71,7 @@ console.log($localStorage.campania.campania[0].plantilla_caritas);
 
 
 $scope.guardarRespuesta = function(idpregunta, respuesta){
-  AuthService.setRespuestas({idpreguntas:idpreguntas, idcampania:$stateParams.id, respuesta:respuesta})
+  AuthService.setRespuestas({idpreguntas:idpregunta, idcampania:$stateParams.id, respuesta:respuesta})
 
     $localStorage.preguntas.preguntas.splice(0,1);
   if($localStorage.preguntas.preguntas.length != 0){
