@@ -1,6 +1,6 @@
 angular.module('ionium').controller(
 		'inicioController',
-		function($scope, AuthService, $cordovaNetwork, $cordovaSocialSharing, $http, $interval,$rootScope, $localStorage, $ionicPopup, $state, $timeout, $ionicLoading, $ionicSlideBoxDelegate,$ionicHistory) {
+		function($scope, AuthService, GuardarLocalService, $cordovaNetwork, $cordovaSocialSharing, $http, $interval,$rootScope, $localStorage, $ionicPopup, $state, $timeout, $ionicLoading, $ionicSlideBoxDelegate,$ionicHistory) {
 			if(window.Connection)
 	   {
 	                if (!$cordovaNetwork.isOnline()) {
@@ -70,6 +70,26 @@ console.log(ids);
 	$localStorage.sucursal={id:ids};
 
 	$state.go('app.vercampania',{id:ids});
+ }
+
+ $scope.showSincronizar = function(){
+ 	var confirmSincro = $ionicPopup.confirm({
+		 title: 'Sincronizar datos',
+		 template: '¿Desea sincronizar datos guardados localmente?'
+	 });
+
+ 	confirmSincro.then(function(res){
+ 		if (res) {
+ 			if (window.cordova && window.SQLitePlugin) {  
+		      //alert("Podemos usar SqlLITE !!");
+		      GuardarLocalService.listaDatos();
+		    }else {
+		       // si no podemos usar el plugin sqlite
+		       db = window.openDatabase("APSNetMobileDb", "1.0", "testsqlite.db", 100 * 1024 * 1024); 
+		       //alert("usamos WebSQL(DB)");
+		    }
+ 		}
+ 	});
  }
 
  $scope.showConfirmCerraSession = function() {
