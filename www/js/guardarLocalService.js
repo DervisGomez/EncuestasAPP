@@ -14,17 +14,6 @@ angular.module("ionium")
         });
     },
 
-    cantidadRegistros: function(){
-        db.transaction(function(tx) {
-            tx.executeSql('SELECT count(*) AS contador FROM respuesta', [], function(tx, rs) {
-               console.log('Registros encontrados: ' + rs.rows.item(0).contador);
-               alert('Registros encontrados: ' + rs.rows.item(0).contador);
-            }, function(tx, error) {
-               console.log('Error: ' + error.message);
-            });
-        });
-    },
-
     insertarDatos: function(pregunta,campaña,respuesta){
         db.transaction(function(tx) {
             tx.executeSql('INSERT INTO respuesta VALUES (?,?,?)', [pregunta, campaña,respuesta]);
@@ -46,10 +35,12 @@ angular.module("ionium")
                     AuthService.setRespuestas({idpreguntas:rs.rows.item(i).idpregunta, idcampania:rs.rows.item(i).idcampaña, respuesta:rs.rows.item(i).respuesta})
                   };
                   alert("Datos Sincronizados");
+                  console.log("Datos Sincronizados");
                 }else{
                   alert("No hay datos guatdados localmente");
+                  console.log("No hay datos guatdados localmente");
                 }
-              }
+              
             }, function(tx, error) {
                console.log('Error: ' + error.message);
                alert('error: '+error.message);

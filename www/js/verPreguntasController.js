@@ -73,15 +73,15 @@ console.log($localStorage.campania.campania[0].plantilla_caritas);
 $scope.guardarRespuesta = function(idpregunta, respuesta){
   //AuthService.setRespuestas({idpreguntas:idpregunta, idcampania:$stateParams.id, respuesta:respuesta})
   if (window.cordova && window.SQLitePlugin) {  
-      //alert("Podemos usar SqlLITE !!");
-      GuardarLocalService.abrirBD();
-      //GuardarLocalService.crearTablas();
-      GuardarLocalService.insertarDatos(idpregunta,$stateParams.id,respuesta);
-    }else {
-       // si no podemos usar el plugin sqlite
-       db = window.openDatabase("APSNetMobileDb", "1.0", "testsqlite.db", 100 * 1024 * 1024); 
-       //alert("usamos WebSQL(DB)");
-    }
+    //alert("Podemos usar SqlLITE !!");
+    GuardarLocalService.abrirBD();
+    //GuardarLocalService.crearTablas();
+    GuardarLocalService.insertarDatos(idpregunta,$stateParams.id,respuesta);
+  }else {
+    // si no podemos usar el plugin sqlite
+    db = window.openDatabase("APSNetMobileDb", "1.0", "testsqlite.db", 100 * 1024 * 1024); 
+    console.log("usamos WebSQL(DB)");
+  }
 
     $localStorage.preguntas.preguntas.splice(0,1);
   if($localStorage.preguntas.preguntas.length != 0){

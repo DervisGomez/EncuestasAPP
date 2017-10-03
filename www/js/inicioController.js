@@ -86,7 +86,7 @@ console.log(ids);
 		    }else {
 		       // si no podemos usar el plugin sqlite
 		       db = window.openDatabase("APSNetMobileDb", "1.0", "testsqlite.db", 100 * 1024 * 1024); 
-		       //alert("usamos WebSQL(DB)");
+		       console.log("usamos WebSQL(DB)");
 		    }
  		}
  	});
