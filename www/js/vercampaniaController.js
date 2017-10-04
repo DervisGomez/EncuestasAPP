@@ -1,6 +1,6 @@
 angular.module('ionium').controller(
 		'vercampaniaController',
-		function($scope, AuthService, $ionicPlatform, $cordovaSocialSharing,  $http, $interval, $ionicPopup, $state, $timeout, $ionicLoading, $ionicSlideBoxDelegate,$ionicHistory, $stateParams, $cordovaLaunchNavigator, $cordovaGeolocation, $rootScope, $localStorage) {
+		function($scope, AuthService, GuardarLocalService, $ionicPlatform, $cordovaSocialSharing,  $http, $interval, $ionicPopup, $state, $timeout, $ionicLoading, $ionicSlideBoxDelegate,$ionicHistory, $stateParams, $cordovaLaunchNavigator, $cordovaGeolocation, $rootScope, $localStorage) {
 					// Active INK Effect
 				    ionic.material.ink.displayEffect();
 
@@ -33,11 +33,24 @@ angular.module('ionium').controller(
 					$scope.dataCampania = res.data[0];
 
 					$localStorage.campania= {campania:$scope.dataCampania2};
-
+alert("1: "+$localStorage.campania.campania);
 					console.log($localStorage.campania.campania);
 				});
 
+				if (window.cordova && window.SQLitePlugin) {
+
+					$scope.dataCampania2=GuardarLocalService.listaCampania($stateParams.id);
+					$scope.dataCampania =$scope.dataCampania [0];
+					$localStorage.campania= {campania:$scope.dataCampania2};
+
+				}else {							
+						    // si no podemos usar el plugin sqlite
+					db = window.openDatabase("APSNetMobileDb", "1.0", "testsqlite.db", 100 * 1024 * 1024); 
+					console.log("usamos WebSQL(DB)");
+				}
+
 			}else{
+				alert("2: "+JSON.stringify($localStorage.campania.campania));
 				$scope.dataCampania =$localStorage.campania.campania[0];
 
 			}

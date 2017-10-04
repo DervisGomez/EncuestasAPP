@@ -3,10 +3,18 @@ angular.module('ionium').controller(
 		function($scope, AuthService, GuardarLocalService, $cordovaNetwork, $cordovaSocialSharing, $http, $interval,$rootScope, $localStorage, $ionicPopup, $state, $timeout, $ionicLoading, $ionicSlideBoxDelegate,$ionicHistory) {
 			if(window.Connection)
 	   {
+	   		if (window.cordova && window.SQLitePlugin) {  
+							$scope.dataSucursale=GuardarLocalService.listaSucursal();
+						}else {							
+						    // si no podemos usar el plugin sqlite
+						    db = window.openDatabase("APSNetMobileDb", "1.0", "testsqlite.db", 100 * 1024 * 1024); 
+						    console.log("usamos WebSQL(DB)");
+						}
 	                if (!$cordovaNetwork.isOnline()) {
 	                    $ionicPopup.confirm({
 	                        title: "Internet is not working",
 	                        content: "Esta sección solo funciona con internet."
+
 	                    }).then(function (res)
 	                    {
 	                            if (res) {
@@ -34,13 +42,14 @@ $scope.usuarioEmail=$localStorage.currentUser.mail;
 				AuthService.getCintillo({idempresa:$localStorage.currentUser.rol}).then(function(res) {
 					// res holds your data
 					$scope.dataCintillo = res.data[0].cintillo;
+					console.log("cintillo: "+res.data[0].cintillo);
 
 				});
 
 				AuthService.getSucursales ({correo:$localStorage.currentUser.mail}).then(function(res) {
 						// res holds your data
 						$scope.dataSucursales = res.data;
-						console.log(res);
+						console.log("sucursal: "+res.data[0].nombre);
 
 					});
 
@@ -58,10 +67,31 @@ $scope.usuarioEmail=$localStorage.currentUser.mail;
 			AuthService.getSucursales ({correo:$localStorage.currentUser.mail, idempresa:$localStorage.currentUser.rol, perfil:$localStorage.currentUser.perfil}).then(function(res) {
 					// res holds your data
 					$scope.dataSucursales = res.data;
-					console.log(res);
-
+					console.log("sucursal: "+res);
+					if (window.cordova && window.SQLitePlugin) {
+						GuardarLocalService.abrirBD();
+						for (var i = res.data.length - 1; i >= 0; i--) {
+							GuardarLocalService.insertarSucursal(res.data[i].id,res.data[i].nombre);
+							
+							var dat = {idsucursal:res.data[i]};
+							alert(res.data[i].id)
+							AuthService.getCampania(dat).then(function(rs) {
+								alert(rs.data.length+"---")
+								for (var y = rs.data.length - 1; y >= 0; y--) {
+									alert(rs.data[y].id)
+									GuardarLocalService.insertarCamapania(rs.data[y].id,rs.data[y].nombre,rs.data[y].descripcion,rs.data[y].instrucciones,rs.data[y].agradecimiento,res.data[i].id);
+								}								
+							});
+						}
+						alert(JSON.stringify(GuardarLocalService.listaSucursal()))
+						$scope.dataSucursales=GuardarLocalService.listaSucursal();
+					}else {							
+						    // si no podemos usar el plugin sqlite
+						db = window.openDatabase("APSNetMobileDb", "1.0", "testsqlite.db", 100 * 1024 * 1024); 
+						console.log("usamos WebSQL(DB)");
+					}
 				});
- $scope.loadData();
+ //$scope.loadData();
 
  ionic.material.ink.displayEffect();
 

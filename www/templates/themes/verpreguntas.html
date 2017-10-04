@@ -52,9 +52,22 @@ input[placeholder], [placeholder], *[placeholder] {
 
 #navlist li
 {
-display: inline;
-list-style-type: none;
-padding-right: 20px;
+  display: inline;
+  list-style-type: none;
+  padding-right: 20px;
+}
+
+#navlist li img{
+  width: 10%;
+  height: auto;
+  top: 0px;
+  position: relative;
+}
+
+#navlist li img:hover{
+  width: 12%;
+  margin: -1%;
+  cursor: pointer;
 }
 
 </style>
@@ -72,26 +85,11 @@ padding-right: 20px;
   <div>
 
 <ul id="navlist">
-<li ><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 1);" style="    width: 10%;
-  height: auto;
-  top: 0px;
-  position: relative;" src="{{CaritaUrl}}/Muy_Mal.png"></li>
-<li><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 2);" style="    width: 10%;
-  height: auto;
-  top: 0px;
-  position: relative;" src="{{CaritaUrl}}/Mal.png"></li>
-<li><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 3);" style="    width: 10%;
-  height: auto;
-  top: 0px;
-  position: relative;" src="{{CaritaUrl}}/Regular.png"></li>
-<li><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 4);" style="    width: 10%;
-  height: auto;
-  top: 0px;
-  position: relative;" src="{{CaritaUrl}}/Bien.png"></li>
-<li><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 5);"  style="    width: 10%;
-  height: auto;
-  top: 0px;
-  position: relative;" src="{{CaritaUrl}}/Muy_Bien.png"></li>
+<li ><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 1);"  src="{{CaritaUrl}}/Muy_Mal.png"></li>
+<li><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 2);"  src="{{CaritaUrl}}/Mal.png"></li>
+<li><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 3);"  src="{{CaritaUrl}}/Regular.png"></li>
+<li><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 4);"  src="{{CaritaUrl}}/Bien.png"></li>
+<li><img ng-click="guardarRespuesta(dataPreguntas.idpreguntas, 5);"  src="{{CaritaUrl}}/Muy_Bien.png"></li>
 </ul>
 </div>
 
