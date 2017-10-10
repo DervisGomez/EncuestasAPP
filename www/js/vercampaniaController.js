@@ -1,10 +1,8 @@
 angular.module('ionium').controller(
 		'vercampaniaController',
-		function($scope, AuthService, GuardarLocalService, $ionicPlatform, $cordovaSocialSharing,  $http, $interval, $ionicPopup, $state, $timeout, $ionicLoading, $ionicSlideBoxDelegate,$ionicHistory, $stateParams, $cordovaLaunchNavigator, $cordovaGeolocation, $rootScope, $localStorage) {
+		function($scope, AuthService, DatosService, GuardarLocalService, $ionicPlatform, $cordovaSocialSharing,  $http, $interval, $ionicPopup, $state, $timeout, $ionicLoading, $ionicSlideBoxDelegate,$ionicHistory, $stateParams, $cordovaLaunchNavigator, $cordovaGeolocation, $rootScope, $localStorage) {
 					// Active INK Effect
-				    ionic.material.ink.displayEffect();
-
-
+			ionic.material.ink.displayEffect();
 
 			$ionicLoading.show({
 				content: 'Loading',
@@ -23,39 +21,71 @@ angular.module('ionium').controller(
 			};
 
 			$timeout(function () {
+				$ionicLoading.hide();
+				if( $localStorage.campania == null || $localStorage.campania.campania.length == 0 ){
+					/*var data = {idsucursal:$stateParams.id};
+					AuthService.getCampania(data).then(function(res) {
+						// res holds your data
+						$scope.dataCampania2=res.data;
+						$scope.dataCampania = res.data[0];
 
-			$ionicLoading.hide();
-			if( $localStorage.campania == null || $localStorage.campania.campania.length == 0 ){
-				var data = {idsucursal:$stateParams.id};
-				AuthService.getCampania(data).then(function(res) {
-					// res holds your data
-					$scope.dataCampania2=res.data;
-					$scope.dataCampania = res.data[0];
+						$localStorage.campania= {campania:$scope.dataCampania2};
+						alert("1: "+$localStorage.campania.campania);
+						console.log($localStorage.campania.campania);
+					});*/
 
-					$localStorage.campania= {campania:$scope.dataCampania2};
-alert("1: "+$localStorage.campania.campania);
-					console.log($localStorage.campania.campania);
-				});
+						$scope.listaCampania();
 
-				if (window.cordova && window.SQLitePlugin) {
+				}else{
+					alert("2: "+JSON.stringify($localStorage.campania.campania));
+					$scope.dataCampania =$localStorage.campania.campania[0];
+					//$scope.listaCampania();
 
-					$scope.dataCampania2=GuardarLocalService.listaCampania($stateParams.id);
-					$scope.dataCampania =$scope.dataCampania [0];
-					$localStorage.campania= {campania:$scope.dataCampania2};
-
-				}else {							
-						    // si no podemos usar el plugin sqlite
-					db = window.openDatabase("APSNetMobileDb", "1.0", "testsqlite.db", 100 * 1024 * 1024); 
-					console.log("usamos WebSQL(DB)");
 				}
 
-			}else{
-				alert("2: "+JSON.stringify($localStorage.campania.campania));
-				$scope.dataCampania =$localStorage.campania.campania[0];
-
-			}
-
 			}, 2000);
+
+			$scope.listaCampania= function(){
+				GuardarLocalService.abrirBD();
+				DatosService.data.sucursal=$stateParams.id;
+		 		//db = window.sqlitePlugin.openDatabase({name:'testsqlite.db', key:'test', iosDatabaseLocation:'Documents'});
+		      	db.transaction(function(tx) {
+		            tx.executeSql("SELECT id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal FROM campania where idsucursal='"+$stateParams.id+"'", [], function(tx, rs) {
+		               console.log('Registros encontrados: ' + rs.rows.length);
+		  				var itemsColl = [];
+		               //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
+		               if(rs.rows.length > 0){
+		                  for (var i = 0; i < rs.rows.length; i++) {
+		                    var miItem = new Object();
+		                    miItem.id = rs.rows.item(i).id;
+		                    miItem.nombre = rs.rows.item(i).nombre;
+		                    miItem.descripcion = rs.rows.item(i).descripcion;
+		                    miItem.instrucciones = rs.rows.item(i).instrucciones;
+		                    miItem.agradecimiento = rs.rows.item(i).agradecimiento;
+		                    miItem.idsucursal= rs.rows.item(i).idsucursal;
+		                    miItem.plantilla_caritas=rs.rows.item(i).plantilla_caritas;
+		                    miItem.captar_infopersonal=rs.rows.item(i).captar_infopersonal;
+		                    itemsColl.push(miItem);
+		                  };
+		                  items2 = JSON.stringify(itemsColl);
+		                  //$scope.dataSucursales=itemsColl;
+		                  $scope.dataCampania2=itemsColl;
+							$scope.dataCampania = itemsColl[0];
+							$localStorage.campania= {campania:$scope.dataCampania2};
+		                  console.log("scope of items is " + items2);
+		                  alert("scope of items is; " +items2);
+		                  alert("scope; " +JSON.stringify($scope.dataCampania2));                  
+		                }else{
+		                  alert("No hay datos guatdados localmente");
+		                  console.log("No hay datos guatdados localmente");
+		                }              
+		            }, function(tx, error) {
+		               console.log('Error: ' + error.message);
+		               alert('error: '+error.message);
+		            });
+		        });
+		    }
+
 
 			$scope.refreshTasks = function() {
 				$scope.loadData();
@@ -66,6 +96,7 @@ alert("1: "+$localStorage.campania.campania);
 			};
 
 			$scope.loadData = function() {
+				alert("load");
 				if( $localStorage.campania == null || $localStorage.campania.campania.length == 0 ){
 					var data = {idsucursal:$stateParams.id};
 					AuthService.getCampania(data).then(function(res) {
@@ -84,39 +115,25 @@ alert("1: "+$localStorage.campania.campania);
 				}
 
 			}
-
-
-
-
-
  //$scope.loadData();
-
-
-
 		$scope.iniciarCampania = function(ids){
-console.log(ids);
+			console.log(ids);
 			$state.go('app.verpreguntas',{id:ids});
 		}
 
 		$scope.salirCampania = function() {
 			$ionicPopup.prompt({
- title: 'Password Check',
- template: 'Ingresa tu contraseña',
- inputType: 'password',
- inputPlaceholder: 'Tu contraseña'
-}).then(function(res) {
- console.log('Your password is', res);
-
- if(res== $localStorage.currentUser.codigo){
-	 $state.go('app.home', null, {reload:true});
- }else{
-	 $scope.showAlert();
- }
-});
-
+				 title: 'Password Check',
+				 template: 'Ingresa tu contraseña',
+				 inputType: 'password',
+				 inputPlaceholder: 'Tu contraseña'
+			}).then(function(res) {
+			 	console.log('Your password is', res);
+				 if(res== $localStorage.currentUser.codigo){
+					 $state.go('app.home', null, {reload:true});
+				 }else{
+					 $scope.showAlert();
+				 }
+			});
 		};
-
-
-
-
-		});
+	});

@@ -1,34 +1,27 @@
 angular.module('ionium').controller(
 		'inicioController',
-		function($scope, AuthService, GuardarLocalService, $cordovaNetwork, $cordovaSocialSharing, $http, $interval,$rootScope, $localStorage, $ionicPopup, $state, $timeout, $ionicLoading, $ionicSlideBoxDelegate,$ionicHistory) {
-			if(window.Connection)
-	   {
-	   		if (window.cordova && window.SQLitePlugin) {  
-							$scope.dataSucursale=GuardarLocalService.listaSucursal();
-						}else {							
-						    // si no podemos usar el plugin sqlite
-						    db = window.openDatabase("APSNetMobileDb", "1.0", "testsqlite.db", 100 * 1024 * 1024); 
-						    console.log("usamos WebSQL(DB)");
-						}
-	                if (!$cordovaNetwork.isOnline()) {
-	                    $ionicPopup.confirm({
-	                        title: "Internet is not working",
-	                        content: "Esta sección solo funciona con internet."
+		function($scope, AuthService, GuardarLocalService, DatosService, $cordovaNetwork, $cordovaSocialSharing, $http, $interval,$rootScope, $localStorage, $ionicPopup, $state, $timeout, $ionicLoading, $ionicSlideBoxDelegate,$ionicHistory) {
+			if(window.Connection){	   			
+	            if (!$cordovaNetwork.isOnline()) {
+	                /*$ionicPopup.confirm({
+	                     title: "Internet is not working",
+	                     content: "Esta sección solo funciona con internet."
 
-	                    }).then(function (res)
-	                    {
-	                            if (res) {
+	                }).then(function (res)   {
+	                    if (res) {
 	                                //navigator.app.exitApp();
-																	$state.go('app.red');
-	                            }
-	                    });
-	                }
+							$state.go('app.red');
+	                    }
+	                });*/
+						$scope.listaSucursal();	
+					
 	            }
+	        }
 
+			//$ionicHistory.clearCache();
+			//ionic.material.ink.displayEffect();
+			$scope.usuarioEmail=$localStorage.currentUser.mail;
 
-$ionicHistory.clearCache();
-ionic.material.ink.displayEffect();
-$scope.usuarioEmail=$localStorage.currentUser.mail;
 			$scope.refreshTasks = function() {
 				$scope.loadData();
 				$timeout(function() {
@@ -38,67 +31,109 @@ $scope.usuarioEmail=$localStorage.currentUser.mail;
 			};
 
 			$scope.loadData = function() {
-
+				alert("load");
 				AuthService.getCintillo({idempresa:$localStorage.currentUser.rol}).then(function(res) {
 					// res holds your data
 					$scope.dataCintillo = res.data[0].cintillo;
 					console.log("cintillo: "+res.data[0].cintillo);
 
 				});
-
 				AuthService.getSucursales ({correo:$localStorage.currentUser.mail}).then(function(res) {
 						// res holds your data
-						$scope.dataSucursales = res.data;
-						console.log("sucursal: "+res.data[0].nombre);
+					$scope.dataSucursales = res.data;
+					console.log("sucursal: "+res.data[0].nombre);
 
-					});
-
+				});
 			}
-
-
-
 
 			AuthService.getCintillo({idempresa:$localStorage.currentUser.rol}).then(function(res) {
 					// res holds your data
-					$scope.dataCintillo = res.data[0].cintillo;
-
-				});
+				$scope.dataCintillo = res.data[0].cintillo;
+			});
 
 			AuthService.getSucursales ({correo:$localStorage.currentUser.mail, idempresa:$localStorage.currentUser.rol, perfil:$localStorage.currentUser.perfil}).then(function(res) {
 					// res holds your data
-					$scope.dataSucursales = res.data;
-					console.log("sucursal: "+res);
-					if (window.cordova && window.SQLitePlugin) {
-						GuardarLocalService.abrirBD();
-						for (var i = res.data.length - 1; i >= 0; i--) {
-							GuardarLocalService.insertarSucursal(res.data[i].id,res.data[i].nombre);
-							
-							var dat = {idsucursal:res.data[i]};
-							alert(res.data[i].id)
-							AuthService.getCampania(dat).then(function(rs) {
-								alert(rs.data.length+"---")
-								for (var y = rs.data.length - 1; y >= 0; y--) {
-									alert(rs.data[y].id)
-									GuardarLocalService.insertarCamapania(rs.data[y].id,rs.data[y].nombre,rs.data[y].descripcion,rs.data[y].instrucciones,rs.data[y].agradecimiento,res.data[i].id);
-								}								
-							});
-						}
-						alert(JSON.stringify(GuardarLocalService.listaSucursal()))
-						$scope.dataSucursales=GuardarLocalService.listaSucursal();
-					}else {							
-						    // si no podemos usar el plugin sqlite
-						db = window.openDatabase("APSNetMobileDb", "1.0", "testsqlite.db", 100 * 1024 * 1024); 
-						console.log("usamos WebSQL(DB)");
+				//$scope.dataSucursales = res.data;			
+				GuardarLocalService.abrirBD();
+				for (var i = res.data.length - 1; i >= 0; i--) {
+					GuardarLocalService.insertarSucursal(res.data[i].id,res.data[i].nombre);
+				}
+				$scope.listaSucursal();	
+			});
+			AuthService.getCampañasAll ({idempresa:$localStorage.currentUser.rol}).then(function(res) {
+				//$scope.dataSucursales = res.data;
+				console.log("campania: "+JSON.stringify(res.data));
+				
+				GuardarLocalService.abrirBD();
+				for (var i = res.data.length - 1; i >= 0; i--) {
+					GuardarLocalService.insertarCampania(res.data[i].id,res.data[i].nombre,res.data[i].descripcion,res.data[i].instrucciones,res.data[i].agradecimiento,res.data[i].idsucursal,res.data[i].plantilla_caritas);
+				}
+			});
+			AuthService.getPreguntasAll ({idempresa:$localStorage.currentUser.rol}).then(function(res) {
+					// res holds your data
+					//$scope.dataSucursales = res.data;
+				console.log("preguntas: "+JSON.stringify(res.data));
+					GuardarLocalService.abrirBD();
+					for (var i = res.data.length - 1; i >= 0; i--) {
+						GuardarLocalService.insertarPregunta(res.data[i].id,res.data[i].idempresa,res.data[i].pregunta,res.data[i].idcampanias);
 					}
-				});
- //$scope.loadData();
+			});
+
+ $scope.listaSucursal= function(){
+ 	GuardarLocalService.abrirBD();
+ 	//db = window.sqlitePlugin.openDatabase({name:'testsqlite.db', key:'test', iosDatabaseLocation:'Documents'});
+      db.transaction(function(tx) {
+            tx.executeSql('SELECT id, nombre FROM sucursal', [], function(tx, rs) {
+               console.log('Registros encontrados: ' + rs.rows.length);
+  				var itemsColl = [];
+               //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
+               if(rs.rows.length > 0){
+                  for (var i = 0; i < rs.rows.length; i++) {
+                    var miItem = new Object();
+                    miItem.id = rs.rows.item(i).id;
+                    miItem.nombre = rs.rows.item(i).nombre;
+                    itemsColl.push(miItem);
+                  };
+                  items = JSON.stringify(itemsColl);
+                  $scope.dataSucursales=itemsColl;
+                  console.log("scope of items is " + items);
+                  //alert("scope of items is; " +items);
+                  //alert("scope; " +JSON.stringify($scope.dataSucursales));                  
+                }else{
+                  alert("No hay datos guardados localmente");
+                  console.log("No hay datos guatdados localmente");
+                }              
+            }, function(tx, error) {
+               console.log('Error: ' + error.message);
+               alert('error: '+error.message);
+            });
+        });
+    }
+
+ $scope.getCampania2 =function(data,id){
+ 	AuthService.getCampania(data).then(function(rs) {
+								//alert(rs.data.length+"---")
+		for (var y = rs.data.length - 1; y >= 0; y--) {
+			alert("6- "+id);
+			GuardarLocalService.insertarCampania(rs.data[y].id,rs.data[y].nombre,rs.data[y].descripcion,rs.data[y].instrucciones,rs.data[y].agradecimiento,id);
+		//GuardarLocalService.insertarCampania("1","2","3","4","5","6");
+		}								
+	});
+ }
+
+ function consultasql(callbackPaso1, callbackPaso2){
+    //algo aca
+    callbackPaso1('paso 1');
+
+    //sigo... algo aca
+    callbackPaso2('paso 2');
+}
 
  ionic.material.ink.displayEffect();
 
  $scope.verCampania = function(ids){
-console.log(ids);
+	console.log(ids);
 	$localStorage.sucursal={id:ids};
-
 	$state.go('app.vercampania',{id:ids});
  }
 
@@ -109,67 +144,53 @@ console.log(ids);
 	 });
 
  	confirmSincro.then(function(res){
- 		if (res) {
- 			if (window.cordova && window.SQLitePlugin) {  
+ 		if (res) { 
 		      //alert("Podemos usar SqlLITE !!");
 		      GuardarLocalService.listaDatos();
-		    }else {
-		       // si no podemos usar el plugin sqlite
-		       db = window.openDatabase("APSNetMobileDb", "1.0", "testsqlite.db", 100 * 1024 * 1024); 
-		       console.log("usamos WebSQL(DB)");
-		    }
+		    
  		}
  	});
  }
 
  $scope.showConfirmCerraSession = function() {
-
 	 var confirmPopup = $ionicPopup.confirm({
 		 title: 'Cerrar sesión',
 		 template: '¿Desea cerrar la sesión del usuario?'
 	 });
-
-
-
 	 confirmPopup.then(function(res) {
 		 if(res) {
 			 AuthService.logout().then(function(response) {
+				 $ionicLoading.show({
+					 content: 'Loading',
+					 animation: 'fade-in',
+					 showBackdrop: true,
+					 maxWidth: 200,
+					 showDelay: 0
+				});
+				 $timeout(function () {
+					 $scope.result = angular.fromJson(response.data);
 
-			 $ionicLoading.show({
-				 content: 'Loading',
-				 animation: 'fade-in',
-				 showBackdrop: true,
-				 maxWidth: 200,
-				 showDelay: 0
-			});
-
-
-		 $timeout(function () {
-
-			 $scope.result = angular.fromJson(response.data);
-
-			 if($scope.result.Status == "Error"){
-				 $ionicLoading.hide();
-				 $scope.showAlert2();
-			 } else{
-					delete $localStorage.currentUser;
-					delete $localStorage.currentRol;
-					delete $localStorage.campania;
-					delete $localStorage.preguntas;
-					window.localStorage.removeItem('ionium-fb');
-					window.localStorage.removeItem('ionium-gp');
-					window.localStorage.removeItem('twitterKey');
-					KioskPlugin.exitKiosk();
-					navigator.app.exitApp();
-				 // $http.defaults.headers.common.Authorization = ''
-					$ionicLoading.hide();
-					$state.go('app.login');
-			 }
-		 }, 2000);
-	 });
-		 }
+					 if($scope.result.Status == "Error"){
+						 $ionicLoading.hide();
+						 $scope.showAlert2();
+					 } else{
+							delete $localStorage.currentUser;
+							delete $localStorage.currentRol;
+							delete $localStorage.campania;
+							delete $localStorage.preguntas;
+							window.localStorage.removeItem('ionium-fb');
+							window.localStorage.removeItem('ionium-gp');
+							window.localStorage.removeItem('twitterKey');
+							KioskPlugin.exitKiosk();
+							navigator.app.exitApp();
+						 // $http.defaults.headers.common.Authorization = ''
+							$ionicLoading.hide();
+							$state.go('app.login');
+					 }
+		 		}, 2000);
+	 		});
+		}
 	 });
 
  };
-
-		});
+});

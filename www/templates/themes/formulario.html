@@ -82,39 +82,45 @@ input[placeholder], [placeholder], *[placeholder] {
 
    <div style="background: rgba(43, 46, 55, 0.5);padding-top: 20px;padding-bottom: 40px;font-family:Roboto;">
 
-     <div class="list list-inset" style="border-left:0;border-radius: 52px">
+
+   <label style="color: white; "><input type="checkbox" id="cbox1" ng-change="condiciones()" ng-model="aceptar"> Acepto terminos y condiciones</label>
+
+     <div class="list list-inset" style="border-left:0;border-radius: 52px ; padding-right: 6px;">
        <label style="position: relative;" id="item16" class="item item-input">
  <i style="position: relative;
  left: 20px;" class="icon ion-person placeholder-icon"></i>
- <input type="text"  style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;"  placeholder="NOMBRE"  ng-model="nombreCompleto">
+ <input type="text"  style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;"  placeholder="NOMBRE" ng-readonly="prueba"  ng-model="nombreCompleto">
 </label>
 
      </div>
-     <div class="list list-inset" style="border-left:0;border-radius: 52px">
+     <div class="list list-inset" style="border-left:0;border-radius: 52px; padding-right: 6px;">
 
          <label style="position: relative;" id="item16" class="item item-input">
            <i  style="position: relative;
            left: 20px;" class="icon fa fa-mobile placeholder-icon"></i>
-             <input style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;" type="text" placeholder="CELULAR" ng-model="celular">
+             <input style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;" type="text" ng-readonly="prueba" placeholder="CELULAR" ng-model="celular">
          </label>
      </div>
 
-     <div class="list list-inset" style="border-left:0;border-radius: 52px">
+     <div class="list list-inset" style="border-left:0;border-radius: 52px; padding-right: 6px;">
        <label style="position: relative;" id="item16" class="item item-input">
  <i style="position: relative;
  left: 20px;" class="icon ion-android-mail placeholder-icon"></i>
- <input type="email"  style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;"  placeholder="CORREO ELECTRÓNICO"  ng-model="correo">
+ <input type="email"  style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;" ng-readonly="prueba"  placeholder="CORREO ELECTRÓNICO"  ng-model="correo">
 </label>
 
      </div>
-     <div class="list list-inset" style="border-left:0;border-radius: 52px">
+     <div class="list list-inset" style="border-left:0;border-radius: 52px; padding-right: 6px;">
 
          <label style="position: relative;" id="item16" class="item item-input">
            <i  style="position: relative;
            left: 20px;" class="icon fa fa-birthday-cake placeholder-icon"></i>
-             <input style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;" type="text" placeholder="CUMPLEAÑOS" ng-model="fecha_nacimiento">
+             <input style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;" type="text" ng-readonly="prueba" placeholder="CUMPLEAÑOS" ng-model="fecha_nacimiento">
          </label>
      </div>
+
+
+
      <div style="position:relative; top:20px">
        <button type="button"   style="background:#f16920;font-family: 'Roboto', sans-serif;border-radius: 52px;" class="button button-large button-assertive" ng-click="guardarFormulario(nombreCompleto,celular, correo,fecha_nacimiento)">PARTICIPAR</button>
 

@@ -713,6 +713,16 @@ $ionicConfigProvider.backButton.previousTitleText(false);
     }
   })
 
+  .state('app.nombre', {
+    url: '/nombre',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/themes/nombre-divice.html',
+        controller: 'NombreController'
+      }
+    }
+  })
+
   .state('app.motionlist', {
     cache: false,
     url: '/material/motion',

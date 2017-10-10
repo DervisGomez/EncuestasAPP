@@ -152,6 +152,7 @@ angular.module('ionium')
 							});
 						},
 
+
 						logout : function() {
 							return $http({
 								method : "POST",
@@ -371,7 +372,52 @@ return response.data
 						     else
 						        return false;
 
-						}
+						},
+
+						getCampañasAll : function(data) {
+							return $http({
+								method : "POST",
+								url : BASE_URL.url
+										+ 'apps/jappyServices/public/api/consultaTodasCampanias',
+								data : data,
+								headers : {
+									'Content-Type' : 'application/json',
+									'accept' : 'application/json',
+
+
+								}
+							});
+						},
+
+						getPreguntasAll : function(data) {
+							return $http({
+								method : "POST",
+								url : BASE_URL.url
+										+ 'apps/jappyServices/public/api/consultaTodasPreguntas',
+								data : data,
+								headers : {
+									'Content-Type' : 'application/json',
+									'accept' : 'application/json',
+
+
+								}
+							});
+						},
+
+						setSincronizar : function(data) {
+							return $http({
+								method : "POST",
+								url : BASE_URL.url
+										+ 'apps/jappyServices/public/api/sincronizarRespuestas',
+								data : data,
+								headers : {
+									'Content-Type' : 'application/json',
+									'accept' : 'application/json',
+
+
+								}
+							});
+						},
 
 					}
 				});

@@ -1,6 +1,6 @@
 angular.module('ionium').controller(
 		'LoginController',
-		function($scope, AuthService, SOCIAL, $ionicSideMenuDelegate, $ionicModal, $rootScope, $localStorage, $ionicLoading, $state, $ionicPopup, $http, $ionicHistory, $ionicModal, $timeout, $cordovaOauth) {
+		function($scope, AuthService, GuardarLocalService, SOCIAL, $ionicSideMenuDelegate, $ionicModal, $rootScope, $localStorage, $ionicLoading, $state, $ionicPopup, $http, $ionicHistory, $ionicModal, $timeout, $cordovaOauth) {
 
 $ionicSideMenuDelegate.canDragContent(false);
 			$scope.showAlert = function() {
@@ -18,18 +18,12 @@ $ionicSideMenuDelegate.canDragContent(false);
 
 			};
 
-
-
-
 			$scope.FBlogin = function(){
 
 				$cordovaOauth.facebook(window.global.Facebook_APP_ID, ["email", "public_profile", "user_hometown", "user_posts", "user_friends", "user_about_me"]).then(function(result) {
-						displayData(result.access_token);
-
-
-
+					displayData(result.access_token);
 				}, function(error) {
-						alert("Error: " + error);
+					alert("Error: " + error);
 				});
 			}
 
@@ -116,13 +110,11 @@ window.localStorage.setItem("twitterKey", JSON.stringify(result));
 			function displayData2(result){
 							window.localStorage.setItem("ionium-gp", JSON.stringify(result));
 							$ionicHistory.nextViewOptions({
- disableBack: true
-});
+							 disableBack: true
+							});
 						$state.go("app.home", null, {reload:true});
 
 			}
-
-
 
 			$scope.showAlert2 = function() {
 				var alertPopup = $ionicPopup.alert({
@@ -169,11 +161,7 @@ window.localStorage.setItem("twitterKey", JSON.stringify(result));
 										 codigo:$scope.data.password
 
 								 };
-
 								 console.log($scope.result);
-
-
-
 								 console.log($localStorage.currentUser);
 
 								//  $scope.modal.remove();
@@ -185,36 +173,41 @@ window.localStorage.setItem("twitterKey", JSON.stringify(result));
 								$localStorage.rol = $scope.result.rol; */
 								$ionicLoading.hide();
 								$ionicHistory.nextViewOptions({
-	 disableBack: true
- });
-								$state.go('app.home', null, {reload:true});
+									 disableBack: true
+								 });
+									GuardarLocalService.abrirBD();
+									$scope.validarNombre();
 
+								//$state.go('app.home', null, {reload:true});
 							}
 
 						}, 1000);
-
-
-
-
-
-
 								/*window.localStorage.setItem('email',
 										$scope.result.user['email']);
 
 								window.localStorage.setItem('persist_code',
 										$scope.result.persist_code);*/
-
 							});
 				}else{
 					$scope.showAlert2();
 				}
-
-
-
-
-
-
 			};
+
+$scope.validarNombre= function(){
+ 	GuardarLocalService.abrirBD();
+      db.transaction(function(tx) {
+            tx.executeSql('SELECT nombre FROM divice', [], function(tx, rs) {
+               console.log('Registros encontrados: ' + rs.rows.length);
+               if(rs.rows.length > 0){
+                    $state.go('app.home', null, {reload:true}); 
+                }else{
+                	$state.go('app.nombre', null, {reload:true});
+                }              
+            }, function(tx, error) {
+               console.log('Error: ' + error.message);
+            });
+        });
+    }
 
 
 

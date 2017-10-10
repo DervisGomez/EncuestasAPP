@@ -23,23 +23,36 @@ console.log($scope.promocion);
 
 			$scope.loadData = function() {
 
-
-
-
 			}
+
+			$scope.showAlert = function() {
+				var alertPopup = $ionicPopup.alert({
+					title : 'Terminos y Condiciones',
+					template : 'Para enviar los datos debe aceptar los terminos y condiciones'
+				});
+			};
 
 			$scope.guardarFormulario = function(nombreCompleto,celular, correo,fecha_nacimiento){
 
-				$scope.data2 ={idcampania:$stateParams.id, idempresa:$localStorage.campania.campania[0].idempresa, nombreCompleto:nombreCompleto, celular:celular, correo:correo, fecha_nacimiento:fecha_nacimiento};
-				console.log($scope.data2);
-				AuthService.setFormulario($scope.data2);
-				$state.go('app.vergracias',{id:$stateParams.id}, {reload:'app.vergracias'});
+				if (!$scope.prueba) {
+					$scope.data2 ={idcampania:$stateParams.id, idempresa:$localStorage.campania.campania[0].idempresa, nombreCompleto:nombreCompleto, celular:celular, correo:correo, fecha_nacimiento:fecha_nacimiento};
+					console.log($scope.data2);
+					AuthService.setFormulario($scope.data2);
+					$state.go('app.vergracias',{id:$stateParams.id}, {reload:'app.vergracias'});
+				}else{
+					$scope.showAlert();
+				}		
 
 
 			}
 
 			$scope.salir = function(){
 				$state.go('app.vergracias',{id:$stateParams.id}, {reload:'app.vergracias'});
+			}
+
+			$scope.prueba=true;
+			$scope.condiciones=function(){
+				$scope.prueba=!$scope.prueba;
 			}
 
 
