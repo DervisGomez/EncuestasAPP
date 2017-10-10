@@ -3,7 +3,7 @@
 
 <style>
 
-.login2 {
+.login {
     text-align: center;
     position: absolute;
     transition: none;
@@ -48,15 +48,15 @@ input[placeholder], [placeholder], *[placeholder] {
   <ion-content class="login">
 
     <div class="content">
-        <img src="http://sistemex.com/apps/listentap/source/img/empresas/{{dataCintillo}}" style="display: none;" />
+        <img src="http://sistemex.com/apps/listentap/source/img/empresas/{{dataCintillo}}" />
 <div style="    position: relative;
   top: -100px;">
-<h2 style=" color:#f16920">Bienvenido {{usuarioEmail}}</h2>
+<h2 style="color:#f16920; width: 90%; margin: 0 auto">Bienvenido {{usuarioEmail}}</h2>
 <br>
 <img style="width: 5%;
     height: auto;
     top: 0px;
-    display: none;
+    min-width: 40px;
     position: relative;" src="img/Sucursal.png" />
 
 <br>
@@ -84,12 +84,14 @@ input[placeholder], [placeholder], *[placeholder] {
     height: auto;
     top: -20px;
     position: relative;
-    left: 200px;" src="img/ionic.png">
+    min-width: 40px;
+    left: 32%;" src="img/ionic.png">
 <img ng-click="showConfirmCerraSession()"  style="width: 7%;
     height: auto;
     top: -20px;
     position: relative;
-    left: 200px;" src="img/Salir.png">
+    min-width: 40px;
+    left: 32%;" src="img/Salir.png">
 
 </div>
 

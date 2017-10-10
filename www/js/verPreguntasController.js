@@ -135,7 +135,7 @@ $scope.guardarRespuesta = function(idpregunta, respuesta){
     var day = dt.getDate();
     var year = dt.getFullYear();
     $scope.fechaActual= year + '-' + month + '-' + day;
-    alert(idpregunta+" - "+$stateParams.id+" - "+respuesta+" - "+$localStorage.campania.campania[0].idsucursal+" - "+$scope.nombre+" - "+$scope.fechaActual); 
+    //alert(idpregunta+" - "+$stateParams.id+" - "+respuesta+" - "+$localStorage.campania.campania[0].idsucursal+" - "+$scope.nombre+" - "+$scope.fechaActual); 
     GuardarLocalService.insertarDatos(idpregunta,$stateParams.id,respuesta,$localStorage.campania.campania[0].idsucursal,$scope.nombre,$scope.fechaActual);
   
 

@@ -2,7 +2,7 @@
 
 <style>
 
-.login2 {
+.login {
     text-align: center;
     position: absolute;
     transition: none;
@@ -32,6 +32,7 @@ input[placeholder], [placeholder], *[placeholder] {
 *:-ms-input-placeholder {
     /* IE 10+ */
     color: red;
+    
 }
 
 </style>
@@ -39,42 +40,25 @@ input[placeholder], [placeholder], *[placeholder] {
 
     <div class="content">
         <img src="img/logo.png" style="width: 50%;
-    height: auto;
-    top: -60px;
-    display: none;
-    position: relative;" />
-
-        <div  style="border-left:0;width: 100%; border-radius: 52px">
-          <label style="position: relative;" id="item16" class="item item-input">
-    <i style="position: relative;
-    left: 20px;" class="icon ion-person placeholder-icon"></i>
-    <input type="email"  style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;"  placeholder="CORREO ELECTRÓNICO"  ng-model="data.email">
-</label>
-
-        </div>
-        <div  style="border-left:0;border-radius: 52px">
-
+            height: auto;
+            top: -60px;
+            position: relative;" />
+        <div class="list list-inset" style="width: 90%; max-width: 700px; margin: 10px auto; border-left:0;border-radius: 52px">
             <label style="position: relative;" id="item16" class="item item-input">
-              <i  style="position: relative;
-              left: 20px;" class="icon ion-lock-combination placeholder-icon"></i>
+                <i style="position: relative;
+                    left: 20px;" class="icon ion-person placeholder-icon"></i>
+                <input type="email"  style="border: none;border-radius: 52px; color: white;font-size:large;font-weight:bold;"  placeholder="CORREO ELECTRÓNICO"  ng-model="data.email">
+            </label>
+        </div>
+        <div class="list list-inset" style="width: 90%; max-width: 700px; margin: 10px auto;border-left:0;border-radius: 52px">
+            <label style="position: relative;" id="item16" class="item item-input">
+                <i  style="position: relative;
+                    left: 20px;" class="icon ion-lock-combination placeholder-icon"></i>
                 <input style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;" type="password" placeholder="CONTRASE&Ntilde;A" ng-model="data.password">
             </label>
         </div>
-        <button type="button"   style="background:#f16920;border-radius: 52px; width: 100%"  ng-click="login()">Inicia sesión</button>
-
-
-
-
-
-
+        <button type="button"   style="width: 60%; max-width: 300px; min-width: 100px; background:#f16920;border-radius: 52px;" class="button button-large button-assertive" ng-click="login()">Inicia sesión</button>
     </div>
-
-
-
-
   </ion-content>
-
-
-
 
 </ion-view>

@@ -37,7 +37,7 @@ angular.module('ionium').controller(
 						$scope.listaCampania();
 
 				}else{
-					alert("2: "+JSON.stringify($localStorage.campania.campania));
+					//alert("2: "+JSON.stringify($localStorage.campania.campania));
 					$scope.dataCampania =$localStorage.campania.campania[0];
 					//$scope.listaCampania();
 

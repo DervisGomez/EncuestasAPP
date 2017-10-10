@@ -3,7 +3,7 @@
 
 <style>
 
-.login2 {
+.login {
     text-align: center;
     position: absolute;
     transition: none;
@@ -73,36 +73,33 @@ input[placeholder], [placeholder], *[placeholder] {
     position: relative;
 }
 </style>
+
   <ion-content class="login">
 
     <div class="content">
 
-<div style="float:right;width:50%">
- <ion-list>
+      <div style="min-width: 280px; float:right;width:50%">
+       <ion-list>
+         <div style="background: rgba(43, 46, 55, 0.5);padding-top: 20px;padding-bottom: 20px;font-family:Roboto;">
+          <label style="color: white; "><input type="checkbox" id="cbox1" ng-change="condiciones()" ng-model="aceptar"> Acepto terminos y condiciones</label>
+          <div class="list list-inset" style="width: 90%;margin: 20px  auto; border-left:0;border-radius: 52px ; padding-right: 6px;">
+             <label style="position: relative;" id="item16" class="item item-input">
+                <i style="position: relative;
+                  left: 20px;" class="icon ion-person placeholder-icon"></i>
+                <input type="text"  style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;"  placeholder="NOMBRE" ng-readonly="prueba"  ng-model="nombreCompleto">
+            </label>
 
-   <div style="background: rgba(43, 46, 55, 0.5);padding-top: 20px;padding-bottom: 40px;font-family:Roboto;">
+          </div>
+         <div class="list list-inset" style="width: 90%;margin: 20px auto;border-left:0;border-radius: 52px; padding-right: 6px;">
 
+             <label style="position: relative;" id="item16" class="item item-input">
+               <i  style="position: relative;
+               left: 20px;" class="icon fa fa-mobile placeholder-icon"></i>
+                 <input style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;" type="text" ng-readonly="prueba" placeholder="CELULAR" ng-model="celular">
+             </label>
+         </div>
 
-   <label style="color: white; "><input type="checkbox" id="cbox1" ng-change="condiciones()" ng-model="aceptar"> Acepto terminos y condiciones</label>
-
-     <div class="list list-inset" style="border-left:0;border-radius: 52px ; padding-right: 6px;">
-       <label style="position: relative;" id="item16" class="item item-input">
- <i style="position: relative;
- left: 20px;" class="icon ion-person placeholder-icon"></i>
- <input type="text"  style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;"  placeholder="NOMBRE" ng-readonly="prueba"  ng-model="nombreCompleto">
-</label>
-
-     </div>
-     <div class="list list-inset" style="border-left:0;border-radius: 52px; padding-right: 6px;">
-
-         <label style="position: relative;" id="item16" class="item item-input">
-           <i  style="position: relative;
-           left: 20px;" class="icon fa fa-mobile placeholder-icon"></i>
-             <input style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;" type="text" ng-readonly="prueba" placeholder="CELULAR" ng-model="celular">
-         </label>
-     </div>
-
-     <div class="list list-inset" style="border-left:0;border-radius: 52px; padding-right: 6px;">
+     <div class="list list-inset" style="width: 90%;margin: 20px auto;border-left:0;border-radius: 52px; padding-right: 6px;">
        <label style="position: relative;" id="item16" class="item item-input">
  <i style="position: relative;
  left: 20px;" class="icon ion-android-mail placeholder-icon"></i>
@@ -110,7 +107,7 @@ input[placeholder], [placeholder], *[placeholder] {
 </label>
 
      </div>
-     <div class="list list-inset" style="border-left:0;border-radius: 52px; padding-right: 6px;">
+     <div class="list list-inset" style="width: 90%;margin: 20px auto;border-left:0;border-radius: 52px; padding-right: 6px;">
 
          <label style="position: relative;" id="item16" class="item item-input">
            <i  style="position: relative;
@@ -121,34 +118,23 @@ input[placeholder], [placeholder], *[placeholder] {
 
 
 
-     <div style="position:relative; top:20px">
-       <button type="button"   style="background:#f16920;font-family: 'Roboto', sans-serif;border-radius: 52px;" class="button button-large button-assertive" ng-click="guardarFormulario(nombreCompleto,celular, correo,fecha_nacimiento)">PARTICIPAR</button>
+     <div style="position:relative; ">
+       <button type="button"   style="width: 60%;max-width: 220px; min-width: 10px; background:#f16920;font-family: 'Roboto', sans-serif;border-radius: 52px;" class="button button-large button-assertive" ng-click="guardarFormulario(nombreCompleto,celular, correo,fecha_nacimiento)">PARTICIPAR</button>
 
      </div>
 
    </div>
 
-   <div style="position:relative; top:20px">
-     <button type="button"   style="background:black;font-family: 'Roboto', sans-serif;border-radius: 52px;" class="button button-large button-assertive" ng-click="salir()">NO PARTICIPAR</button>
+   <div style="position:relative;  top:20px">
+     <button type="button"   style="min-width: 10px;width: 60%;max-width: 220px;background:black;font-family: 'Roboto', sans-serif;border-radius: 52px;" class="button button-large button-assertive" ng-click="salir()">NO PARTICIPAR</button>
 
    </div>
 
         </ion-list>
 </div>
 
-
-
-
-
-
     </div>
 
-
-
-
   </ion-content>
-
-
-
 
 </ion-view>
