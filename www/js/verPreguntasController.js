@@ -22,7 +22,7 @@ $timeout(function () {
     console.log($scope.dataPreguntas);
 
   }
-}, 2000);
+}, 1000);
 
 $scope.listaPreguntas = function(){
         GuardarLocalService.abrirBD();

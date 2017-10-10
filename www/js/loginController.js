@@ -144,12 +144,13 @@ angular.module('ionium').controller(
 								 /*$localStorage.currentUser = $scope.result.user['email'];
 								$localStorage.token = $scope.result.persist_code;
 								$localStorage.rol = $scope.result.rol; */
-								$ionicLoading.hide();
+								
 								$ionicHistory.nextViewOptions({
 									 disableBack: true
 								 });
 								GuardarLocalService.abrirBD();
 								$scope.validarNombre();
+								$ionicLoading.hide();
 								//$state.go('app.home', null, {reload:true});
 							}
 						}, 1000);

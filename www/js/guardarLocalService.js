@@ -16,7 +16,7 @@ angular.module("ionium")
             tx.executeSql('CREATE TABLE IF NOT EXISTS respuesta (idpregunta,idcampaña,respuesta,idsucursal,nombre,fecha)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS sucursal (id,nombre)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS campana (id,nombre,cintillo,fecha_inicio,fecha_final,descripcion,instrucciones,agradecimiento,captar_infopersonal,calificacion,estatus,duplicado,idconfiguraciones_campania,cod_inicial,cod_final,idempresa,idusuario,tipo_campania,plantilla_caritas,imagenpromocion,participantes,participantes_formulario)');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS campania (id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS campania (id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS divice (nombre)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS pregunta (id,idempresa,pregunta,idcampania)');
         }, function(error) {
@@ -67,18 +67,18 @@ angular.module("ionium")
         });
     },
 
-    insertarCampania: function(id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal){
+    insertarCampania: function(id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo){
         db.transaction(function(tx) {
           tx.executeSql("SELECT id, nombre FROM campania where id='"+id+"'", [], function(tx, rs) {
             if (rs.rows.length>0) {
               //alert("no guardado");
             }else{
-              tx.executeSql('INSERT INTO campania VALUES (?,?,?,?,?,?,?,?)', [id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal]);
+              tx.executeSql('INSERT INTO campania VALUES (?,?,?,?,?,?,?,?,?,?)', [id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo]);
             }
           });
         }, function(error) {
             console.log('ERROR: ' + error.message);
-            alert('ERROR: ' + error.message);
+            alert('ERROR1: ' + error.message);
         }, function() {
            //alert('Campania guardados correctamente');
            console.log('Datos guardados correctamente');
@@ -136,6 +136,11 @@ angular.module("ionium")
                     //alert(rs.rows.item(i).idpregunta+" - "+rs.rows.item(i).idcampaña+" - "+rs.rows.item(i).respuesta);
                     AuthService.setSincronizar({idpreguntas:rs.rows.item(i).idpregunta, idcampania:rs.rows.item(i).idcampaña, respuesta:rs.rows.item(i).respuesta,idsucursal:rs.rows.item(i).idsucursal,nombreequipo:rs.rows.item(i).nombre,fecha:rs.rows.item(i).fecha})
                   };
+
+                  tx.executeSql('DELETE FROM respuesta', [], function(tx, res) {
+
+                  });
+
                   alert("Datos Sincronizados");
                   console.log("Datos Sincronizados");
                 }else{

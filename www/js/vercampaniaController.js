@@ -50,7 +50,7 @@ angular.module('ionium').controller(
 				DatosService.data.sucursal=$stateParams.id;
 		 		//db = window.sqlitePlugin.openDatabase({name:'testsqlite.db', key:'test', iosDatabaseLocation:'Documents'});
 		      	db.transaction(function(tx) {
-		            tx.executeSql("SELECT id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal FROM campania where idsucursal='"+$stateParams.id+"'", [], function(tx, rs) {
+		            tx.executeSql("SELECT id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo FROM campania where idsucursal='"+$stateParams.id+"'", [], function(tx, rs) {
 		               console.log('Registros encontrados: ' + rs.rows.length);
 		  				var itemsColl = [];
 		               //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
@@ -65,6 +65,8 @@ angular.module('ionium').controller(
 		                    miItem.idsucursal= rs.rows.item(i).idsucursal;
 		                    miItem.plantilla_caritas=rs.rows.item(i).plantilla_caritas;
 		                    miItem.captar_infopersonal=rs.rows.item(i).captar_infopersonal;
+		                    miItem.imagenpromocion=rs.rows.item(i).imagenpromocion;
+		                    miItem.cintillo=rs.rows.item(i).cintillo;
 		                    itemsColl.push(miItem);
 		                  };
 		                  items2 = JSON.stringify(itemsColl);
@@ -73,8 +75,8 @@ angular.module('ionium').controller(
 							$scope.dataCampania = itemsColl[0];
 							$localStorage.campania= {campania:$scope.dataCampania2};
 		                  console.log("scope of items is " + items2);
-		                  alert("scope of items is; " +items2);
-		                  alert("scope; " +JSON.stringify($scope.dataCampania2));                  
+		                  //alert("scope of items is; " +items2);
+		                  //alert("scope; " +JSON.stringify($scope.dataCampania2));                  
 		                }else{
 		                  alert("No hay datos guatdados localmente");
 		                  console.log("No hay datos guatdados localmente");

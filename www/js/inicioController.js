@@ -58,7 +58,7 @@ angular.module('ionium').controller(
 				for (var i = res.data.length - 1; i >= 0; i--) {
 					GuardarLocalService.insertarSucursal(res.data[i].id,res.data[i].nombre);
 				}
-				$scope.listaSucursal();	
+				
 			});
 			AuthService.getCampañasAll ({idempresa:$localStorage.currentUser.rol}).then(function(res) {
 				//$scope.dataSucursales = res.data;
@@ -66,7 +66,7 @@ angular.module('ionium').controller(
 				
 				GuardarLocalService.abrirBD();
 				for (var i = res.data.length - 1; i >= 0; i--) {
-					GuardarLocalService.insertarCampania(res.data[i].id,res.data[i].nombre,res.data[i].descripcion,res.data[i].instrucciones,res.data[i].agradecimiento,res.data[i].idsucursal,res.data[i].plantilla_caritas);
+					GuardarLocalService.insertarCampania(res.data[i].id,res.data[i].nombre,res.data[i].descripcion,res.data[i].instrucciones,res.data[i].agradecimiento,res.data[i].idsucursal,res.data[i].plantilla_caritas,res.data[i].captar_infopersonal,res.data[i].imagenpromocion,res.data[i].cintillo);
 				}
 			});
 			AuthService.getPreguntasAll ({idempresa:$localStorage.currentUser.rol}).then(function(res) {
@@ -77,6 +77,7 @@ angular.module('ionium').controller(
 					for (var i = res.data.length - 1; i >= 0; i--) {
 						GuardarLocalService.insertarPregunta(res.data[i].id,res.data[i].idempresa,res.data[i].pregunta,res.data[i].idcampanias);
 					}
+					$scope.listaSucursal();	
 			});
 
  $scope.listaSucursal= function(){
@@ -100,7 +101,7 @@ angular.module('ionium').controller(
                   //alert("scope of items is; " +items);
                   //alert("scope; " +JSON.stringify($scope.dataSucursales));                  
                 }else{
-                  alert("No hay datos guardados localmente");
+                  //alert("No hay datos guardados localmente");
                   console.log("No hay datos guatdados localmente");
                 }              
             }, function(tx, error) {

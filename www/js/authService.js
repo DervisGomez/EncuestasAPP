@@ -419,6 +419,21 @@ return response.data
 							});
 						},
 
+						setNombre : function(data) {
+							return $http({
+								method : "POST",
+								url : BASE_URL.url
+										+ 'apps/jappyServices/public/api/guardarEquipo',
+								data : data,
+								headers : {
+									'Content-Type' : 'application/json',
+									'accept' : 'application/json',
+
+
+								}
+							});
+						},
+
 					}
 				});
 
