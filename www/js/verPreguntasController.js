@@ -6,8 +6,9 @@ angular.module('ionium').controller(
       // Active INK Effect
         ionic.material.ink.displayEffect();
 $timeout(function () {
-  $scope.validarNombre();
   if(  $localStorage.preguntas == null || $localStorage.preguntas.preguntas.length ==0){
+
+  $scope.validarNombre();
     /*var data = {idcampania:$stateParams.id};
     AuthService.getPreguntas(data).then(function(res) {
       // res holds your data
@@ -20,6 +21,8 @@ $timeout(function () {
   }else{
     $scope.dataPreguntas = $localStorage.preguntas.preguntas[0];
     console.log($scope.dataPreguntas);
+    
+  $scope.validarNombre();
 
   }
 }, 1000);
@@ -155,7 +158,7 @@ $scope.guardarRespuesta = function(idpregunta, respuesta){
     var day = dt.getDate();
     var year = dt.getFullYear();
     $scope.fechaActual= year + '-' + month + '-' + day;
-    //AuthService.setConteo({idcampania:ids, fecha_hoy:$scope.fechaActual});
+    AuthService.setConteo({idcampania:ids, fecha_hoy:$scope.fechaActual});
     console.log($localStorage.campania.campania[0].captar_infopersonal);
     if($localStorage.campania.campania[0].captar_infopersonal == null){
       $state.go('app.vergracias', {id:ids}, {reload:'app.vergracias'});

@@ -47,7 +47,6 @@ angular.module('ionium').controller(
 
 			$scope.listaCampania= function(){
 				GuardarLocalService.abrirBD();
-				DatosService.data.sucursal=$stateParams.id;
 		 		//db = window.sqlitePlugin.openDatabase({name:'testsqlite.db', key:'test', iosDatabaseLocation:'Documents'});
 		      	db.transaction(function(tx) {
 		            tx.executeSql("SELECT id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo FROM campania where idsucursal='"+$stateParams.id+"'", [], function(tx, rs) {

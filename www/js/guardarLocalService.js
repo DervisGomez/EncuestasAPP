@@ -69,9 +69,9 @@ angular.module("ionium")
 
     insertarCampania: function(id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo){
         db.transaction(function(tx) {
-          tx.executeSql("SELECT id, nombre FROM campania where id='"+id+"'", [], function(tx, rs) {
+          tx.executeSql("SELECT id, nombre FROM campania where id='"+id+"'  AND idsucursal='"+id+"'", [], function(tx, rs) {
             if (rs.rows.length>0) {
-              //alert("no guardado");
+              alert("no guardado"+id);
             }else{
               tx.executeSql('INSERT INTO campania VALUES (?,?,?,?,?,?,?,?,?,?)', [id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo]);
             }
@@ -81,7 +81,7 @@ angular.module("ionium")
             alert('ERROR1: ' + error.message);
         }, function() {
            //alert('Campania guardados correctamente');
-           console.log('Datos guardados correctamente');
+           console.log('Campania guardados correctamente'+id);
         });
     },
 
