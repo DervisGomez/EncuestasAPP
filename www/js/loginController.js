@@ -1,8 +1,18 @@
 angular.module('ionium').controller(
 		'LoginController',
-		function($scope, AuthService, GuardarLocalService, SOCIAL, $ionicSideMenuDelegate, $ionicModal, $rootScope, $localStorage, $ionicLoading, $state, $ionicPopup, $http, $ionicHistory, $ionicModal, $timeout, $cordovaOauth) {
+		function($scope, AuthService, GuardarLocalService, $cordovaNetwork,SOCIAL, $ionicSideMenuDelegate, $ionicModal, $rootScope, $localStorage, $ionicLoading, $state, $ionicPopup, $http, $ionicHistory, $ionicModal, $timeout, $cordovaOauth) {
 
 			$ionicSideMenuDelegate.canDragContent(false);
+
+			$scope.tipo="password";
+
+			$scope.mostrar=function(){
+				if ($scope.tipo=="password") {
+					$scope.tipo="text";
+				}else{
+					$scope.tipo="password"
+				}				
+			}
 
 			$scope.showAlert = function() {
 				var alertPopup = $ionicPopup.alert({
@@ -107,6 +117,13 @@ angular.module('ionium').controller(
 				});
 			};
 
+			$scope.showAlert3 = function() {
+				var alertPopup = $ionicPopup.alert({
+					title : 'ListenTap - Verificar',
+					template : 'Para iniciar sesión debes tener conexión a internet'
+				});
+			};
+
 			$scope.data = {
 				email : $scope.email,
 				password : $scope.password
@@ -115,54 +132,66 @@ angular.module('ionium').controller(
 			$scope.login = function() {
 
 				if($scope.data.email != null  && $scope.data.password != null){
-
-					AuthService.login($scope.data).then(function(response) {
-						$ionicLoading.show({
-							content: 'Loading',
-							animation: 'fade-in',
-							showBackdrop: true,
-							maxWidth: 200,
-							showDelay: 0
-						});
-						$timeout(function () {
-							$scope.result = angular.fromJson(response.data);
-							if($scope.result.Status == "Error"){
-								$ionicLoading.hide();
-								$scope.showAlert();
-							} else{
-								 $localStorage.currentUser = {
-									 mail: $scope.result.user['email'],
-									 token: $scope.result.persist_code,
-									 rol: $scope.result.user.idempresa,
-									 perfil:$scope.result.user.idperfil,
-									 codigo:$scope.data.password
-								 };
-								 console.log($scope.result);
-								 console.log($localStorage.currentUser);
-							//  $scope.modal.remove();
-							 //$http.defaults.headers.common.Authorization = 'Bearer ' + $scope.result.persist_code;
-								 /*$localStorage.currentUser = $scope.result.user['email'];
-								$localStorage.token = $scope.result.persist_code;
-								$localStorage.rol = $scope.result.rol; */
-								
-								$ionicHistory.nextViewOptions({
-									 disableBack: true
-								 });
-								GuardarLocalService.abrirBD();
-								$scope.validarNombre();
-								$ionicLoading.hide();
-								//$state.go('app.home', null, {reload:true});
-							}
-						}, 1000);
-								/*window.localStorage.setItem('email',
-									$scope.result.user['email']);
-								window.localStorage.setItem('persist_code',
-										$scope.result.persist_code);*/
-					});
+					if(window.Connection){
+						console.log("entro");
+						if ($cordovaNetwork.isOnline()){
+							$scope.entrar();
+						}else{
+							$scope.showAlert3();
+						}
+					}else{
+						$scope.entrar();
+					}
 				}else{
 					$scope.showAlert2();
 				}
 			};
+
+			$scope.entrar=function(){
+				AuthService.login($scope.data).then(function(response) {
+								$ionicLoading.show({
+									content: 'Loading',
+									animation: 'fade-in',
+									showBackdrop: true,
+									maxWidth: 200,
+									showDelay: 0
+								});
+								$timeout(function () {
+									$scope.result = angular.fromJson(response.data);
+									if($scope.result.Status == "Error"){
+										$ionicLoading.hide();
+										$scope.showAlert();
+									} else{
+										 $localStorage.currentUser = {
+											 mail: $scope.result.user['email'],
+											 token: $scope.result.persist_code,
+											 rol: $scope.result.user.idempresa,
+											 perfil:$scope.result.user.idperfil,
+											 codigo:$scope.data.password
+										 };
+										 console.log($scope.result);
+										 console.log($localStorage.currentUser);
+									//  $scope.modal.remove();
+									 //$http.defaults.headers.common.Authorization = 'Bearer ' + $scope.result.persist_code;
+										 /*$localStorage.currentUser = $scope.result.user['email'];
+										$localStorage.token = $scope.result.persist_code;
+										$localStorage.rol = $scope.result.rol; */
+										
+										$ionicHistory.nextViewOptions({
+											 disableBack: true
+										 });
+										GuardarLocalService.abrirBD();
+										$scope.validarNombre();
+										$ionicLoading.hide();
+										//$state.go('app.home', null, {reload:true});
+									}
+								}, 1000);
+								/*window.localStorage.setItem('email',
+									$scope.result.user['email']);
+								window.localStorage.setItem('persist_code',
+										$scope.result.persist_code);*/
+							});
+			}
 
 			$scope.validarNombre= function(){
 		 		GuardarLocalService.abrirBD();

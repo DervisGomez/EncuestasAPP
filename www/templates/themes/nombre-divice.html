@@ -43,12 +43,13 @@ input[placeholder], [placeholder], *[placeholder] {
     top: -60px;
     position: relative;" />
 
-        <div class="list list-inset" style="width: 90%; max-width: 700px; margin: 10px auto; border-left:0;border-radius: 52px">
-          <label style="position: relative;" id="item16" class="item item-input">
-            <i style="position: relative; left: 20px;" class="icon ion-android-phone-landscape placeholder-icon"></i>
-            <input type="text"  style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;"  placeholder="Nombre del dispositivo"  ng-model="nombr">
-          </label>
+        <div class="list" style="position: relative; width: 90%; max-width: 600px; margin: 10px auto">
+            <i style="position: absolute;top: 16px; left: 16px;" class="icon ion-android-phone-landscape placeholder-icon"></i>
+           <label class="item item-input item-floating-label">
+                <input style="padding-left: 32px" type="text" placeholder="Nombre del dispositivo"  ng-model="nombr">
+           </label>
         </div>
+
         <button type="button"   style="width: 60%; max-width: 300px; min-width: 100px; background:#f16920;border-radius: 52px;" class="button button-large button-assertive" ng-click="nombrarDivice(nombr)">Guardar Nombre</button>
 
     </div>

@@ -8,6 +8,10 @@
     transition: none;
 }
 
+.campo-text{
+    padding-left: 16px;
+}
+
 input[placeholder], [placeholder], *[placeholder] {
     color: white !important;
     font-size: 20px;
@@ -40,10 +44,9 @@ input[placeholder], [placeholder], *[placeholder] {
 
     <div class="content">
         <img src="img/logo.png" style="width: 50%;
-            height: auto;
-            top: -60px;
+            max-width: 330px;
             position: relative;" />
-        <div class="list list-inset" style="width: 90%; max-width: 700px; margin: 10px auto; border-left:0;border-radius: 52px">
+        <!--<div class="list list-inset" style="width: 90%; max-width: 700px; margin: 10px auto; border-left:0;border-radius: 52px">
             <label style="position: relative;" id="item16" class="item item-input">
                 <i style="position: relative;
                     left: 20px;" class="icon ion-person placeholder-icon"></i>
@@ -56,8 +59,29 @@ input[placeholder], [placeholder], *[placeholder] {
                     left: 20px;" class="icon ion-lock-combination placeholder-icon"></i>
                 <input style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;" type="password" placeholder="CONTRASE&Ntilde;A" ng-model="data.password">
             </label>
+        </div>-->
+
+        <div class="list" style="position: relative; width: 90%; max-width: 600px; margin: 10px auto">
+            <i style="position: absolute;top: 16px; left: 16px;" class="icon ion-person placeholder-icon"></i>
+           <label class="item item-input item-floating-label">
+           <input style="padding-left: 32px" type="email" placeholder="CORREO ELECTRÓNICO"  ng-model="data.email">
+           </label>
         </div>
-        <button type="button"   style="width: 60%; max-width: 300px; min-width: 100px; background:#f16920;border-radius: 52px;" class="button button-large button-assertive" ng-click="login()">Inicia sesión</button>
+
+        <div class="list" style="position: relative; width: 90%; max-width: 600px; margin: 10px auto">
+            <i style="position: absolute;top: 16px; left: 16px;" class="icon ion-lock-combination placeholder-icon"></i>
+           <label class="item item-input item-floating-label">
+           <input style="padding-left: 32px; padding-right: 32px" type="{{tipo}}" placeholder="CONTRASE&Ntilde;A" ng-model="data.password">
+           </label>
+           <i ng-click=mostrar(); class="icon ion-eye-disabled placeholder-icon" style="z-index: 100; position: absolute;top: 16px; right: 16px; cursor: pointer;" ></i>
+        </div>
+
+        <div style="max-width: 600px; width: 90%;padding: 12px;  min-width: 100px; margin: 0 auto">
+
+
+        <button type="button"   style="background:#ff354c; color: white; width: 100%;" class="button button-large" ng-click="login()">Ingresar</button></div>
+
+        <div style="padding: 12px; color: white">¿Ovidaste tu contraseña?</div>
     </div>
   </ion-content>
 

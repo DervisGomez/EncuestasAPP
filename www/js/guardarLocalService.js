@@ -19,11 +19,54 @@ angular.module("ionium")
             tx.executeSql('CREATE TABLE IF NOT EXISTS campania (id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS divice (nombre)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS pregunta (id,idempresa,pregunta,idcampania)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS formulario (idcampania,idempresa,nombreCompleto,celular,correo,fecha_nacimiento)');
+          
+          
         }, function(error) {
             console.log('ERROR: ' + error.message);
         }, function() {
            //alert('Tablas Creadas');
            console.log('Tablas Creadas');
+        });
+    },
+
+    listaFormulario: function(){
+      db.transaction(function(tx) {
+            tx.executeSql('SELECT idcampania,idempresa,nombreCompleto,celular,correo,fecha_nacimiento FROM formulario', [], function(tx, rs) {
+               console.log('Registros encontrados: ' + rs.rows.length);
+               if (rs.rows.length>0) {
+                  for (var i = 0; i < rs.rows.length; i++) {
+                    data2 ={idcampania:rs.rows.item(i).idcampania, idempresa:rs.rows.item(i).idempresa, nombreCompleto:rs.rows.item(i).nombreCompleto, celular:rs.rows.item(i).celular, correo:rs.rows.item(i).correo, fecha_nacimiento:rs.rows.item(i).fecha_nacimiento};
+                    AuthService.setFormulario(data2);
+                    //alert(rs.rows.item(i).idpregunta+" - "+rs.rows.item(i).idcampaña+" - "+rs.rows.item(i).respuesta);
+                  };
+
+                  tx.executeSql('DELETE FROM formulario', [], function(tx, res) {
+
+                  });
+
+                  alert("Datos Sincronizados");
+                  console.log("formulario Sincronizados");
+                }else{
+                  alert("No hay datos guatdados localmente");
+                  console.log("No hay datos guatdados localmente");
+                }
+              
+            }, function(tx, error) {
+               console.log('Error: ' + error.message);
+               alert('error: '+error.message);
+            });
+        });
+    },
+
+    insertarFormulario: function(idcampania,idempresa,nombreCompleto,celular,correo,fecha_nacimiento){
+        db.transaction(function(tx) {
+            tx.executeSql('INSERT INTO formulario VALUES (?,?,?,?,?,?)', [idcampania,idempresa,nombreCompleto,celular,correo,fecha_nacimiento]);
+        }, function(error) {
+            console.log('ERROR: ' + error.message);
+        }, function() {
+           //alert('Datos guardados correctamente');
+           console.log('formlario guardados correctamente');
         });
     },
 
@@ -127,6 +170,29 @@ angular.module("ionium")
         });
     },
 
+    elimanarRegistros: function(){
+      db.transaction(function(tx) {
+        tx.executeSql('DELETE FROM sucursal', [], function(tx, res) {
+
+        }, function(tx, error) {
+           console.log('Error: ' + error.message);
+           alert('errorS: '+error.message);
+        });
+        tx.executeSql('DELETE FROM campania', [], function(tx, res) {
+
+        }, function(tx, error) {
+           console.log('Error: ' + error.message);
+           alert('errorC: '+error.message);
+        });
+        tx.executeSql('DELETE FROM pregunta', [], function(tx, res) {
+
+        }, function(tx, error) {
+           console.log('Error: ' + error.message);
+           alert('errorP: '+error.message);
+        });
+      })
+    },
+
     listaDatos: function(){
       db.transaction(function(tx) {
             tx.executeSql('SELECT idpregunta,idcampaña,respuesta,idsucursal,nombre,fecha FROM respuesta', [], function(tx, rs) {
@@ -141,10 +207,10 @@ angular.module("ionium")
 
                   });
 
-                  alert("Datos Sincronizados");
+                  //alert("Datos Sincronizados");
                   console.log("Datos Sincronizados");
                 }else{
-                  alert("No hay datos guatdados localmente");
+                  //alert("No hay datos guatdados localmente");
                   console.log("No hay datos guatdados localmente");
                 }
               

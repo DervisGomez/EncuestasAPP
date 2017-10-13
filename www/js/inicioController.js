@@ -1,26 +1,73 @@
 angular.module('ionium').controller(
 		'inicioController',
 		function($scope, AuthService, GuardarLocalService, DatosService, $cordovaNetwork, $cordovaSocialSharing, $http, $interval,$rootScope, $localStorage, $ionicPopup, $state, $timeout, $ionicLoading, $ionicSlideBoxDelegate,$ionicHistory) {
-			if(window.Connection){	   			
-	            if (!$cordovaNetwork.isOnline()) {
-	                /*$ionicPopup.confirm({
-	                     title: "Internet is not working",
-	                     content: "Esta sección solo funciona con internet."
-
-	                }).then(function (res)   {
-	                    if (res) {
-	                                //navigator.app.exitApp();
-							$state.go('app.red');
-	                    }
-	                });*/
-						$scope.listaSucursal();	
-					
-	            }
-	        }
-
+				
 			//$ionicHistory.clearCache();
 			//ionic.material.ink.displayEffect();
 			$scope.usuarioEmail=$localStorage.currentUser.mail;
+
+
+	       	$timeout(function () {
+	       		$ionicLoading.show({
+									content: 'Loading',
+									animation: 'fade-in',
+									showBackdrop: true,
+									maxWidth: 200,
+									showDelay: 0
+								});
+			  if(window.Connection){
+					console.log("entro");
+					if ($cordovaNetwork.isOnline()){
+						GuardarLocalService.abrirBD();
+						GuardarLocalService.elimanarRegistros();
+						$scope.cargarDatos();
+					}else{						
+						$scope.listaSucursal();
+						//$scope.showAlert3();
+					}
+				}else{
+					GuardarLocalService.abrirBD();
+					GuardarLocalService.elimanarRegistros();
+					$scope.cargarDatos();
+				}
+			}, 2000);
+
+			$scope.cargarDatos=function(){
+				AuthService.getCintillo({idempresa:$localStorage.currentUser.rol}).then(function(res) {
+					// res holds your data
+					$scope.dataCintillo = res.data[0].cintillo;
+				});
+
+				AuthService.getSucursales ({correo:$localStorage.currentUser.mail, idempresa:$localStorage.currentUser.rol, perfil:$localStorage.currentUser.perfil}).then(function(res) {
+						// res holds your data
+					$scope.dataSucursales = res.data;			
+					GuardarLocalService.abrirBD();
+					for (var i = res.data.length - 1; i >= 0; i--) {
+						GuardarLocalService.insertarSucursal(res.data[i].id,res.data[i].nombre);
+					}
+					
+				});
+				AuthService.getCampañasAll ({idempresa:$localStorage.currentUser.rol}).then(function(res) {
+					//$scope.dataSucursales = res.data;
+					console.log("campania: "+JSON.stringify(res.data));
+					
+					GuardarLocalService.abrirBD();
+					for (var i = res.data.length - 1; i >= 0; i--) {
+						GuardarLocalService.insertarCampania(res.data[i].id,res.data[i].nombre,res.data[i].descripcion,res.data[i].instrucciones,res.data[i].agradecimiento,res.data[i].idsucursal,res.data[i].plantilla_caritas,res.data[i].captar_infopersonal,res.data[i].imagenpromocion,res.data[i].cintillo);
+					}
+				});
+				AuthService.getPreguntasAll ({idempresa:$localStorage.currentUser.rol}).then(function(res) {
+						// res holds your data
+						//$scope.dataSucursales = res.data;
+					console.log("preguntas: "+JSON.stringify(res.data));
+						GuardarLocalService.abrirBD();
+						for (var i = res.data.length - 1; i >= 0; i--) {
+							GuardarLocalService.insertarPregunta(res.data[i].id,res.data[i].idempresa,res.data[i].pregunta,res.data[i].idcampanias);
+						}
+						$scope.verificarDatos();
+				});
+				$ionicLoading.hide();
+			}			
 
 			$scope.refreshTasks = function() {
 				$scope.loadData();
@@ -46,39 +93,27 @@ angular.module('ionium').controller(
 				});
 			}
 
-			AuthService.getCintillo({idempresa:$localStorage.currentUser.rol}).then(function(res) {
-					// res holds your data
-				$scope.dataCintillo = res.data[0].cintillo;
-			});
+			
 
-			AuthService.getSucursales ({correo:$localStorage.currentUser.mail, idempresa:$localStorage.currentUser.rol, perfil:$localStorage.currentUser.perfil}).then(function(res) {
-					// res holds your data
-				//$scope.dataSucursales = res.data;			
+			$scope.verificarDatos= function(){
 				GuardarLocalService.abrirBD();
-				for (var i = res.data.length - 1; i >= 0; i--) {
-					GuardarLocalService.insertarSucursal(res.data[i].id,res.data[i].nombre);
-				}
-				
-			});
-			AuthService.getCampañasAll ({idempresa:$localStorage.currentUser.rol}).then(function(res) {
-				//$scope.dataSucursales = res.data;
-				console.log("campania: "+JSON.stringify(res.data));
-				
-				GuardarLocalService.abrirBD();
-				for (var i = res.data.length - 1; i >= 0; i--) {
-					GuardarLocalService.insertarCampania(res.data[i].id,res.data[i].nombre,res.data[i].descripcion,res.data[i].instrucciones,res.data[i].agradecimiento,res.data[i].idsucursal,res.data[i].plantilla_caritas,res.data[i].captar_infopersonal,res.data[i].imagenpromocion,res.data[i].cintillo);
-				}
-			});
-			AuthService.getPreguntasAll ({idempresa:$localStorage.currentUser.rol}).then(function(res) {
-					// res holds your data
-					//$scope.dataSucursales = res.data;
-				console.log("preguntas: "+JSON.stringify(res.data));
-					GuardarLocalService.abrirBD();
-					for (var i = res.data.length - 1; i >= 0; i--) {
-						GuardarLocalService.insertarPregunta(res.data[i].id,res.data[i].idempresa,res.data[i].pregunta,res.data[i].idcampanias);
-					}
-					$scope.listaSucursal();	
-			});
+			    db.transaction(function(tx) {
+			        tx.executeSql('SELECT idpregunta FROM respuesta', [], function(tx, rs) {
+			            console.log('Registros encontrados: ' + rs.rows.length);
+			  			var itemsColl = [];
+			               //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
+			            if(rs.rows.length > 0){
+			            	$scope.showSincronizar();
+			            }else{
+
+			            }              
+			        }, function(tx, error) {
+			            console.log('Error: ' + error.message);
+			            alert('error: '+error.message);
+			        });
+			    });
+			}
+
 
  $scope.listaSucursal= function(){
  	GuardarLocalService.abrirBD();
@@ -109,6 +144,7 @@ angular.module('ionium').controller(
                alert('error: '+error.message);
             });
         });
+      $ionicLoading.hide();
     }
 
  $scope.getCampania2 =function(data,id){
@@ -148,6 +184,7 @@ angular.module('ionium').controller(
  		if (res) { 
 		      //alert("Podemos usar SqlLITE !!");
 		      GuardarLocalService.listaDatos();
+		      GuardarLocalService.listaFormulario();
 		    
  		}
  	});

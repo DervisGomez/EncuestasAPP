@@ -1,6 +1,6 @@
 angular.module('ionium').controller(
 		'formularioController',
-		function($scope, AuthService, $ionicPlatform, $cordovaSocialSharing, $cordovaNetwork, $stateParams ,$http, $ionicPopup, $state, $timeout, $interval, $ionicLoading, $rootScope, $localStorage, $ionicSlideBoxDelegate,$ionicHistory) {
+		function($scope, AuthService, GuardarLocalService, $ionicPlatform, $cordovaSocialSharing, $cordovaNetwork, $stateParams ,$http, $ionicPopup, $state, $timeout, $interval, $ionicLoading, $rootScope, $localStorage, $ionicSlideBoxDelegate,$ionicHistory) {
 
 			document.addEventListener("deviceready", onDeviceReady, false);
 			    function onDeviceReady() {
@@ -37,7 +37,8 @@ console.log($scope.promocion);
 				if (!$scope.prueba) {
 					$scope.data2 ={idcampania:$stateParams.id, idempresa:$localStorage.campania.campania[0].idempresa, nombreCompleto:nombreCompleto, celular:celular, correo:correo, fecha_nacimiento:fecha_nacimiento};
 					console.log($scope.data2);
-					AuthService.setFormulario($scope.data2);
+					GuardarLocalService.insertarFormulario($stateParams.id,$localStorage.campania.campania[0].idempresa,nombreCompleto,celular,correo,fecha_nacimiento);
+					//AuthService.setFormulario($scope.data2);
 					$state.go('app.vergracias',{id:$stateParams.id}, {reload:'app.vergracias'});
 				}else{
 					$scope.showAlert();
