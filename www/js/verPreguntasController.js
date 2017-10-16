@@ -28,7 +28,7 @@ angular.module('ionium').controller(
                 $localStorage.preguntas = {preguntas:res.data};
               console.log($scope.dataPreguntas);
           });
-            }else{            
+            }else{
               $scope.listaPreguntas();
               //$scope.showAlert3();
             }
@@ -47,11 +47,11 @@ angular.module('ionium').controller(
         }else{
           $scope.dataPreguntas = $localStorage.preguntas.preguntas[0];
           console.log($scope.dataPreguntas);
-          
+
         $scope.validarNombre();
 
         }
-      }, 1000);
+      }, 100);
 
       $scope.listaPreguntas = function(){
         GuardarLocalService.abrirBD();
@@ -75,11 +75,11 @@ angular.module('ionium').controller(
               $scope.dataPreguntas = itemsColl[0];
               $localStorage.preguntas = {preguntas:itemsColl};
               console.log($scope.dataPreguntas);
-              console.log("scope of items is " + items3);        
+              console.log("scope of items is " + items3);
             }else{
               alert("No hay datos guatdados localmente");
               console.log("No hay datos guatdados localmente");
-            }              
+            }
           }, function(tx, error) {
             console.log('Error: ' + error.message);
             alert('error: '+error.message);
@@ -118,23 +118,6 @@ angular.module('ionium').controller(
 
 
 
-      $scope.refreshTasks = function() {
-        $scope.loadData();
-        $timeout(function() {
-          $scope.$broadcast('scroll.refreshComplete');
-          $scope.$broadcast('scroll.refreshComplete');
-        }, 1250);
-      };
-
-      $scope.loadData = function() {
-        var data = {idcampania:$stateParams.id};
-        AuthService.getPreguntas(data).then(function(res) {
-          // res holds your data
-          $scope.dataPreguntas = res.data;
-          console.log(res.data);
-
-        });
-			}
 
       $scope.validarNombre= function(){
         GuardarLocalService.abrirBD();
@@ -142,8 +125,8 @@ angular.module('ionium').controller(
           tx.executeSql('SELECT nombre FROM divice', [], function(tx, rs) {
             console.log('Registros encontrados: ' + rs.rows.length);
             if(rs.rows.length > 0){
-              $scope.nombre = rs.rows.item(0).nombre; 
-            }              
+              $scope.nombre = rs.rows.item(0).nombre;
+            }
           }, function(tx, error) {
             console.log('Error: ' + error.message);
           });
@@ -151,18 +134,18 @@ angular.module('ionium').controller(
       }
 
       $scope.guardarRespuesta = function(idpregunta, respuesta){
-        //AuthService.setRespuestas({idpreguntas:idpregunta, idcampania:$stateParams.id, respuesta:respuesta})  
+        //AuthService.setRespuestas({idpreguntas:idpregunta, idcampania:$stateParams.id, respuesta:respuesta})
           //alert("Podemos usar SqlLITE !!");
-        GuardarLocalService.abrirBD();  
+        GuardarLocalService.abrirBD();
 
         var dt = new Date()
         var month = dt.getMonth()+1;
         var day = dt.getDate();
         var year = dt.getFullYear();
         $scope.fechaActual= year + '-' + month + '-' + day;
-        //alert(idpregunta+" - "+$stateParams.id+" - "+respuesta+" - "+$localStorage.campania.campania[0].idsucursal+" - "+$scope.nombre+" - "+$scope.fechaActual); 
+        //alert(idpregunta+" - "+$stateParams.id+" - "+respuesta+" - "+$localStorage.campania.campania[0].idsucursal+" - "+$scope.nombre+" - "+$scope.fechaActual);
         GuardarLocalService.insertarDatos(idpregunta,$stateParams.id,respuesta,$localStorage.campania.campania[0].idsucursal,$scope.nombre,$scope.fechaActual);
-      
+
         $localStorage.preguntas.preguntas.splice(0,1);
         if($localStorage.preguntas.preguntas.length != 0){
           var ids=$stateParams.id;
