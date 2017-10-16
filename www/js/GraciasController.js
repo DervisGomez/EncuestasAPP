@@ -15,17 +15,17 @@ $scope.gracias=$localStorage.campania.campania[0].agradecimiento;
 var updateTime = function(){
 
 	if($localStorage.campania.campania.length != 0){
-		 $localStorage.campania.campania.splice(0,1);
-	 $state.go('app.vercampania', {id:$localStorage.sucursal.id}, {reload:true});
+		//$localStorage.campania.campania.splice(0,1);
+	 	$state.go('app.vercampania', {id:$localStorage.sucursal.id}, {reload:true});
 	 }else{
 
-			$state.go('app.vercampania', {id:$localStorage.sucursal.id}, {reload:true});
+		$state.go('app.vercampania', {id:$localStorage.sucursal.id}, {reload:true});
 
 	 }
 }
 	$timeout(function () {
 		if($localStorage.campania.campania.length != 0){
-			 $localStorage.campania.campania.splice(0,1);
+			 //$localStorage.campania.campania.splice(0,1);
 		 $state.go('app.vercampania', {id:$localStorage.sucursal.id}, {reload:true});
 		 }else{
 
@@ -57,7 +57,7 @@ var updateTime = function(){
 				$scope.data ={idcampania:$stateParams.id, idempresa:$localStorage.campania.campania[0].idempresa};
 				AuthService.setFormulario($scope.data);
 if($localStorage.campania.campania.length != 0){
-	 $localStorage.campania.campania.splice(0,1);
+	 //$localStorage.campania.campania.splice(0,1);
  $state.go('app.vercampania', {id:$localStorage.sucursal.id});
  }else{
 	  $state.go('app.vercampania', {id:$localStorage.sucursal.id});

@@ -18,6 +18,7 @@ angular.module("ionium")
             tx.executeSql('CREATE TABLE IF NOT EXISTS campana (id,nombre,cintillo,fecha_inicio,fecha_final,descripcion,instrucciones,agradecimiento,captar_infopersonal,calificacion,estatus,duplicado,idconfiguraciones_campania,cod_inicial,cod_final,idempresa,idusuario,tipo_campania,plantilla_caritas,imagenpromocion,participantes,participantes_formulario)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS campania (id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS divice (nombre)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS ind (id,nombr)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS pregunta (id,idempresa,pregunta,idcampania)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS formulario (idcampania,idempresa,nombreCompleto,celular,correo,fecha_nacimiento)');
           
@@ -70,6 +71,27 @@ angular.module("ionium")
         });
     },
 
+    insertarIndex: function(data){
+        db.transaction(function(tx) {
+            tx.executeSql('INSERT INTO ind VALUES (?,?)', [data,data]);
+        }, function(error) {
+            console.log('ERROR: ' + error.message);
+        }, function() {
+           //alert('Campana divice correctamente');
+           console.log('Index guardados correctamente');
+        });
+    },
+    eliminarIndex: function(){
+      db.transaction(function(tx) {
+        tx.executeSql('DELETE FROM ind', [], function(tx, res) {
+
+        }, function(tx, error) {
+           console.log('Error: ' + error.message);
+           alert('errorS: '+error.message);
+        });
+      })
+    },
+
     insertarDivice: function(data){
         db.transaction(function(tx) {
             tx.executeSql('INSERT INTO divice VALUES (?)', [data]);
@@ -112,7 +134,7 @@ angular.module("ionium")
 
     insertarCampania: function(id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo){
         db.transaction(function(tx) {
-          tx.executeSql("SELECT id, nombre FROM campania where id='"+id+"'  AND idsucursal='"+id+"'", [], function(tx, rs) {
+          tx.executeSql("SELECT id, nombre FROM campania where id='"+id+"'  AND idsucursal='"+idsucursal+"'", [], function(tx, rs) {
             if (rs.rows.length>0) {
               alert("no guardado"+id);
             }else{

@@ -5,6 +5,7 @@ angular.module('ionium').controller(
 			$scope.estatus="";
 
 			$ionicSideMenuDelegate.canDragContent(false);
+			console.log("h");
 
 			$scope.showAlert = function() {
 				var alertPopup = $ionicPopup.alert({

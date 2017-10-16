@@ -21,7 +21,7 @@ angular.module('ionium').controller(
 			};
 
 			$timeout(function () {
-				$ionicLoading.hide();
+				$scope.cantidaIndex();
 				if( $localStorage.campania == null || $localStorage.campania.campania.length == 0 ){
 					/*var data = {idsucursal:$stateParams.id};
 					AuthService.getCampania(data).then(function(res) {
@@ -34,16 +34,52 @@ angular.module('ionium').controller(
 						console.log($localStorage.campania.campania);
 					});*/
 
-						$scope.listaCampania();
+					console.log("nombre")
+
+					$scope.listaCampania();
 
 				}else{
 					//alert("2: "+JSON.stringify($localStorage.campania.campania));
-					$scope.dataCampania =$localStorage.campania.campania[0];
+					/*$scope.dataNumero=$localStorage.campania.numero;
+					console.log($scope.dataNumero+" campania");	
+					$scope.dataNumero++;
+
+					if ($scope.dataNumero<$localStorage.campania.campania.length) {
+						console.log($scope.dataNumero+" campania2");	
+						$scope.dataCampania =$localStorage.campania.campania[$scope.dataNumero];
+					}else{
+						console.log($scope.dataNumero+" campania0");	
+						$scope.dataNumero=0;
+						$scope.dataCampania =$localStorage.campania.campania[$scope.dataNumero];
+					}
+					$localStorage.campania.numero=$scope.dataNumero;*/
+								
 					//$scope.listaCampania();
+					$scope.dataCampania =$localStorage.campania.campania[$localStorage.numero.id];
+					
+									
 
 				}
 
+				$ionicLoading.hide();
+
 			}, 2000);
+
+			$scope.cantidaIndex=function(){
+				GuardarLocalService.abrirBD();
+		 		//db = window.sqlitePlugin.openDatabase({name:'testsqlite.db', key:'test', iosDatabaseLocation:'Documents'});
+		      	db.transaction(function(tx) {
+		            tx.executeSql("SELECT nombr FROM ind", [], function(tx, rs) {
+		               console.log('Registros encontrados: ' + rs.rows.length);
+		               //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
+		               //$scope.inde=rs.rows.length;
+		               $localStorage.numero={id:rs.rows.length}
+		            }, function(tx, error) {
+		               console.log('Error: ' + error.message);
+		               alert('error: '+error.message);
+		            });
+		        });
+			}
 
 			$scope.listaCampania= function(){
 				GuardarLocalService.abrirBD();
@@ -71,7 +107,7 @@ angular.module('ionium').controller(
 		                  items2 = JSON.stringify(itemsColl);
 		                  //$scope.dataSucursales=itemsColl;
 		                  $scope.dataCampania2=itemsColl;
-							$scope.dataCampania = itemsColl[0];
+							$scope.dataCampania = itemsColl[$localStorage.numero.id];
 							$localStorage.campania= {campania:$scope.dataCampania2};
 		                  console.log("scope of items is " + items2);
 		                  //alert("scope of items is; " +items2);
@@ -119,6 +155,14 @@ angular.module('ionium').controller(
  //$scope.loadData();
 		$scope.iniciarCampania = function(ids){
 			console.log(ids);
+			GuardarLocalService.abrirBD();
+			if (($localStorage.numero.id+1)<$localStorage.campania.campania.length) {
+				console.log("entro");
+				GuardarLocalService.insertarIndex("h");
+			}else{
+				console.log("eliminar");
+				GuardarLocalService.eliminarIndex();
+			}
 			$state.go('app.verpreguntas',{id:ids});
 		}
 
@@ -131,6 +175,8 @@ angular.module('ionium').controller(
 			}).then(function(res) {
 			 	console.log('Your password is', res);
 				 if(res== $localStorage.currentUser.codigo){
+				 	$localStorage.campania = null;
+				 	GuardarLocalService.eliminarIndex();
 					 $state.go('app.home', null, {reload:true});
 				 }else{
 					 $scope.showAlert();

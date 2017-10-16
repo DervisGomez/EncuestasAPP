@@ -15,7 +15,7 @@ angular.module('ionium').controller(
 									maxWidth: 200,
 									showDelay: 0
 								});
-			  if(window.Connection){
+			  	if(window.Connection){
 					console.log("entro");
 					if ($cordovaNetwork.isOnline()){
 						GuardarLocalService.abrirBD();
