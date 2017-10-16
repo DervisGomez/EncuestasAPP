@@ -136,7 +136,7 @@ angular.module("ionium")
         db.transaction(function(tx) {
           tx.executeSql("SELECT id, nombre FROM campania where id='"+id+"'  AND idsucursal='"+idsucursal+"'", [], function(tx, rs) {
             if (rs.rows.length>0) {
-              alert("no guardado"+id);
+              //alert("no guardado"+id);
             }else{
               tx.executeSql('INSERT INTO campania VALUES (?,?,?,?,?,?,?,?,?,?)', [id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo]);
             }

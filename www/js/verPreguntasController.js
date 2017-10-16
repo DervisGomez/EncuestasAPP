@@ -6,6 +6,7 @@ angular.module('ionium').controller(
       // Active INK Effect
       ionic.material.ink.displayEffect();
       $timeout(function () {
+        $scope.cintillo=$localStorage.cintillo.cintillo;
         if(  $localStorage.preguntas == null || $localStorage.preguntas.preguntas.length ==0){
 
           $scope.validarNombre();

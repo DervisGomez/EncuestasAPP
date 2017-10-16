@@ -39,6 +39,7 @@ angular.module('ionium').controller(
 					$scope.listaCampania();
 
 				}else{
+					
 					//alert("2: "+JSON.stringify($localStorage.campania.campania));
 					/*$scope.dataNumero=$localStorage.campania.numero;
 					console.log($scope.dataNumero+" campania");	
@@ -156,6 +157,7 @@ angular.module('ionium').controller(
 		$scope.iniciarCampania = function(ids){
 			console.log(ids);
 			GuardarLocalService.abrirBD();
+			$localStorage.cintillo={cintillo:$scope.dataCampania.cintillo} ;
 			if (($localStorage.numero.id+1)<$localStorage.campania.campania.length) {
 				console.log("entro");
 				GuardarLocalService.insertarIndex("h");
