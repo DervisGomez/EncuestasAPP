@@ -88,30 +88,30 @@ angular.module('ionium').controller(
       }
 
 
-      console.log($localStorage.campania.campania[0].plantilla_caritas);
-      if($localStorage.campania.campania[0].plantilla_caritas == 1){
+      console.log($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas);
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas == 1){
         $scope.CaritaUrl="img/plantillas/plantilla1/";
       }
-      if($localStorage.campania.campania[0].plantilla_caritas == 2){
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas == 2){
         $scope.CaritaUrl="img/plantillas/azul/";
 
       }
-      if($localStorage.campania.campania[0].plantilla_caritas ==3 ){
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas ==3 ){
         $scope.CaritaUrl="img/plantillas/verde/";
       }
-      if($localStorage.campania.campania[0].plantilla_caritas == 4){
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas == 4){
         $scope.CaritaUrl="img/plantillas/rojo/";
       }
-      if($localStorage.campania.campania[0].plantilla_caritas ==5 ){
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas ==5 ){
         $scope.CaritaUrl="img/plantillas/violeta/";
       }
-      if($localStorage.campania.campania[0].plantilla_caritas ==6 ){
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas ==6 ){
         $scope.CaritaUrl="img/plantillas/naranja/";
       }
-      if($localStorage.campania.campania[0].plantilla_caritas ==7 ){
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas ==7 ){
         $scope.CaritaUrl="img/plantillas/amarillo/";
       }
-      if($localStorage.campania.campania[0].plantilla_caritas ==8 ){
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas ==8 ){
         $scope.CaritaUrl="img/plantillas/azul/blanco";
       }
 

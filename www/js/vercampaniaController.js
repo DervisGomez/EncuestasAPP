@@ -21,7 +21,7 @@ angular.module('ionium').controller(
 			};
 
 			$timeout(function () {
-				$scope.cantidaIndex();
+				//$scope.cantidaIndex();
 				if( $localStorage.campania == null || $localStorage.campania.campania.length == 0 ){
 					/*var data = {idsucursal:$stateParams.id};
 					AuthService.getCampania(data).then(function(res) {
@@ -35,6 +35,8 @@ angular.module('ionium').controller(
 					});*/
 
 					console.log("nombre")
+
+					$scope.numero=0;
 
 					$scope.listaCampania();
 
@@ -56,7 +58,8 @@ angular.module('ionium').controller(
 					$localStorage.campania.numero=$scope.dataNumero;*/
 								
 					//$scope.listaCampania();
-					$scope.dataCampania =$localStorage.campania.campania[$localStorage.numero.id];
+					$scope.numero= $localStorage.siguiente.numero;
+					$scope.dataCampania =$localStorage.campania.campania[$scope.numero];
 					
 									
 
@@ -108,7 +111,7 @@ angular.module('ionium').controller(
 		                  items2 = JSON.stringify(itemsColl);
 		                  //$scope.dataSucursales=itemsColl;
 		                  $scope.dataCampania2=itemsColl;
-							$scope.dataCampania = itemsColl[$localStorage.numero.id];
+							$scope.dataCampania = itemsColl[$scope.numero];
 							$localStorage.campania= {campania:$scope.dataCampania2};
 		                  console.log("scope of items is " + items2);
 		                  //alert("scope of items is; " +items2);
@@ -158,11 +161,17 @@ angular.module('ionium').controller(
 			console.log(ids);
 			GuardarLocalService.abrirBD();
 			$localStorage.cintillo={cintillo:$scope.dataCampania.cintillo} ;
-			if (($localStorage.numero.id+1)<$localStorage.campania.campania.length) {
+			if (($scope.numero+1)<$localStorage.campania.campania.length) {
 				console.log("entro");
+				$localStorage.actual={numero:$scope.numero} ;
+				var siguiente=$scope.numero+1;
+				$localStorage.siguiente={numero:siguiente} ;
 				GuardarLocalService.insertarIndex("h");
 			}else{
 				console.log("eliminar");
+				$localStorage.actual={numero:$scope.numero} ;
+				var siguiente=0;
+				$localStorage.siguiente={numero:siguiente} ;
 				GuardarLocalService.eliminarIndex();
 			}
 			$state.go('app.verpreguntas',{id:ids});
@@ -178,10 +187,10 @@ angular.module('ionium').controller(
 			 	console.log('Your password is', res);
 				 if(res== $localStorage.currentUser.codigo){
 				 	$localStorage.campania = null;
-				 	GuardarLocalService.eliminarIndex();
-					 $state.go('app.home', null, {reload:true});
+				 	//GuardarLocalService.eliminarIndex();
+					$state.go('app.home', null, {reload:true});
 				 }else{
-					 $scope.showAlert();
+					$scope.showAlert();
 				 }
 			});
 		};
