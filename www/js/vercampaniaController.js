@@ -89,7 +89,7 @@ angular.module('ionium').controller(
 				GuardarLocalService.abrirBD();
 		 		//db = window.sqlitePlugin.openDatabase({name:'testsqlite.db', key:'test', iosDatabaseLocation:'Documents'});
 		      	db.transaction(function(tx) {
-		            tx.executeSql("SELECT id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo FROM campania where idsucursal='"+$stateParams.id+"'", [], function(tx, rs) {
+		            tx.executeSql("SELECT id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa FROM campania where idsucursal='"+$stateParams.id+"'", [], function(tx, rs) {
 		               console.log('Registros encontrados: ' + rs.rows.length);
 		  				var itemsColl = [];
 		               //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
@@ -106,6 +106,7 @@ angular.module('ionium').controller(
 		                    miItem.captar_infopersonal=rs.rows.item(i).captar_infopersonal;
 		                    miItem.imagenpromocion=rs.rows.item(i).imagenpromocion;
 		                    miItem.cintillo=rs.rows.item(i).cintillo;
+		                    miItem.idempresa=rs.rows.item(i).idempresa;
 		                    itemsColl.push(miItem);
 		                  };
 		                  items2 = JSON.stringify(itemsColl);
@@ -159,20 +160,20 @@ angular.module('ionium').controller(
  //$scope.loadData();
 		$scope.iniciarCampania = function(ids){
 			console.log(ids);
-			GuardarLocalService.abrirBD();
+			GuardarLocalService.abrirBD();			
+			GuardarLocalService.insertarCantidadCompania("h");
 			$localStorage.cintillo={cintillo:$scope.dataCampania.cintillo} ;
 			if (($scope.numero+1)<$localStorage.campania.campania.length) {
 				console.log("entro");
 				$localStorage.actual={numero:$scope.numero} ;
 				var siguiente=$scope.numero+1;
 				$localStorage.siguiente={numero:siguiente} ;
-				GuardarLocalService.insertarIndex("h");
+				
 			}else{
 				console.log("eliminar");
 				$localStorage.actual={numero:$scope.numero} ;
 				var siguiente=0;
 				$localStorage.siguiente={numero:siguiente} ;
-				GuardarLocalService.eliminarIndex();
 			}
 			$state.go('app.verpreguntas',{id:ids});
 		}

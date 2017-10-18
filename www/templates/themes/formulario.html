@@ -107,14 +107,18 @@ input[placeholder], [placeholder], *[placeholder] {
 </label>
 
      </div>
-     <div class="list list-inset" style="width: 90%;margin: 20px auto;border-left:0;border-radius: 52px; padding-right: 6px;">
+
+
+      <div class="list list-inset" style="width: 90%;margin: 20px auto;border-left:0;border-radius: 52px; padding-right: 6px;">
 
          <label style="position: relative;" id="item16" class="item item-input">
            <i  style="position: relative;
            left: 20px;" class="icon fa fa-birthday-cake placeholder-icon"></i>
-             <input style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;" type="text" ng-readonly="prueba" placeholder="CUMPLEAÑOS" ng-model="fecha_nacimiento">
+             <input   type="text" onfocus="(this.type='date')" style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;"  ng-readonly="prueba" placeholder="CUMPLEAÑOS" ng-model="fecha_nacimiento" id="date">
          </label>
      </div>
+
+     
 
 
 

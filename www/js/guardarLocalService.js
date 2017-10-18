@@ -15,13 +15,11 @@ angular.module("ionium")
         db.transaction(function(tx) {
             tx.executeSql('CREATE TABLE IF NOT EXISTS respuesta (idpregunta,idcampaña,respuesta,idsucursal,nombre,fecha)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS sucursal (id,nombre)');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS campana (id,nombre,cintillo,fecha_inicio,fecha_final,descripcion,instrucciones,agradecimiento,captar_infopersonal,calificacion,estatus,duplicado,idconfiguraciones_campania,cod_inicial,cod_final,idempresa,idusuario,tipo_campania,plantilla_caritas,imagenpromocion,participantes,participantes_formulario)');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS campania (id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS campania (id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS divice (nombre)');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS ind (id,nombr)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS pregunta (id,idempresa,pregunta,idcampania)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS formulario (idcampania,idempresa,nombreCompleto,celular,correo,fecha_nacimiento)');
-          
+            tx.executeSql('CREATE TABLE IF NOT EXISTS cantidadcompania (nombre)');
           
         }, function(error) {
             console.log('ERROR: ' + error.message);
@@ -71,9 +69,9 @@ angular.module("ionium")
         });
     },
 
-    insertarIndex: function(data){
+    insertarCantidadCompania: function(data){
         db.transaction(function(tx) {
-            tx.executeSql('INSERT INTO ind VALUES (?,?)', [data,data]);
+            tx.executeSql('INSERT INTO cantidadcompania VALUES (?)', [data]);
         }, function(error) {
             console.log('ERROR: ' + error.message);
         }, function() {
@@ -81,9 +79,9 @@ angular.module("ionium")
            console.log('Index guardados correctamente');
         });
     },
-    eliminarIndex: function(){
+    eliminarCantidadCompania: function(){
       db.transaction(function(tx) {
-        tx.executeSql('DELETE FROM ind', [], function(tx, res) {
+        tx.executeSql('DELETE FROM cantidadcompania', [], function(tx, res) {
 
         }, function(tx, error) {
            console.log('Error: ' + error.message);
@@ -132,13 +130,13 @@ angular.module("ionium")
         });
     },
 
-    insertarCampania: function(id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo){
+    insertarCampania: function(id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa){
         db.transaction(function(tx) {
           tx.executeSql("SELECT id, nombre FROM campania where id='"+id+"'  AND idsucursal='"+idsucursal+"'", [], function(tx, rs) {
             if (rs.rows.length>0) {
               //alert("no guardado"+id);
             }else{
-              tx.executeSql('INSERT INTO campania VALUES (?,?,?,?,?,?,?,?,?,?)', [id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo]);
+              tx.executeSql('INSERT INTO campania VALUES (?,?,?,?,?,?,?,?,?,?,?)', [id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa]);
             }
           });
         }, function(error) {

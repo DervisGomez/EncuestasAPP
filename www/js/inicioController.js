@@ -5,16 +5,17 @@ angular.module('ionium').controller(
 			//$ionicHistory.clearCache();
 			//ionic.material.ink.displayEffect();
 			$scope.usuarioEmail=$localStorage.currentUser.mail;
-
-
-	       	$timeout(function () {
-	       		$ionicLoading.show({
+			$ionicLoading.show({
 									content: 'Loading',
 									animation: 'fade-in',
 									showBackdrop: true,
 									maxWidth: 200,
 									showDelay: 0
 								});
+
+
+	       	$timeout(function () {
+	       		
 			  	if(window.Connection){
 					console.log("entro");
 					if ($cordovaNetwork.isOnline()){
@@ -53,7 +54,7 @@ angular.module('ionium').controller(
 					
 					GuardarLocalService.abrirBD();
 					for (var i = res.data.length - 1; i >= 0; i--) {
-						GuardarLocalService.insertarCampania(res.data[i].id,res.data[i].nombre,res.data[i].descripcion,res.data[i].instrucciones,res.data[i].agradecimiento,res.data[i].idsucursal,res.data[i].plantilla_caritas,res.data[i].captar_infopersonal,res.data[i].imagenpromocion,res.data[i].cintillo);
+						GuardarLocalService.insertarCampania(res.data[i].id,res.data[i].nombre,res.data[i].descripcion,res.data[i].instrucciones,res.data[i].agradecimiento,res.data[i].idsucursal,res.data[i].plantilla_caritas,res.data[i].captar_infopersonal,res.data[i].imagenpromocion,res.data[i].cintillo,res.data[i].idempresa);
 					}
 				});
 				AuthService.getPreguntasAll ({idempresa:$localStorage.currentUser.rol}).then(function(res) {
@@ -66,8 +67,14 @@ angular.module('ionium').controller(
 						}
 						$scope.verificarDatos();
 				});
-				$ionicLoading.hide();
-			}			
+				$scope.cerrarCarga();
+			}
+
+			$scope.cerrarCarga=function(){
+				$timeout(function() {
+					$ionicLoading.hide();
+				}, 3000);
+			}
 
 			$scope.refreshTasks = function() {
 				$scope.loadData();
@@ -93,23 +100,37 @@ angular.module('ionium').controller(
 				});
 			}
 
+			$scope.showDatosSincronizados = function() {
+				var alertPopup = $ionicPopup.alert({
+					title : 'Sincronizar',
+					template : 'Ha respondido más de 10 campañas, los datos se sincronizan atumaticamente'
+				});
+			};
 			
 
 			$scope.verificarDatos= function(){
 				GuardarLocalService.abrirBD();
 			    db.transaction(function(tx) {
-			        tx.executeSql('SELECT idpregunta FROM respuesta', [], function(tx, rs) {
+			        tx.executeSql('SELECT nombre FROM cantidadcompania', [], function(tx, rs) {
 			            console.log('Registros encontrados: ' + rs.rows.length);
+			            $scope.cantidadregistro=rs.rows.length;
 			  			var itemsColl = [];
 			               //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
 			            if(rs.rows.length > 0){
-			            	$scope.showSincronizar();
+			            	if (rs.rows.length > 9) {
+			            		$scope.showDatosSincronizados();
+			            		GuardarLocalService.listaDatos();
+							    GuardarLocalService.listaFormulario();
+							    GuardarLocalService.eliminarCantidadCompania();
+			            	}else{
+			            		$scope.showSincronizar();
+			            	}			            	
 			            }else{
 
 			            }              
 			        }, function(tx, error) {
 			            console.log('Error: ' + error.message);
-			            alert('error: '+error.message);
+			            //alert('error: '+error.message);
 			        });
 			    });
 			}
@@ -147,29 +168,11 @@ angular.module('ionium').controller(
       $ionicLoading.hide();
     }
 
- $scope.getCampania2 =function(data,id){
- 	AuthService.getCampania(data).then(function(rs) {
-								//alert(rs.data.length+"---")
-		for (var y = rs.data.length - 1; y >= 0; y--) {
-			alert("6- "+id);
-			GuardarLocalService.insertarCampania(rs.data[y].id,rs.data[y].nombre,rs.data[y].descripcion,rs.data[y].instrucciones,rs.data[y].agradecimiento,id);
-		//GuardarLocalService.insertarCampania("1","2","3","4","5","6");
-		}								
-	});
- }
-
- function consultasql(callbackPaso1, callbackPaso2){
-    //algo aca
-    callbackPaso1('paso 1');
-
-    //sigo... algo aca
-    callbackPaso2('paso 2');
-}
-
  ionic.material.ink.displayEffect();
 
  $scope.verCampania = function(ids){
 	console.log(ids);
+	$localStorage.campania = null;
 	$localStorage.sucursal={id:ids};
 	$state.go('app.vercampania',{id:ids});
  }
@@ -183,9 +186,9 @@ angular.module('ionium').controller(
  	confirmSincro.then(function(res){
  		if (res) { 
 		      //alert("Podemos usar SqlLITE !!");
-		      GuardarLocalService.listaDatos();
-		      GuardarLocalService.listaFormulario();
-		    
+		    GuardarLocalService.listaDatos();
+		    GuardarLocalService.listaFormulario();
+		    GuardarLocalService.eliminarCantidadCompania();
  		}
  	});
  }

@@ -9,10 +9,10 @@ angular.module('ionium').controller(
 			        }, false );
 			}
 
-console.log($localStorage.campania.campania);
-			//var data = {id:$stateParams.id};
-$scope.promocion=$localStorage.campania.campania[0].imagenpromocion;
-console.log($scope.promocion);
+			console.log($localStorage.campania.campania);
+						//var data = {id:$stateParams.id};
+			$scope.promocion=$localStorage.campania.campania[0].imagenpromocion;
+			console.log($scope.promocion);
 			$scope.refreshTasks = function() {
 				$scope.loadData();
 				$timeout(function() {
@@ -35,8 +35,8 @@ console.log($scope.promocion);
 			$scope.guardarFormulario = function(nombreCompleto,celular, correo,fecha_nacimiento){
 
 				if (!$scope.prueba) {
-					$scope.data2 ={idcampania:$stateParams.id, idempresa:$localStorage.campania.campania[0].idempresa, nombreCompleto:nombreCompleto, celular:celular, correo:correo, fecha_nacimiento:fecha_nacimiento};
-					console.log($scope.data2);
+					$scope.data2 ={idcampania:$stateParams.id, idempresa:$localStorage.campania.campania[$localStorage.actual.numero].idempresa, nombreCompleto:nombreCompleto, celular:celular, correo:correo, fecha_nacimiento:fecha_nacimiento};
+					console.log($localStorage.campania.campania[$localStorage.actual.numero].idempresa);
 					GuardarLocalService.insertarFormulario($stateParams.id,$localStorage.campania.campania[0].idempresa,nombreCompleto,celular,correo,fecha_nacimiento);
 					//AuthService.setFormulario($scope.data2);
 					$state.go('app.vergracias',{id:$stateParams.id}, {reload:'app.vergracias'});
