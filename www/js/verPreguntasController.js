@@ -5,6 +5,7 @@ angular.module('ionium').controller(
 
       // Active INK Effect
       ionic.material.ink.displayEffect();
+      var audio = new Audio('sound/tap.mp3');
       $timeout(function () {
         $scope.cintillo=$localStorage.cintillo.cintillo;
         if(  $localStorage.preguntas == null || $localStorage.preguntas.preguntas.length ==0){
@@ -134,6 +135,7 @@ angular.module('ionium').controller(
       }
 
       $scope.guardarRespuesta = function(idpregunta, respuesta){
+        audio.play();
         //AuthService.setRespuestas({idpreguntas:idpregunta, idcampania:$stateParams.id, respuesta:respuesta})
           //alert("Podemos usar SqlLITE !!");
         GuardarLocalService.abrirBD();

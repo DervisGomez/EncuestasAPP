@@ -1,6 +1,6 @@
 angular.module('ionium').controller(
 		'LoginController',
-		function($scope, AuthService, GuardarLocalService, $cordovaNetwork,SOCIAL, $ionicSideMenuDelegate, $ionicModal, $rootScope, $localStorage, $ionicLoading, $state, $ionicPopup, $http, $ionicHistory, $ionicModal, $timeout, $cordovaOauth) {
+		function($scope, AuthService,$cordovaNativeAudio , GuardarLocalService, $cordovaNetwork,SOCIAL, $ionicSideMenuDelegate, $ionicModal, $rootScope, $localStorage, $ionicLoading, $state, $ionicPopup, $http, $ionicHistory, $ionicModal, $timeout, $cordovaOauth) {
 
 			$ionicSideMenuDelegate.canDragContent(false);
 
@@ -143,6 +143,15 @@ angular.module('ionium').controller(
 						$scope.entrar();
 					}
 				}else{
+					/*$cordovaNativeAudio
+					.preloadSimple('click', 'sound/ding.mp3')            
+		             .then(function (msg) {
+		                console.log(msg);
+		             }, function (error) {
+		                console.log(error);
+		             });*/
+		             
+					 //$cordovaNativeAudio.play('click');
 					$scope.showAlert2();
 				}
 			};

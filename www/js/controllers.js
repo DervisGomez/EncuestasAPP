@@ -14,7 +14,7 @@ app.filter('trusted', function($sce){
 	}
 })
 
-app.controller('AppCtrl', function($ionicNavBarDelegate, $scope, $ionicModal, $http, $ionicSideMenuDelegate, $state, $cordovaOauth, DashList, $rootScope, $localStorage, AuthService, $ionicLoading, $timeout, $state, $ionicPopup) {
+app.controller('AppCtrl', function($ionicNavBarDelegate, $scope, $ionicModal, $http, $ionicSideMenuDelegate, $state, $cordovaOauth, DashList, $rootScope, $localStorage, AuthService, $ionicLoading, $timeout, $state, $ionicPopup, $cordovaNativeAudio) {
 
 
   $scope.isAuthenticated = AuthService.onlyLoggedIn();

@@ -27,14 +27,19 @@ angular.module('ionium').controller(
 
 			$scope.showAlert = function() {
 				var alertPopup = $ionicPopup.alert({
-					title : 'Terminos y Condiciones',
-					template : 'Para enviar los datos debe aceptar los terminos y condiciones'
+					title : 'Campos Vacios',
+					template : 'Debe especificar todos los datos'
 				});
 			};
 
+			$scope.nombreCompleto="";
+			$scope.celular="";
+			$scope.correo="";
+			$scope.fecha_nacimiento="";
+
 			$scope.guardarFormulario = function(nombreCompleto,celular, correo,fecha_nacimiento){
 
-				if (!$scope.prueba) {
+				if (nombreCompleto.length>0&&celular.length>0&&correo.length>0&&fecha_nacimiento.length>0) {
 					$scope.data2 ={idcampania:$stateParams.id, idempresa:$localStorage.campania.campania[$localStorage.actual.numero].idempresa, nombreCompleto:nombreCompleto, celular:celular, correo:correo, fecha_nacimiento:fecha_nacimiento};
 					console.log($localStorage.campania.campania[$localStorage.actual.numero].idempresa);
 					GuardarLocalService.insertarFormulario($stateParams.id,$localStorage.campania.campania[0].idempresa,nombreCompleto,celular,correo,fecha_nacimiento);

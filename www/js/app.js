@@ -43,8 +43,10 @@ angular.module('ionium', ['ionic', 'backand', 'topscroller', 'ngCordova', 'ngCor
     	}
     })
 
-.run(function($ionicPlatform, BackandService, $ionicHistory, $ionicPopup, $cordovaNetwork, $rootScope, AuthService, $state, $localStorage, $ionicNavBarDelegate) {
+.run(function($ionicPlatform, BackandService,$cordovaNativeAudio, $ionicHistory, $ionicPopup, $cordovaNetwork, $rootScope, AuthService, $state, $localStorage, $ionicNavBarDelegate) {
   $ionicPlatform.ready(function() {
+
+    
 
 
 navigator.splashscreen.hide();
