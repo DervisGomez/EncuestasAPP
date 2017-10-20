@@ -146,7 +146,7 @@ angular.module('ionium').controller(
         var year = dt.getFullYear();
         $scope.fechaActual= year + '-' + month + '-' + day;
         //alert(idpregunta+" - "+$stateParams.id+" - "+respuesta+" - "+$localStorage.campania.campania[0].idsucursal+" - "+$scope.nombre+" - "+$scope.fechaActual);
-        GuardarLocalService.insertarDatos(idpregunta,$stateParams.id,respuesta,$localStorage.campania.campania[0].idsucursal,$scope.nombre,$scope.fechaActual);
+        GuardarLocalService.insertarDatos(idpregunta,$stateParams.id,respuesta,$localStorage.campania.campania[$localStorage.actual.numero].idsucursal,$scope.nombre,$scope.fechaActual);
 
         $localStorage.preguntas.preguntas.splice(0,1);
         if($localStorage.preguntas.preguntas.length != 0){
@@ -162,8 +162,11 @@ angular.module('ionium').controller(
           var day = dt.getDate();
           var year = dt.getFullYear();
           $scope.fechaActual= year + '-' + month + '-' + day;
-          AuthService.setConteo({idcampania:ids, fecha_hoy:$scope.fechaActual});
+          //AuthService.setConteo({idcampania:ids, fecha_hoy:$scope.fechaActual});
           console.log($localStorage.campania.campania[0].captar_infopersonal);
+
+          GuardarLocalService.abrirBD();
+          GuardarLocalService.insertarConteo($scope.fechaActual,$localStorage.campania.campania[$localStorage.actual.numero].idsucursal,ids,$localStorage.campania.campania[$localStorage.actual.numero].participantes_formulario)
 
           if($localStorage.campania.campania[0].captar_infopersonal == null){
             $state.go('app.vergracias', {id:ids}, {reload:'app.vergracias'});

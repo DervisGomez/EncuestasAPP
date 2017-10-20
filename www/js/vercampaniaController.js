@@ -89,7 +89,7 @@ angular.module('ionium').controller(
 				GuardarLocalService.abrirBD();
 		 		//db = window.sqlitePlugin.openDatabase({name:'testsqlite.db', key:'test', iosDatabaseLocation:'Documents'});
 		      	db.transaction(function(tx) {
-		            tx.executeSql("SELECT id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa FROM campania where idsucursal='"+$stateParams.id+"'", [], function(tx, rs) {
+		            tx.executeSql("SELECT id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario FROM campania where idsucursal='"+$stateParams.id+"'", [], function(tx, rs) {
 		               console.log('Registros encontrados: ' + rs.rows.length);
 		  				var itemsColl = [];
 		               //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
@@ -107,6 +107,7 @@ angular.module('ionium').controller(
 		                    miItem.imagenpromocion=rs.rows.item(i).imagenpromocion;
 		                    miItem.cintillo=rs.rows.item(i).cintillo;
 		                    miItem.idempresa=rs.rows.item(i).idempresa;
+		                    rs.rows.item(i).participantes_formulario=rs.rows.item(i).participantes_formulario
 		                    itemsColl.push(miItem);
 		                  };
 		                  items2 = JSON.stringify(itemsColl);

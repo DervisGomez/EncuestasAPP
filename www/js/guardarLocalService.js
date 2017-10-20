@@ -9,24 +9,62 @@ angular.module("ionium")
         }else {             
             // si no podemos usar el plugin sqlite
           db = window.openDatabase("APSNetMobileDb", "1.0", "testsqlite.db", 100 * 1024 * 1024); 
+          //openDatabase('documents', '1.0', 'Offline document storage', 5*1024*1024, function (db)
           console.log("usamos WebSQL(DB)");
         }
         
         db.transaction(function(tx) {
             tx.executeSql('CREATE TABLE IF NOT EXISTS respuesta (idpregunta,idcampaña,respuesta,idsucursal,nombre,fecha)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS sucursal (id,nombre)');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS campania (id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS campania (id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS divice (nombre)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS pregunta (id,idempresa,pregunta,idcampania)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS formulario (idcampania,idempresa,nombreCompleto,celular,correo,fecha_nacimiento)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS cantidadcompania (nombre)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS user (mail,token,rol,perfil,codigo)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS conteo (fecha,idsucursal,idcampania,participantes_conteo)');
           
         }, function(error) {
             console.log('ERROR: ' + error.message);
         }, function() {
            //alert('Tablas Creadas');
            console.log('Tablas Creadas');
+        });
+    },
+
+    listaConteo: function(){
+      db.transaction(function(tx) {
+            tx.executeSql('SELECT fecha,idsucursal,idcampania,participantes_conteo FROM conteo', [], function(tx, rs) {
+               console.log('Registros encontrados: ' + rs.rows.length);
+               if (rs.rows.length>0) {
+                  for (var i = 0; i < rs.rows.length; i++) {
+                    AuthService.setConteo({fecha:rs.rows.item(i).fecha,idsucursal:rs.rows.item(i).idsucursal, idcampania:rs.rows.item(i).idcampania, participantes_conteo:rs.rows.item(i).participantes_conteo});
+                    //AuthService.setSincronizar({idpreguntas:rs.rows.item(i).idpregunta, idcampania:rs.rows.item(i).idcampaña, respuesta:rs.rows.item(i).respuesta,idsucursal:rs.rows.item(i).idsucursal,nombreequipo:rs.rows.item(i).nombre,fecha:rs.rows.item(i).fecha})
+                  };
+
+                  tx.executeSql('DELETE FROM conteo', [], function(tx, res) {
+
+                  });
+                  console.log("Datos Sincronizados");
+                }else{
+                  //alert("No hay datos guatdados localmente");
+                  console.log("No hay datos guatdados localmente");
+                }
+              
+            }, function(tx, error) {
+               console.log('Error: ' + error.message);
+               //alert('error: '+error.message);
+            });
+        });
+    },
+
+    insertarConteo: function(fecha,idsucursal,idcampania,participantes_conteo){
+        db.transaction(function(tx) {
+            tx.executeSql('INSERT INTO conteo VALUES (?,?,?,?)', [fecha,idsucursal,idcampania,participantes_conteo]);
+        }, function(error) {
+            console.log('ERROR: ' + error.message);
+        }, function() {
+           console.log('conteo guardados correctamente');
         });
     },
 
@@ -153,13 +191,13 @@ angular.module("ionium")
         });
     },
 
-    insertarCampania: function(id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa){
+    insertarCampania: function(id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario){
         db.transaction(function(tx) {
           tx.executeSql("SELECT id, nombre FROM campania where id='"+id+"'  AND idsucursal='"+idsucursal+"'", [], function(tx, rs) {
             if (rs.rows.length>0) {
               //alert("no guardado"+id);
             }else{
-              tx.executeSql('INSERT INTO campania VALUES (?,?,?,?,?,?,?,?,?,?,?)', [id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa]);
+              tx.executeSql('INSERT INTO campania VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', [id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario]);
             }
           });
         }, function(error) {
