@@ -13,7 +13,6 @@ angular.module('ionium').controller(
 									showDelay: 0
 								});
 
-
 	       	$timeout(function () {
 	       		
 			  	if(window.Connection){
@@ -41,7 +40,12 @@ angular.module('ionium').controller(
 
 				AuthService.getSucursales ({correo:$localStorage.currentUser.mail, idempresa:$localStorage.currentUser.rol, perfil:$localStorage.currentUser.perfil}).then(function(res) {
 						// res holds your data
-					$scope.dataSucursales = res.data;			
+					$scope.dataSucursales = res.data;
+					$scope.sucur=new Object();
+	                $scope.sucur.id="-1";
+	                $scope.sucur.nombre="Seleccione sucursal"
+	                $scope.dataSucursales.push($scope.sucur);	
+	                $scope.sucursa="-1";
 					GuardarLocalService.abrirBD();
 					for (var i = res.data.length - 1; i >= 0; i--) {
 						GuardarLocalService.insertarSucursal(res.data[i].id,res.data[i].nombre);
@@ -151,6 +155,11 @@ angular.module('ionium').controller(
                     miItem.nombre = rs.rows.item(i).nombre;
                     itemsColl.push(miItem);
                   };
+                  $scope.sele=new Object();
+                  $scope.sele.id="-1";
+                  $scope.sele.nombre="Seleccione sucursal"
+                  itemsColl.push(sele);
+
                   items = JSON.stringify(itemsColl);
                   $scope.dataSucursales=itemsColl;
                   console.log("scope of items is " + items);
@@ -171,10 +180,12 @@ angular.module('ionium').controller(
  ionic.material.ink.displayEffect();
 
  $scope.verCampania = function(ids){
-	console.log(ids);
-	$localStorage.campania = null;
-	$localStorage.sucursal={id:ids};
-	$state.go('app.vercampania',{id:ids});
+ 	if (ids!="-1") {
+ 		console.log(ids);
+		$localStorage.campania = null;
+		$localStorage.sucursal={id:ids};
+		$state.go('app.vercampania',{id:ids});
+ 	}
  }
 
  $scope.showSincronizar = function(){
