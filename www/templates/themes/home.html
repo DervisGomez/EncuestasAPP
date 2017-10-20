@@ -42,6 +42,41 @@ input[placeholder], [placeholder], *[placeholder] {
     position: relative;
 }
 
+.caja {
+   margin:20px auto 40px auto;  
+   border:1px solid #d9d9d9;
+   height:40px;
+   overflow: hidden;
+   position:relative;
+}
+select {
+   background-color: #ddd;
+   border: none;
+   font-size: 14px;
+   height: 36px;
+   padding: 5px;
+   width: 250px;
+   border-radius: 12px;
+}
+select:focus{ outline: none;}
+
+.caja::after{
+    content:"\025be";
+    display:table-cell;
+    text-align:center;
+    padding-top:-60px;
+    width:36px;
+    height:36px;
+    color: white;
+    font-size: 24px;
+    background-color:#bbb;
+    position:absolute;
+    border-radius: 12px;
+    top:-9px;
+    right:-1px;  
+    pointer-events: none;
+}
+
 
 
 </style>
@@ -51,8 +86,7 @@ input[placeholder], [placeholder], *[placeholder] {
         <img src="http://sistemex.com/apps/listentap/source/img/empresas/{{dataCintillo}}" />
 <div style="    position: relative;
   top: -100px;">
-<h2 style="color:#FF354C; width: 90%; margin: 0 auto">Bienvenido {{usuarioEmail}}</h2>
-<br>
+
 <img style="width: 5%;
     height: auto;
     top: 0px;
@@ -60,17 +94,14 @@ input[placeholder], [placeholder], *[placeholder] {
     position: relative;" src="img/Sucursal.png" />
 
 <br>
+<h1 class="item" style="color: black; background-color: rgba(0,0,0,0);border: 0;  width: 90%; margin: 0 auto">Bienvenido {{usuarioEmail}}</h1>
  <ion-list>
+            <div  style="position: relative; width: 90%; max-width: 600px; margin: 10px auto">
 
-            <div  class="list list-inset">
+                <label class="caja" style="width: 100%">
 
-                <label class="item item-input item-select">
-                    <div class="input-label">
-                        Selecciona la sucursal
-                    </div>
-
-                    <select ng-options="sucursal.id as sucursal.nombre for sucursal in dataSucursales" ng-model="sucursal" ng-change="verCampania(sucursal)">
-                        <option></option>
+                    <select style="width: 100%" ng-options="sucursal.id as sucursal.nombre for sucursal in dataSucursales" ng-model="sucursal" ng-change="verCampania(sucursal)">
+                        <option> </option>
                     </select>
                 </label>
 
@@ -86,10 +117,7 @@ input[placeholder], [placeholder], *[placeholder] {
     top: -20px;
     position: relative;
     min-width: 40px;
-    background-color: #33C624;
-    border-radius: 50%;
-    padding: 8px;
-    left: 32%;" src="img/sincronizar.png">
+    left: 32%;" src="img/Refresh.png">
 <img ng-click="showConfirmCerraSession()"  style="width: 7%;
     height: auto;
     top: -20px;
@@ -98,9 +126,6 @@ input[placeholder], [placeholder], *[placeholder] {
     left: 32%;" src="img/Salir.png">
 
 </div>
-
-
-
 
 
     </div>

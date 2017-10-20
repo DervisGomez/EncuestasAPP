@@ -148,6 +148,7 @@ angular.module('ionium').controller(
 			};
 
 			$scope.entrar=function(){
+				console.log("hola")
 				AuthService.login($scope.data).then(function(response) {
 								$ionicLoading.show({
 									content: 'Loading',

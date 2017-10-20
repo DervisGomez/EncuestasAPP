@@ -5,13 +5,13 @@ angular.module('ionium').controller(
 			//$ionicHistory.clearCache();
 			//ionic.material.ink.displayEffect();
 			$scope.usuarioEmail=$localStorage.currentUser.mail;
-			$ionicLoading.show({
+			/*$ionicLoading.show({
 									content: 'Loading',
 									animation: 'fade-in',
 									showBackdrop: true,
 									maxWidth: 200,
 									showDelay: 0
-								});
+								});*/
 
 
 	       	$timeout(function () {
