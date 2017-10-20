@@ -5,13 +5,13 @@ angular.module('ionium').controller(
 			//$ionicHistory.clearCache();
 			//ionic.material.ink.displayEffect();
 			$scope.usuarioEmail=$localStorage.currentUser.mail;
-			/*$ionicLoading.show({
+			$ionicLoading.show({
 									content: 'Loading',
 									animation: 'fade-in',
 									showBackdrop: true,
 									maxWidth: 200,
 									showDelay: 0
-								});*/
+								});
 
 
 	       	$timeout(function () {
@@ -193,45 +193,68 @@ angular.module('ionium').controller(
  	});
  }
 
- $scope.showConfirmCerraSession = function() {
-	 var confirmPopup = $ionicPopup.confirm({
-		 title: 'Cerrar sesión',
-		 template: '¿Desea cerrar la sesión del usuario?'
-	 });
-	 confirmPopup.then(function(res) {
-		 if(res) {
-			 AuthService.logout().then(function(response) {
-				 $ionicLoading.show({
-					 content: 'Loading',
-					 animation: 'fade-in',
-					 showBackdrop: true,
-					 maxWidth: 200,
-					 showDelay: 0
-				});
-				 $timeout(function () {
-					 $scope.result = angular.fromJson(response.data);
+$scope.CerrarNormar=function(){
+ 	AuthService.logout().then(function(response) {
+		$ionicLoading.show({
+			content: 'Loading',
+			animation: 'fade-in',
+			showBackdrop: true,
+			maxWidth: 200,
+			showDelay: 0
+		});
+		$timeout(function () {
+		$scope.result = angular.fromJson(response.data);
 
-					 if($scope.result.Status == "Error"){
-						 $ionicLoading.hide();
-						 $scope.showAlert2();
-					 } else{
-							delete $localStorage.currentUser;
-							delete $localStorage.currentRol;
-							delete $localStorage.campania;
-							delete $localStorage.preguntas;
-							window.localStorage.removeItem('ionium-fb');
-							window.localStorage.removeItem('ionium-gp');
-							window.localStorage.removeItem('twitterKey');
-							KioskPlugin.exitKiosk();
-							navigator.app.exitApp();
-						 // $http.defaults.headers.common.Authorization = ''
-							$ionicLoading.hide();
-							$state.go('app.login');
-					 }
-		 		}, 2000);
-	 		});
+			if($scope.result.Status == "Error"){
+				$ionicLoading.hide();
+				$scope.showAlert2();
+			} else{
+				delete $localStorage.currentUser;
+				delete $localStorage.currentRol;
+				delete $localStorage.campania;
+				delete $localStorage.preguntas;
+				window.localStorage.removeItem('ionium-fb');
+				window.localStorage.removeItem('ionium-gp');
+				window.localStorage.removeItem('twitterKey');
+				KioskPlugin.exitKiosk();
+				navigator.app.exitApp();
+				// $http.defaults.headers.common.Authorization = ''
+				$ionicLoading.hide();
+				$state.go('app.login');
+			}
+	 	}, 2000);
+	});
+ }
+
+$scope.showConfirmCerraSession = function() {
+ 	var confirmPopup = $ionicPopup.confirm({
+		title: 'Cerrar sesión',
+		template: '¿Desea cerrar la sesión del usuario?'
+	});
+	confirmPopup.then(function(res) {
+		if(res) {
+			if(window.Connection){
+				if ($cordovaNetwork.isOnline()){
+					$scope.CerrarNormar();
+				}else{
+					delete $localStorage.currentUser;
+					delete $localStorage.currentRol;
+					delete $localStorage.campania;
+					delete $localStorage.preguntas;
+					window.localStorage.removeItem('ionium-fb');
+					window.localStorage.removeItem('ionium-gp');
+					window.localStorage.removeItem('twitterKey');
+					KioskPlugin.exitKiosk();
+					navigator.app.exitApp();
+					// $http.defaults.headers.common.Authorization = ''
+					$ionicLoading.hide();
+					$state.go('app.login');
+				}
+			}else{
+				$scope.CerrarNormar();
+			}
 		}
-	 });
+	});
 
- };
+};
 });

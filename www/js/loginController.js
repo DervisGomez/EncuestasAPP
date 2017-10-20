@@ -120,7 +120,7 @@ angular.module('ionium').controller(
 			$scope.showAlert3 = function() {
 				var alertPopup = $ionicPopup.alert({
 					title : 'ListenTap - Verificar',
-					template : 'Para iniciar sesión debes tener conexión a internet'
+					template : 'Para iniciar sesión por primera vez debes tener conexión a internet'
 				});
 			};
 
@@ -133,11 +133,10 @@ angular.module('ionium').controller(
 
 				if($scope.data.email != null  && $scope.data.password != null){
 					if(window.Connection){
-						console.log("entro");
 						if ($cordovaNetwork.isOnline()){
 							$scope.entrar();
 						}else{
-							$scope.showAlert3();
+							$scope.entrarSin();
 						}
 					}else{
 						$scope.entrar();
@@ -147,51 +146,79 @@ angular.module('ionium').controller(
 				}
 			};
 
-			$scope.entrar=function(){
-				console.log("hola")
-				AuthService.login($scope.data).then(function(response) {
-								$ionicLoading.show({
-									content: 'Loading',
-									animation: 'fade-in',
-									showBackdrop: true,
-									maxWidth: 200,
-									showDelay: 0
-								});
-								$timeout(function () {
-									$scope.result = angular.fromJson(response.data);
-									if($scope.result.Status == "Error"){
-										$ionicLoading.hide();
-										$scope.showAlert();
-									} else{
-										 $localStorage.currentUser = {
-											 mail: $scope.result.user['email'],
-											 token: $scope.result.persist_code,
-											 rol: $scope.result.user.idempresa,
-											 perfil:$scope.result.user.idperfil,
-											 codigo:$scope.data.password
+			$scope.entrarSin=function(){
+				GuardarLocalService.abrirBD();
+		      	db.transaction(function(tx) {
+		            tx.executeSql('SELECT mail,token,rol,perfil,codigo FROM user', [], function(tx, rs) {
+		               console.log('user encontrados: ' + rs.rows.length);
+		               if(rs.rows.length > 0){
+		               		if (rs.rows.item(0).mail==$scope.data.email&&rs.rows.item(0).codigo==$scope.data.password) {
+		               			$localStorage.currentUser = {
+											 mail: rs.rows.item(0).mail,
+											 token: rs.rows.item(0).token,
+											 rol: rs.rows.item(0).rol,
+											 perfil:rs.rows.item(0).perfil,
+											 codigo:rs.rows.item(0).codigo
 										 };
-										 console.log($scope.result);
-										 console.log($localStorage.currentUser);
+								GuardarLocalService.abrirBD();
+								$scope.validarNombre();
+								$ionicLoading.hide();
+		               		}else{
+		               			$scope.showAlert();
+		               		}		                     
+		                }else{
+		                	$scope.showAlert3();
+		                }              
+		               		
+		            }, function(tx, error) {
+		               console.log('Error: ' + error.message);
+		            });
+		        });
+			}
+
+			$scope.entrar=function(){
+				AuthService.login($scope.data).then(function(response) {
+					$ionicLoading.show({
+						content: 'Loading',
+						animation: 'fade-in',
+						showBackdrop: true,
+						maxWidth: 200,
+						showDelay: 0
+					});
+					$timeout(function () {
+						$scope.result = angular.fromJson(response.data);
+						if($scope.result.Status == "Error"){
+							$ionicLoading.hide();
+							$scope.showAlert();
+						} else{
+							$localStorage.currentUser = {
+								mail: $scope.result.user['email'],
+								token: $scope.result.persist_code,
+								rol: $scope.result.user.idempresa,
+								perfil:$scope.result.user.idperfil,
+								codigo:$scope.data.password
+							};
+							GuardarLocalService.abrirBD();
+							GuardarLocalService.elimanarUser();
+							GuardarLocalService.insertarUser($scope.result.user['email'],$scope.result.persist_code,$scope.result.user.idempresa,$scope.result.user.idperfil,$scope.data.password);
+							console.log($scope.result);
+							console.log($localStorage.currentUser);
 									//  $scope.modal.remove();
 									 //$http.defaults.headers.common.Authorization = 'Bearer ' + $scope.result.persist_code;
 										 /*$localStorage.currentUser = $scope.result.user['email'];
 										$localStorage.token = $scope.result.persist_code;
 										$localStorage.rol = $scope.result.rol; */
 										
-										$ionicHistory.nextViewOptions({
-											 disableBack: true
-										 });
-										GuardarLocalService.abrirBD();
-										$scope.validarNombre();
-										$ionicLoading.hide();
-										//$state.go('app.home', null, {reload:true});
-									}
-								}, 1000);
-								/*window.localStorage.setItem('email',
-									$scope.result.user['email']);
-								window.localStorage.setItem('persist_code',
-										$scope.result.persist_code);*/
+							$ionicHistory.nextViewOptions({
+								disableBack: true
 							});
+							GuardarLocalService.abrirBD();
+							$scope.validarNombre();
+							$ionicLoading.hide();
+										//$state.go('app.home', null, {reload:true});
+						}
+					}, 1000);
+				});
 			}
 
 			$scope.validarNombre= function(){
