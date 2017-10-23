@@ -72,6 +72,23 @@ input[placeholder], [placeholder], *[placeholder] {
     z-index: 3;
     position: relative;
 }
+ 
+.login .content div .boton-formulario{
+    min-width: 10px;
+    width: 47%;
+    position: relative;
+    max-width: 220px;
+    background:black;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 52px;
+}
+.login .content div .boton-formulario:hover{
+    border-radius: 0;
+}
+.popup-container .popup{
+  width: 400px;
+
+}
 </style>
 
   <ion-content class="login">
@@ -118,19 +135,13 @@ input[placeholder], [placeholder], *[placeholder] {
          </label>
      </div>
 
-     
-
-
-
-     <div style="position:relative; ">
-       <button type="button" ng-disabled="prueba"   style="width: 60%;max-width: 220px; min-width: 10px; background:#FF354C;font-family: 'Roboto', sans-serif;border-radius: 52px;" class="button button-large button-assertive" ng-click="guardarFormulario(nombreCompleto,celular, correo,fecha_nacimiento)">PARTICIPAR</button>
-
+     <div style="position:relative; width: 92%;margin: 0 auto">
+       <button type="button" ng-disabled="prueba" class="button button-large button-assertive boton-formulario" style="background: #ff354c" ng-click="guardarFormulario(nombreCompleto,celular, correo,fecha_nacimiento)">PARTICIPAR</button>
+       <button type="button" class="button button-large button-assertive boton-formulario" ng-click="salir()">SALTAR</button>
      </div>
-
-   </div>
-
-   <div style="position:relative;  top:20px">
-     <button type="button"   style="min-width: 10px;width: 60%;max-width: 220px;background:black;font-family: 'Roboto', sans-serif;border-radius: 52px;" class="button button-large button-assertive" ng-click="salir()">NO PARTICIPAR</button>
+     <div style="position:relative; top: 0; bottom:12px">
+       
+     </div>
 
    </div>
 

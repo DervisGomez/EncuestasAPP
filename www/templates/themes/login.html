@@ -21,6 +21,15 @@ input[placeholder], [placeholder], *[placeholder] {
   background-color: rgba(43, 46, 55, 0.6);
 }
 
+.boton-login{
+    background:#ff354c;
+    color: white;
+    width: 100%;
+}
+.boton-login:hover{
+    border-radius: 32px;
+}
+
 /* do not group these rules */
 *::-webkit-input-placeholder {
     color: red;
@@ -73,13 +82,12 @@ input[placeholder], [placeholder], *[placeholder] {
            <label class="item item-input item-floating-label">
            <input style="padding-left: 32px; padding-right: 32px" type="{{tipo}}" placeholder="CONTRASE&Ntilde;A" ng-model="data.password">
            </label>
-           <i ng-click=mostrar(); class="icon ion-eye-disabled placeholder-icon" style="z-index: 100; position: absolute;top: 16px; right: 16px; cursor: pointer;" ></i>
+           <i ng-click=mostrar(); class="icon ion-eye-disabled placeholder-icon" style="z-index: 100; font-size: 24px; position: absolute;top: 16px; right: 16px; cursor: pointer;" ></i>
         </div>
 
         <div style="max-width: 600px; width: 90%;padding: 12px;  min-width: 100px; margin: 0 auto">
-
-
-        <button type="button"   style="background:#ff354c; color: white; width: 100%;" class="button button-large" ng-click="login()">Ingresar</button></div>
+            <button type="button"   style="" class="button button-large boton-login" ng-click="login()">Ingresar</button>
+        </div>
 
         <div style="padding: 12px; color: white">¿Ovidaste tu contraseña?</div>
     </div>

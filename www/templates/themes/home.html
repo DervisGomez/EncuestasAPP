@@ -77,64 +77,54 @@ select:focus{ outline: none;}
     pointer-events: none;
 }
 
+.login .content .boton-salir img{
+  width: 7%;
+  height: auto;
+  top: -20px;
+  position: relative;
+  min-width: 40px;
+  left: 34%;
+}
+
+.login .content .boton-salir img:hover{
+  width: 8%;
+  min-width: 44px;
+}
+
 
 
 </style>
   <ion-content class="login">
-
     <div class="content">
-        <img src="http://sistemex.com/apps/listentap/source/img/empresas/{{dataCintillo}}" />
-<div style="    position: relative;
-  top: -100px;">
+      <img src="http://sistemex.com/apps/listentap/source/img/empresas/{{dataCintillo}}" />
 
-<img style="width: 5%;
-    height: auto;
-    top: 0px;
-    min-width: 40px;
-    position: relative;" src="img/Sucursal.png" />
+      <div style="    position: relative;
+        top: -100px;">
 
-<br>
-<h1 class="item" style="color: black; background-color: rgba(0,0,0,0);border: 0;  width: 90%; margin: 0 auto">Bienvenido {{usuarioEmail}}</h1>
- <ion-list>
-            <div  style="position: relative; width: 90%; max-width: 600px; margin: 10px auto">
+        <img style="width: 5%;
+            height: auto;
+            top: 0px;
+            min-width: 40px;
+            position: relative;" src="img/Sucursal.png" />
 
-                <label class="caja" style="width: 100%">
+        <br>
+        <h1 class="item" style="color: black; background-color: rgba(0,0,0,0);border: 0;  width: 90%; margin: 0 auto">Bienvenido {{usuarioEmail}}</h1>
 
-                    <select style="width: 100%" ng-options="sucursal.id as sucursal.nombre for sucursal in dataSucursales" ng-model="sucursa" ng-change="verCampania(sucursa)">
-                    </select>
-                </label>
-
-            </div>
-
+        <ion-list>
+          <div  style="position: relative; width: 90%; max-width: 600px; margin: 10px auto">
+            <label class="caja" style="width: 100%">
+              <select style="width: 100%" ng-options="sucursal.id as sucursal.nombre for sucursal in dataSucursales" ng-model="sucursa" ng-change="verCampania(sucursa)">
+              </select>
+            </label>
+          </div>
         </ion-list>
-        </div >
+      </div >
 
-<div>
-
-<img ng-click="showSincronizar()"  style="width: 7%;
-    height: auto;
-    top: -20px;
-    position: relative;
-    min-width: 40px;
-    left: 32%;" src="img/Refresh.png">
-<img ng-click="showConfirmCerraSession()"  style="width: 7%;
-    height: auto;
-    top: -20px;
-    position: relative;
-    min-width: 40px;
-    left: 32%;" src="img/Salir.png">
-
-</div>
-
+      <div class="boton-salir">
+        <img ng-click="showSincronizar()"  src="img/Refresh.png">
+        <img ng-click="showConfirmCerraSession()"  src="img/Salir.png">
+      </div>
 
     </div>
-
-
-
-
   </ion-content>
-
-
-
-
 </ion-view>

@@ -50,56 +50,59 @@ input[placeholder], [placeholder], *[placeholder] {
     margin-top: 20px;
 }
 
+.login .content .boton-salir img{
+  width: 7%;
+  height: auto;
+  top: -20px;
+  position: relative;
+  min-width: 40px;
+  left: 34%;
+}
+
+.login .content .boton-salir img:hover{
+  width: 8%;
+  min-width: 44px;
+}
+
+.boton-login{
+    background:#ff354c;
+    color: white;
+    width: 100%;
+}
+.boton-login:hover{
+    border-radius: 32px;
+}
+
 </style>
   <ion-content class="login">
     <ion-refresher pulling-text="Pull To Refresh" on-refresh="refreshTasks()"
             refreshing-text="Actualizando ..." refreshing-icon="ion-loading-b"
           ></ion-refresher>
+
     <div class="content">
         <img src="http://sistemex.com/apps/listentap/source/img/campanias/{{dataCampania.cintillo}}" />
 
+        <ion-list style="    position: relative;
+            top: -100px;">
+            <img src="img/Uso.png" style="    width: 10%;
+                height: auto;
+                top: 0px;
+                position: relative;" />
 
+            <h2 style="color:#FF354C">Usar nuestro sistema es muy fácil</h2>
+            
+            <div style="position:relative; top:0px">
+                <h5>{{dataCampania.instrucciones}}</h5>
+            </div>
 
+            <div style="position:relative; top:20px; max-width: 600px; width: 90%;padding: 12px;  min-width: 100px; margin: 0 auto">
+              <button type="button" class="button button-large boton-login" ng-click="iniciarCampania(dataCampania.id)">Iniciar</button>
+            </div>
+        </ion-list>
 
- <ion-list style="    position: relative;
-    top: -100px;">
-  <img src="img/Uso.png" style="    width: 10%;
-    height: auto;
-    top: 0px;
-    position: relative;" />
-
-    <h2 style="color:#FF354C">Usar nuestro sistema es muy fácil</h2>
-<div style="position:relative; top:0px">
-    <h5>{{dataCampania.instrucciones}}</h5>
-</div>
-
-<div style="position:relative; top:20px">
-  <button type="button"   style="background:#FF354C;" class="button button-small button-assertive" ng-click="iniciarCampania(dataCampania.id)">Iniciar</button>
-
-</div>
- </ion-list>
-
- <div>
- <img ng-click="salirCampania()"  style="width: 5%;
-    height: auto;
-    top: -40px;
-    position: relative;
-    min-width: 40px;
-    left: 35%;" src="img/Salir.png">
- </div>
-
-
-
-
-
+        <div class="boton-salir">
+            <img ng-click="salirCampania()" src="img/Salir.png">
+        </div>
     </div>
-
-
-
-
-  </ion-content>
-
-
-
-
+</ion-content>
 </ion-view>

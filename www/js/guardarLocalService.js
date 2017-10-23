@@ -58,7 +58,7 @@ angular.module("ionium")
         });
     },
 
-    insertarConteo: function(fecha,idsucursal,idcampania,participantes_conteo){
+   insertarConteo: function(fecha,idsucursal,idcampania,participantes_conteo){
         db.transaction(function(tx) {
             tx.executeSql('INSERT INTO conteo VALUES (?,?,?,?)', [fecha,idsucursal,idcampania,participantes_conteo]);
         }, function(error) {

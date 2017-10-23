@@ -10,14 +10,14 @@ angular.module('ionium').controller(
         $scope.cintillo=$localStorage.cintillo.cintillo;
         if(  $localStorage.preguntas == null || $localStorage.preguntas.preguntas.length ==0){
 
-          $scope.validarNombre();
-          /*var data = {idcampania:$stateParams.id};
+          //$scope.validarNombre();
+          var data = {idcampania:$stateParams.id};
           AuthService.getPreguntas(data).then(function(res) {
             // res holds your data
             $scope.dataPreguntas = res.data[0];
             $localStorage.preguntas = {preguntas:res.data};
           console.log($scope.dataPreguntas);
-          });*/
+          });
 
           /*if(window.Connection){
             console.log("entro");
@@ -43,13 +43,13 @@ angular.module('ionium').controller(
             });
           }*/
 
-          $scope.listaPreguntas();
+          //$scope.listaPreguntas();
 
         }else{
           $scope.dataPreguntas = $localStorage.preguntas.preguntas[0];
           console.log($scope.dataPreguntas);
 
-        $scope.validarNombre();
+        //$scope.validarNombre();
 
         }
       }, 100);
@@ -138,7 +138,7 @@ angular.module('ionium').controller(
         audio.play();
         //AuthService.setRespuestas({idpreguntas:idpregunta, idcampania:$stateParams.id, respuesta:respuesta})
           //alert("Podemos usar SqlLITE !!");
-        GuardarLocalService.abrirBD();
+        //GuardarLocalService.abrirBD();
 
         var dt = new Date()
         var month = dt.getMonth()+1;
@@ -146,7 +146,7 @@ angular.module('ionium').controller(
         var year = dt.getFullYear();
         $scope.fechaActual= year + '-' + month + '-' + day;
         //alert(idpregunta+" - "+$stateParams.id+" - "+respuesta+" - "+$localStorage.campania.campania[0].idsucursal+" - "+$scope.nombre+" - "+$scope.fechaActual);
-        GuardarLocalService.insertarDatos(idpregunta,$stateParams.id,respuesta,$localStorage.campania.campania[$localStorage.actual.numero].idsucursal,$scope.nombre,$scope.fechaActual);
+        //GuardarLocalService.insertarDatos(idpregunta,$stateParams.id,respuesta,$localStorage.campania.campania[$localStorage.actual.numero].idsucursal,$scope.nombre,$scope.fechaActual);
 
         $localStorage.preguntas.preguntas.splice(0,1);
         if($localStorage.preguntas.preguntas.length != 0){
@@ -165,8 +165,8 @@ angular.module('ionium').controller(
           //AuthService.setConteo({idcampania:ids, fecha_hoy:$scope.fechaActual});
           console.log($localStorage.campania.campania[0].captar_infopersonal);
 
-          GuardarLocalService.abrirBD();
-          GuardarLocalService.insertarConteo($scope.fechaActual,$localStorage.campania.campania[$localStorage.actual.numero].idsucursal,ids,$localStorage.campania.campania[$localStorage.actual.numero].participantes_formulario)
+          //GuardarLocalService.abrirBD();
+          //GuardarLocalService.insertarConteo($scope.fechaActual,$localStorage.campania.campania[$localStorage.actual.numero].idsucursal,ids,$localStorage.campania.campania[$localStorage.actual.numero].participantes_formulario)
 
           if($localStorage.campania.campania[0].captar_infopersonal == null){
             $state.go('app.vergracias', {id:ids}, {reload:'app.vergracias'});

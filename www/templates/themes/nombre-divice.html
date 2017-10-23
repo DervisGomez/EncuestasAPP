@@ -34,13 +34,21 @@ input[placeholder], [placeholder], *[placeholder] {
     color: red;
 }
 
+.boton-login{
+    background:#ff354c;
+    color: white;
+    width: 100%;
+}
+.boton-login:hover{
+    border-radius: 32px;
+}
+
 </style>
   <ion-content class="login">
 
     <div class="content">
         <img src="img/logo.png" style="width: 50%;
-    height: auto;
-    top: -60px;
+    max-width: 330px;
     position: relative;" />
 
         <div class="list" style="position: relative; width: 90%; max-width: 600px; margin: 10px auto">
@@ -50,7 +58,9 @@ input[placeholder], [placeholder], *[placeholder] {
            </label>
         </div>
 
-        <button type="button"   style="width: 60%; max-width: 300px; min-width: 100px; background:#f16920;border-radius: 52px;" class="button button-large button-assertive" ng-click="nombrarDivice(nombr)">Guardar Nombre</button>
+        <div style="max-width: 600px; width: 90%;padding: 12px;  min-width: 100px; margin: 0 auto">
+            <button type="button"   style="" class="button button-large boton-login" ng-click="nombrarDivice(nombr)">Ingresar</button>
+        </div>
 
     </div>
 

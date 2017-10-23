@@ -26,8 +26,8 @@ angular.module('ionium').controller(
 						//$scope.showAlert3();
 					}
 				}else{
-					GuardarLocalService.abrirBD();
-					GuardarLocalService.elimanarRegistros();
+					//GuardarLocalService.abrirBD();
+					//GuardarLocalService.elimanarRegistros();
 					$scope.cargarDatos();
 				}
 			}, 2000);
@@ -51,7 +51,7 @@ angular.module('ionium').controller(
 						GuardarLocalService.insertarSucursal(res.data[i].id,res.data[i].nombre);
 					}
 					
-				});
+				});/*
 				AuthService.getCampañasAll ({idempresa:$localStorage.currentUser.rol}).then(function(res) {
 					//$scope.dataSucursales = res.data;
 					console.log("campania: "+JSON.stringify(res.data));
@@ -70,7 +70,7 @@ angular.module('ionium').controller(
 							GuardarLocalService.insertarPregunta(res.data[i].id,res.data[i].idempresa,res.data[i].pregunta,res.data[i].idcampanias);
 						}
 						$scope.verificarDatos();
-				});
+				});*/
 				$scope.cerrarCarga();
 			}
 

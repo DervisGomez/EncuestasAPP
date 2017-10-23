@@ -6988,7 +6988,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
     animation-fill-mode: both; }
   .popup-container .popup {
     width: 250px;
-    max-width: 100%;
+    max-width: 90%;
     max-height: 90%;
     border-radius: 0px;
     background-color: rgba(255, 53, 76, 0.9);

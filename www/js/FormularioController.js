@@ -27,8 +27,7 @@ angular.module('ionium').controller(
 
 			$scope.showAlert = function() {
 				var alertPopup = $ionicPopup.alert({
-					title : 'Campos Vacios',
-					template : 'Debe especificar todos los datos'
+					template : 'Por favor de llenar todos los datos'
 				});
 			};
 
