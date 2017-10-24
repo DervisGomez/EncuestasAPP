@@ -2,7 +2,7 @@
 
 <style>
 
-.login {
+.login22 {
     text-align: center;
     position: absolute;
     transition: none;
@@ -48,13 +48,30 @@ input[placeholder], [placeholder], *[placeholder] {
     
 }
 
-</style>
-  <ion-content class="login">
+.login2{
+    width:100%;
+    position:relative;
+    text-align: center;
+    height: 100vh;
+}
+.content2{
+    width: 100%;
+    margin: 0 auto;
+    position: absolute;
+    top:50%;
+    transform:  translate(0, -50%);
+    text-align: center;
+}
 
-    <div class="content">
+</style>
+  <ion-content >
+
+  <div class="login2">
+
+    <div class="content2">
         <img src="img/logo.png" style="width: 50%;
             max-width: 330px;
-            position: relative;" />
+            margin: 0 auto;" />
         <!--<div class="list list-inset" style="width: 90%; max-width: 700px; margin: 10px auto; border-left:0;border-radius: 52px">
             <label style="position: relative;" id="item16" class="item item-input">
                 <i style="position: relative;
@@ -70,7 +87,7 @@ input[placeholder], [placeholder], *[placeholder] {
             </label>
         </div>-->
 
-        <div class="list" style="position: relative; width: 90%; max-width: 600px; margin: 10px auto">
+        <div class="list" style="position: relative; width: 90%; max-width: 600px; margin: 0 auto">
             <i style="position: absolute;top: 16px; left: 16px;" class="icon ion-person placeholder-icon"></i>
            <label class="item item-input item-floating-label">
            <input style="padding-left: 32px" type="email" placeholder="CORREO ELECTRÓNICO"  ng-model="data.email">
@@ -84,13 +101,14 @@ input[placeholder], [placeholder], *[placeholder] {
            </label>
            <i ng-click=mostrar(); class="icon ion-eye-disabled placeholder-icon" style="z-index: 100; font-size: 24px; position: absolute;top: 16px; right: 16px; cursor: pointer;" ></i>
         </div>
-
-        <div style="max-width: 600px; width: 90%;padding: 12px;  min-width: 100px; margin: 0 auto">
-            <button type="button"   style="" class="button button-large boton-login" ng-click="login()">Ingresar</button>
+        <br>
+        <div style="max-width: 600px; width: 90%;padding: 0;  min-width: 100px; margin: 0 auto">
+            <button type="button"   style="" class="button button-large button-assertive boton-login" ng-click="login()">Ingresar</button>
         </div>
 
         <div style="padding: 12px; color: white">¿Ovidaste tu contraseña?</div>
     </div>
+</div>
   </ion-content>
 
 </ion-view>

@@ -67,13 +67,13 @@ input[placeholder], [placeholder], *[placeholder] {
 }
 
 .login .content {
-    min-height: 850px;
+    min-height: 350px;
     padding: 70px 0;
     z-index: 3;
     position: relative;
 }
  
-.login .content div .boton-formulario{
+.login2 .content2 div .boton-formulario{
     min-width: 10px;
     width: 47%;
     position: relative;
@@ -82,20 +82,38 @@ input[placeholder], [placeholder], *[placeholder] {
     font-family: 'Roboto', sans-serif;
     border-radius: 52px;
 }
-.login .content div .boton-formulario:hover{
+.login2 .content2 div .boton-formulario:hover{
     border-radius: 0;
 }
 .popup-container .popup{
   width: 400px;
 
 }
+.login{
+    
+}
+.content2{
+    width:100%;
+    position:relative;
+    text-align: center;
+    height: 100vh;
+}
+.formu{
+  width: 50%;
+    margin: 0 auto;
+    position: absolute;
+    top:50%;
+    right: 0;
+    transform:  translate(0, -50%);
+    text-align: center;
+}
 </style>
 
-  <ion-content class="login">
+  <ion-content class="login2">
 
-    <div class="content">
+    <div class="content2">
 
-      <div style="min-width: 280px; float:right;width:50%">
+      <div class="formu" style="min-width: 280px; float:right;width:50%">
        <ion-list>
          <div style="background: rgba(43, 46, 55, 0.5);padding-top: 20px;padding-bottom: 20px;font-family:Roboto;">
           <label style="color: white; "><input type="checkbox" id="cbox1" ng-change="condiciones()" ng-model="aceptar"> Acepto terminos y condiciones</label>
@@ -136,7 +154,7 @@ input[placeholder], [placeholder], *[placeholder] {
      </div>
 
      <div style="position:relative; width: 92%;margin: 0 auto">
-       <button type="button" ng-disabled="prueba" class="button button-large button-assertive boton-formulario" style="background: #ff354c" ng-click="guardarFormulario(nombreCompleto,celular, correo,fecha_nacimiento)">PARTICIPAR</button>
+       <button type="button" ng-disabled="prueba" class="button button-large button-assertive boton-formulario" style="background: #ff354c" ng-click="guardarFormulario(nombreCompleto,celular,correo,fecha_nacimiento)">PARTICIPAR</button>
        <button type="button" class="button button-large button-assertive boton-formulario" ng-click="salir()">SALTAR</button>
      </div>
      <div style="position:relative; top: 0; bottom:12px">
@@ -146,10 +164,8 @@ input[placeholder], [placeholder], *[placeholder] {
    </div>
 
         </ion-list>
+  </div>
 </div>
-
-    </div>
-
   </ion-content>
 
 </ion-view>

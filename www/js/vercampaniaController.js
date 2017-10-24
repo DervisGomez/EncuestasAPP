@@ -24,7 +24,7 @@ angular.module('ionium').controller(
 				//$scope.cantidaIndex();
 				if( $localStorage.campania == null || $localStorage.campania.campania.length == 0 ){
 					var data = {idsucursal:$stateParams.id};
-					AuthService.getCampania(data).then(function(res) {
+					/*AuthService.getCampania(data).then(function(res) {
 						// res holds your data
 						$scope.dataCampania2=res.data;
 						$scope.dataCampania = res.data[0];
@@ -32,13 +32,13 @@ angular.module('ionium').controller(
 						$localStorage.campania= {campania:$scope.dataCampania2};
 						alert("1: "+$localStorage.campania.campania);
 						console.log($localStorage.campania.campania);
-					});
+					});*/
 
 					console.log("nombre")
 
 					$scope.numero=0;
 
-					//$scope.listaCampania();
+					$scope.listaCampania();
 
 				}else{
 					
@@ -57,7 +57,7 @@ angular.module('ionium').controller(
 					}
 					$localStorage.campania.numero=$scope.dataNumero;*/
 								
-					//$scope.listaCampania();
+					$scope.listaCampania();
 					$scope.numero= $localStorage.siguiente.numero;
 					$scope.dataCampania =$localStorage.campania.campania[$scope.numero];
 					
@@ -161,7 +161,7 @@ angular.module('ionium').controller(
  //$scope.loadData();
 		$scope.iniciarCampania = function(ids){
 			console.log(ids);
-			//GuardarLocalService.abrirBD();			
+			GuardarLocalService.abrirBD();			
 			//GuardarLocalService.insertarCantidadCompania("h");
 			$localStorage.cintillo={cintillo:$scope.dataCampania.cintillo} ;
 			if (($scope.numero+1)<$localStorage.campania.campania.length) {

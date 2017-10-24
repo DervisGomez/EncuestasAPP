@@ -43,10 +43,27 @@ input[placeholder], [placeholder], *[placeholder] {
     border-radius: 32px;
 }
 
-</style>
-  <ion-content class="login">
+.login2{
+    width:100%;
+    position:relative;
+    text-align: center;
+    height: 100vh;
+}
+.content2{
+    width: 100%;
+    margin: 0 auto;
+    position: absolute;
+    top:50%;
+    transform:  translate(0, -50%);
+    text-align: center;
+}
 
-    <div class="content">
+</style>
+  <ion-content >
+
+  <div class="login2">
+
+    <div class="content2">
         <img src="img/logo.png" style="width: 50%;
     max-width: 330px;
     position: relative;" />
@@ -57,13 +74,13 @@ input[placeholder], [placeholder], *[placeholder] {
                 <input style="padding-left: 32px" type="text" placeholder="Nombre del dispositivo"  ng-model="nombr">
            </label>
         </div>
-
-        <div style="max-width: 600px; width: 90%;padding: 12px;  min-width: 100px; margin: 0 auto">
-            <button type="button"   style="" class="button button-large boton-login" ng-click="nombrarDivice(nombr)">Ingresar</button>
+        <br>
+        <div style="max-width: 600px; width: 90%;padding: 0;  min-width: 100px; margin: 0 auto">
+            <button type="button"   style="" class="button button-large button-assertive boton-login" ng-click="nombrarDivice(nombr)">Ingresar</button>
         </div>
 
     </div>
-
+</div>
   </ion-content>
 
 </ion-view>

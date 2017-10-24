@@ -187,7 +187,7 @@ angular.module("ionium")
             alert('ERROR: ' + error.message);
         }, function() {
            //alert('pregunta guardados correctamente');
-           console.log('Datos guardados correctamente');
+           console.log('Preguntas guardados correctamente');
         });
     },
 

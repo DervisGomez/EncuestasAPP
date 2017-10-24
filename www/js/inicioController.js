@@ -26,8 +26,8 @@ angular.module('ionium').controller(
 						//$scope.showAlert3();
 					}
 				}else{
-					//GuardarLocalService.abrirBD();
-					//GuardarLocalService.elimanarRegistros();
+					GuardarLocalService.abrirBD();
+					GuardarLocalService.elimanarRegistros();
 					$scope.cargarDatos();
 				}
 			}, 2000);
@@ -49,9 +49,8 @@ angular.module('ionium').controller(
 					GuardarLocalService.abrirBD();
 					for (var i = res.data.length - 1; i >= 0; i--) {
 						GuardarLocalService.insertarSucursal(res.data[i].id,res.data[i].nombre);
-					}
-					
-				});/*
+					}					
+				});
 				AuthService.getCampañasAll ({idempresa:$localStorage.currentUser.rol}).then(function(res) {
 					//$scope.dataSucursales = res.data;
 					console.log("campania: "+JSON.stringify(res.data));
@@ -70,7 +69,7 @@ angular.module('ionium').controller(
 							GuardarLocalService.insertarPregunta(res.data[i].id,res.data[i].idempresa,res.data[i].pregunta,res.data[i].idcampanias);
 						}
 						$scope.verificarDatos();
-				});*/
+				});
 				$scope.cerrarCarga();
 			}
 
@@ -115,7 +114,7 @@ angular.module('ionium').controller(
 			$scope.verificarDatos= function(){
 				GuardarLocalService.abrirBD();
 			    db.transaction(function(tx) {
-			        tx.executeSql('SELECT nombre FROM cantidadcompania', [], function(tx, rs) {
+			        tx.executeSql('SELECT fecha FROM conteo', [], function(tx, rs) {
 			            console.log('Registros encontrados: ' + rs.rows.length);
 			            $scope.cantidadregistro=rs.rows.length;
 			  			var itemsColl = [];
@@ -141,115 +140,87 @@ angular.module('ionium').controller(
 			}
 
 
- $scope.listaSucursal= function(){
- 	GuardarLocalService.abrirBD();
- 	//db = window.sqlitePlugin.openDatabase({name:'testsqlite.db', key:'test', iosDatabaseLocation:'Documents'});
-      db.transaction(function(tx) {
-            tx.executeSql('SELECT id, nombre FROM sucursal', [], function(tx, rs) {
-               console.log('Registros encontrados: ' + rs.rows.length);
-  				var itemsColl = [];
-               //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
-               if(rs.rows.length > 0){
-                  for (var i = 0; i < rs.rows.length; i++) {
-                    var miItem = new Object();
-                    miItem.id = rs.rows.item(i).id;
-                    miItem.nombre = rs.rows.item(i).nombre;
-                    itemsColl.push(miItem);
-                  };
-                  $scope.sele=new Object();
-                  $scope.sele.id="-1";
-                  $scope.sele.nombre="Seleccione sucursal"
-                  itemsColl.push(sele);
+	 $scope.listaSucursal= function(){
+	 	GuardarLocalService.abrirBD();
+	 	//db = window.sqlitePlugin.openDatabase({name:'testsqlite.db', key:'test', iosDatabaseLocation:'Documents'});
+	      db.transaction(function(tx) {
+	            tx.executeSql('SELECT id, nombre FROM sucursal', [], function(tx, rs) {
+	               console.log('Registros encontrados: ' + rs.rows.length);
+	  				var itemsColl = [];
+	               //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
+	               if(rs.rows.length > 0){
+	                  for (var i = 0; i < rs.rows.length; i++) {
+	                    var miItem = new Object();
+	                    miItem.id = rs.rows.item(i).id;
+	                    miItem.nombre = rs.rows.item(i).nombre;
+	                    itemsColl.push(miItem);
+	                  };
+	                  $scope.sele=new Object();
+	                  $scope.sele.id="-1";
+	                  $scope.sele.nombre="Seleccione sucursal"
+	                  itemsColl.push(sele);
 
-                  items = JSON.stringify(itemsColl);
-                  $scope.dataSucursales=itemsColl;
-                  console.log("scope of items is " + items);
-                  //alert("scope of items is; " +items);
-                  //alert("scope; " +JSON.stringify($scope.dataSucursales));                  
-                }else{
-                  //alert("No hay datos guardados localmente");
-                  console.log("No hay datos guatdados localmente");
-                }              
-            }, function(tx, error) {
-               console.log('Error: ' + error.message);
-               alert('error: '+error.message);
-            });
-        });
-      $ionicLoading.hide();
-    }
+	                  items = JSON.stringify(itemsColl);
+	                  $scope.dataSucursales=itemsColl;
+	                  console.log("scope of items is " + items);
+	                  //alert("scope of items is; " +items);
+	                  //alert("scope; " +JSON.stringify($scope.dataSucursales));                  
+	                }else{
+	                  //alert("No hay datos guardados localmente");
+	                  console.log("No hay datos guatdados localmente");
+	                }              
+	            }, function(tx, error) {
+	               console.log('Error: ' + error.message);
+	               alert('error: '+error.message);
+	            });
+	        });
+	      $ionicLoading.hide();
+	    }
 
- ionic.material.ink.displayEffect();
+	 ionic.material.ink.displayEffect();
 
- $scope.verCampania = function(ids){
- 	if (ids!="-1") {
- 		console.log(ids);
-		$localStorage.campania = null;
-		$localStorage.sucursal={id:ids};
-		$state.go('app.vercampania',{id:ids});
- 	}
- }
+	 $scope.verCampania = function(ids){
+	 	if (ids!="-1") {
+	 		console.log(ids);
+			$localStorage.campania = null;
+			$localStorage.sucursal={id:ids};
+			$state.go('app.vercampania',{id:ids});
+	 	}
+	 }
 
- $scope.showSincronizar = function(){
- 	var confirmSincro = $ionicPopup.confirm({
-		 title: 'Sincronizar datos',
-		 template: '¿Desea sincronizar datos guardados localmente?'
-	 });
+	 $scope.showSincronizar = function(){
+	 	var confirmSincro = $ionicPopup.confirm({
+			 title: 'Sincronizar datos',
+			 template: '¿Desea sincronizar datos guardados localmente?'
+		 });
 
- 	confirmSincro.then(function(res){
- 		if (res) { 
-		      //alert("Podemos usar SqlLITE !!");
-		    GuardarLocalService.listaDatos();
-		    GuardarLocalService.listaConteo()
-		    GuardarLocalService.listaFormulario();
-		    GuardarLocalService.eliminarCantidadCompania();
- 		}
- 	});
- }
+	 	confirmSincro.then(function(res){
+	 		if (res) { 
+			      //alert("Podemos usar SqlLITE !!");
+			    GuardarLocalService.listaDatos();
+			    GuardarLocalService.listaConteo()
+			    GuardarLocalService.listaFormulario();
+			    GuardarLocalService.eliminarCantidadCompania();
+	 		}
+	 	});
+	 }
 
-$scope.CerrarNormar=function(){
- 	AuthService.logout().then(function(response) {
-		$ionicLoading.show({
-			content: 'Loading',
-			animation: 'fade-in',
-			showBackdrop: true,
-			maxWidth: 200,
-			showDelay: 0
-		});
-		$timeout(function () {
-		$scope.result = angular.fromJson(response.data);
+	$scope.CerrarNormar=function(){
+	 	AuthService.logout().then(function(response) {
+			$ionicLoading.show({
+				content: 'Loading',
+				animation: 'fade-in',
+				showBackdrop: true,
+				maxWidth: 200,
+				showDelay: 0
+			});
+			$timeout(function () {
+			$scope.result = angular.fromJson(response.data);
 
-			if($scope.result.Status == "Error"){
-				$ionicLoading.hide();
-				$scope.showAlert2();
-			} else{
-				delete $localStorage.currentUser;
-				delete $localStorage.currentRol;
-				delete $localStorage.campania;
-				delete $localStorage.preguntas;
-				window.localStorage.removeItem('ionium-fb');
-				window.localStorage.removeItem('ionium-gp');
-				window.localStorage.removeItem('twitterKey');
-				KioskPlugin.exitKiosk();
-				navigator.app.exitApp();
-				// $http.defaults.headers.common.Authorization = ''
-				$ionicLoading.hide();
-				$state.go('app.login');
-			}
-	 	}, 2000);
-	});
- }
-
-$scope.showConfirmCerraSession = function() {
- 	var confirmPopup = $ionicPopup.confirm({
-		title: 'Cerrar sesión',
-		template: '¿Desea cerrar la sesión del usuario?'
-	});
-	confirmPopup.then(function(res) {
-		if(res) {
-			if(window.Connection){
-				if ($cordovaNetwork.isOnline()){
-					$scope.CerrarNormar();
-				}else{
+				if($scope.result.Status == "Error"){
+					$ionicLoading.hide();
+					$scope.showAlert2();
+				} else{
 					delete $localStorage.currentUser;
 					delete $localStorage.currentRol;
 					delete $localStorage.campania;
@@ -263,11 +234,39 @@ $scope.showConfirmCerraSession = function() {
 					$ionicLoading.hide();
 					$state.go('app.login');
 				}
-			}else{
-				$scope.CerrarNormar();
-			}
-		}
-	});
+		 	}, 2000);
+		});
+	 }
 
-};
+	$scope.showConfirmCerraSession = function() {
+	 	var confirmPopup = $ionicPopup.confirm({
+			title: 'Cerrar sesión',
+			template: '¿Desea cerrar la sesión del usuario?'
+		});
+		confirmPopup.then(function(res) {
+			if(res) {
+				if(window.Connection){
+					if ($cordovaNetwork.isOnline()){
+						$scope.CerrarNormar();
+					}else{
+						delete $localStorage.currentUser;
+						delete $localStorage.currentRol;
+						delete $localStorage.campania;
+						delete $localStorage.preguntas;
+						window.localStorage.removeItem('ionium-fb');
+						window.localStorage.removeItem('ionium-gp');
+						window.localStorage.removeItem('twitterKey');
+						KioskPlugin.exitKiosk();
+						navigator.app.exitApp();
+						// $http.defaults.headers.common.Authorization = ''
+						$ionicLoading.hide();
+						$state.go('app.login');
+					}
+				}else{
+					$scope.CerrarNormar();
+				}
+			}
+		});
+
+	};
 });
