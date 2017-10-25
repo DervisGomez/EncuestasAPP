@@ -33,40 +33,17 @@ angular.module('ionium').controller(
 						alert("1: "+$localStorage.campania.campania);
 						console.log($localStorage.campania.campania);
 					});*/
-
 					console.log("nombre")
-
 					$scope.numero=0;
-
 					$scope.listaCampania();
 
-				}else{
-					
-					//alert("2: "+JSON.stringify($localStorage.campania.campania));
-					/*$scope.dataNumero=$localStorage.campania.numero;
-					console.log($scope.dataNumero+" campania");	
-					$scope.dataNumero++;
-
-					if ($scope.dataNumero<$localStorage.campania.campania.length) {
-						console.log($scope.dataNumero+" campania2");	
-						$scope.dataCampania =$localStorage.campania.campania[$scope.dataNumero];
-					}else{
-						console.log($scope.dataNumero+" campania0");	
-						$scope.dataNumero=0;
-						$scope.dataCampania =$localStorage.campania.campania[$scope.dataNumero];
-					}
-					$localStorage.campania.numero=$scope.dataNumero;*/
-								
+				}else{								
 					$scope.listaCampania();
 					$scope.numero= $localStorage.siguiente.numero;
 					$scope.dataCampania =$localStorage.campania.campania[$scope.numero];
-					
-									
-
 				}
 
 				$ionicLoading.hide();
-
 			}, 2000);
 
 			$scope.cantidaIndex=function(){
@@ -89,7 +66,7 @@ angular.module('ionium').controller(
 				GuardarLocalService.abrirBD();
 		 		//db = window.sqlitePlugin.openDatabase({name:'testsqlite.db', key:'test', iosDatabaseLocation:'Documents'});
 		      	db.transaction(function(tx) {
-		            tx.executeSql("SELECT id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario FROM campania where idsucursal='"+$stateParams.id+"'", [], function(tx, rs) {
+		            tx.executeSql("SELECT id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario,background FROM campania where idsucursal='"+$stateParams.id+"'", [], function(tx, rs) {
 		               console.log('Registros encontrados: ' + rs.rows.length);
 		  				var itemsColl = [];
 		               //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
@@ -107,7 +84,9 @@ angular.module('ionium').controller(
 		                    miItem.imagenpromocion=rs.rows.item(i).imagenpromocion;
 		                    miItem.cintillo=rs.rows.item(i).cintillo;
 		                    miItem.idempresa=rs.rows.item(i).idempresa;
-		                    rs.rows.item(i).participantes_formulario=rs.rows.item(i).participantes_formulario
+		                    miItem.participantes_formulario=rs.rows.item(i).participantes_formulario;
+		                    miItem.background=rs.rows.item(i).background;
+		                    console.log(rs.rows.item(i).background);
 		                    itemsColl.push(miItem);
 		                  };
 		                  items2 = JSON.stringify(itemsColl);
@@ -168,8 +147,7 @@ angular.module('ionium').controller(
 				console.log("entro");
 				$localStorage.actual={numero:$scope.numero} ;
 				var siguiente=$scope.numero+1;
-				$localStorage.siguiente={numero:siguiente} ;
-				
+				$localStorage.siguiente={numero:siguiente} ;				
 			}else{
 				console.log("eliminar");
 				$localStorage.actual={numero:$scope.numero} ;

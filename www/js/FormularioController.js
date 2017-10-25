@@ -11,7 +11,7 @@ angular.module('ionium').controller(
 
 			console.log($localStorage.campania.campania);
 						//var data = {id:$stateParams.id};
-			$scope.promocion=$localStorage.campania.campania[0].imagenpromocion;
+			$scope.promocion=$localStorage.campania.campania[$localStorage.actual.numero].imagenpromocion;
 			console.log($scope.promocion);
 			$scope.refreshTasks = function() {
 				$scope.loadData();

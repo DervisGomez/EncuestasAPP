@@ -16,7 +16,7 @@ angular.module("ionium")
         db.transaction(function(tx) {
             tx.executeSql('CREATE TABLE IF NOT EXISTS respuesta (idpregunta,idcampaña,respuesta,idsucursal,nombre,fecha)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS sucursal (id,nombre)');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS campania (id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS campania (id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario,background)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS divice (nombre)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS pregunta (id,idempresa,pregunta,idcampania)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS formulario (idcampania,idempresa,nombreCompleto,celular,correo,fecha_nacimiento)');
@@ -38,6 +38,7 @@ angular.module("ionium")
                console.log('Registros encontrados: ' + rs.rows.length);
                if (rs.rows.length>0) {
                   for (var i = 0; i < rs.rows.length; i++) {
+                    console.log(rs.rows.item(i).fecha+" - "+rs.rows.item(i).idsucursal+" - "+rs.rows.item(i).idcampania+" - "+rs.rows.item(i).participantes_conteo);
                     AuthService.setConteo({fecha:rs.rows.item(i).fecha,idsucursal:rs.rows.item(i).idsucursal, idcampania:rs.rows.item(i).idcampania, participantes_conteo:rs.rows.item(i).participantes_conteo});
                     //AuthService.setSincronizar({idpreguntas:rs.rows.item(i).idpregunta, idcampania:rs.rows.item(i).idcampaña, respuesta:rs.rows.item(i).respuesta,idsucursal:rs.rows.item(i).idsucursal,nombreequipo:rs.rows.item(i).nombre,fecha:rs.rows.item(i).fecha})
                   };
@@ -105,10 +106,10 @@ angular.module("ionium")
 
                   });
 
-                  alert("Datos Sincronizados");
+                  //alert("Datos Sincronizados");
                   console.log("formulario Sincronizados");
                 }else{
-                  alert("No hay datos guatdados localmente");
+                  //alert("No hay datos guatdados localmente");
                   console.log("No hay datos guatdados localmente");
                 }
               
@@ -191,13 +192,13 @@ angular.module("ionium")
         });
     },
 
-    insertarCampania: function(id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario){
+    insertarCampania: function(id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario,background){
         db.transaction(function(tx) {
           tx.executeSql("SELECT id, nombre FROM campania where id='"+id+"'  AND idsucursal='"+idsucursal+"'", [], function(tx, rs) {
             if (rs.rows.length>0) {
               //alert("no guardado"+id);
             }else{
-              tx.executeSql('INSERT INTO campania VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', [id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario]);
+              tx.executeSql('INSERT INTO campania VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)', [id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario,background]);
             }
           });
         }, function(error) {
