@@ -128,7 +128,7 @@ angular.module('ionium').controller(
 							    GuardarLocalService.listaFormulario();
 							    GuardarLocalService.eliminarCantidadCompania();
 			            	}else{
-			            		$scope.showSincronizar();
+			            		//$scope.showSincronizar();
 			            	}			            	
 			            }else{
 
