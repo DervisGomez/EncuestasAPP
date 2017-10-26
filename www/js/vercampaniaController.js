@@ -44,7 +44,7 @@ angular.module('ionium').controller(
 				}
 
 				$ionicLoading.hide();
-			}, 2000);
+			}, 100);
 
 			$scope.cantidaIndex=function(){
 				GuardarLocalService.abrirBD();
