@@ -57,13 +57,20 @@ input[placeholder], [placeholder], *[placeholder] {
     margin-top: 20px;
 }
 
+.login .content .boton-salir{
+  width:90%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
 .login .content .boton-salir img{
+  position: absolute;
   width: 7%;
   height: auto;
-  top: -20px;
-  position: relative;
+  top: 100px;
   min-width: 40px;
-  left: 45%;
+  left: 12px;
 }
 
 .login .content .boton-salir img:hover{
@@ -89,9 +96,8 @@ input[placeholder], [placeholder], *[placeholder] {
     <div class="content">
         <img src="http://sistemex.com/apps/taptap/source/img/campanias/{{dataCampania.cintillo}}" />
 
-        <ion-list style="    position: relative;
-            top: -100px;">
-            <div style="position:relative; top:20px; max-width: 600px; width: 90%;padding: 12px;  min-width: 100px; margin: 0 auto">
+        <ion-list style="   position: relative;">
+            <div style="position:relative; top:20px; max-width: 600px; width: 90%;padding: 12px;  min-width: 100px; margin: 0 auto; top: 50px">
               <button type="button" class="button button-large  button-assertive boton-login" ng-click="iniciarCampania(dataCampania.id)">Iniciar</button>
             </div>
         </ion-list>

@@ -59,14 +59,37 @@ angular.module("ionium")
         });
     },
 
-   insertarConteo: function(fecha,idsucursal,idcampania,participantes_conteo){
+    insertarConteo: function(fecha,idsucursal,idcampania,participantes_conteo){
+
         db.transaction(function(tx) {
-            tx.executeSql('INSERT INTO conteo VALUES (?,?,?,?)', [fecha,idsucursal,idcampania,participantes_conteo]);
-        }, function(error) {
-            console.log('ERROR: ' + error.message);
-        }, function() {
-           console.log('conteo guardados correctamente');
-        });
+                tx.executeSql("SELECT fecha,idsucursal,idcampania,participantes_conteo FROM conteo where fecha='"+fecha+"' AND idcampania='"+idcampania+"' AND idsucursal='"+idsucursal+"'", [], function(tx, rs) {
+                   console.log('Registros encontrados: ' + rs.rows.length);
+                   //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
+                  if(rs.rows.length > 0){
+                    var miItem = new Object();
+                    miItem.fecha = rs.rows.item(0).fecha;
+                    miItem.idsucursal = rs.rows.item(0).idsucursal;
+                    miItem.idcampania = rs.rows.item(0).idcampania;
+                    miItem.participantes_conteo = rs.rows.item(0).participantes_conteo;
+
+                    tx.executeSql("DELETE FROM conteo where fecha='"+miItem.fecha+"' AND idcampania='"+miItem.idcampania+"' AND idsucursal='"+miItem.idsucursal+"'", [], function(tx, res) {
+
+                    }, function(tx, error) {
+                       console.log('Error: ' + error.message);
+                       alert('errorS: '+error.message);
+                    });
+                    var cont=parseInt(miItem.participantes_conteo)+1;
+                    console.log("Conteo "+cont);
+                    tx.executeSql('INSERT INTO conteo VALUES (?,?,?,?)', [miItem.fecha,miItem.idsucursal,miItem.idcampania,cont]);
+                               
+                  }else{
+                      tx.executeSql('INSERT INTO conteo VALUES (?,?,?,?)', [fecha,idsucursal,idcampania,"1"]);
+                  }              
+                }, function(tx, error) {
+                   console.log('Error: ' + error.message);
+                   alert('error: '+error.message);
+                });
+            });
     },
 
     insertarUser: function(mail,token,rol,perfil,codigo){
@@ -101,11 +124,9 @@ angular.module("ionium")
                     AuthService.setFormulario(data2);
                     //alert(rs.rows.item(i).idpregunta+" - "+rs.rows.item(i).idcampaña+" - "+rs.rows.item(i).respuesta);
                   };
-
                   tx.executeSql('DELETE FROM formulario', [], function(tx, res) {
 
                   });
-
                   //alert("Datos Sincronizados");
                   console.log("formulario Sincronizados");
                 }else{
@@ -327,7 +348,7 @@ angular.module("ionium")
             return tx.executeSql('SELECT id, nombre FROM sucursal', [], function(tx, rs) {
                console.log('Registros encontrados: ' + rs.rows.length);
                //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
-  var itemsColl = [];
+                var itemsColl = [];
                if(rs.rows.length > 0){
                   for (var i = 0; i < rs.rows.length; i++) {
                     var miItem = new Object();

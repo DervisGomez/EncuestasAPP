@@ -10,8 +10,8 @@ angular.module('ionium').controller(
 
 			console.log($localStorage.campania.campania);
 			//var data = {id:$stateParams.id};
-			$scope.dataCintillo=$localStorage.campania.campania[0].cintillo;
-			$scope.gracias=$localStorage.campania.campania[0].agradecimiento;
+			$scope.dataCintillo=$localStorage.campania.campania[$localStorage.actual.numero].cintillo;
+			$scope.gracias=$localStorage.campania.campania[$localStorage.actual.numero].agradecimiento;
 			var updateTime = function(){
 
 				if($localStorage.campania.campania.length != 0){
@@ -45,7 +45,7 @@ angular.module('ionium').controller(
 			}
 
 			$scope.guardarFormulario = function(){
-				$scope.data ={idcampania:$stateParams.id, idempresa:$localStorage.campania.campania[0].idempresa};
+				$scope.data ={idcampania:$stateParams.id, idempresa:$localStorage.campania.campania[$localStorage.actual.numero].idempresa};
 				AuthService.setFormulario($scope.data);
 
 				if($localStorage.campania.campania.length != 0){

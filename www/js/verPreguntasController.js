@@ -123,13 +123,13 @@ angular.module('ionium').controller(
           var year = dt.getFullYear();
           $scope.fechaActual= year + '-' + month + '-' + day;
           //AuthService.setConteo({idcampania:ids, fecha_hoy:$scope.fechaActual});
-          console.log($localStorage.campania.campania[0].captar_infopersonal);
+          console.log($localStorage.campania.campania[$localStorage.actual.numero].captar_infopersonal);
 
           GuardarLocalService.abrirBD
           console.log($localStorage.campania.campania[$localStorage.actual.numero].participantes_formulario);
           GuardarLocalService.insertarConteo($scope.fechaActual,$localStorage.campania.campania[$localStorage.actual.numero].idsucursal,ids,$localStorage.campania.campania[$localStorage.actual.numero].participantes_formulario)
 
-          if($localStorage.campania.campania[0].captar_infopersonal == null){
+          if($localStorage.campania.campania[$localStorage.actual.numero].captar_infopersonal == null){
             $state.go('app.vergracias', {id:ids}, {reload:'app.vergracias'});
           }else{
             $state.go('app.verformulario',{id:ids}, {reload:'app.formulario'});
