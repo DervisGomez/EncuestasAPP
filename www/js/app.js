@@ -45,6 +45,7 @@ angular.module('ionium', ['ionic', 'backand', 'topscroller', 'ngCordova', 'ngCor
 
 .run(function($ionicPlatform, BackandService,$cordovaNativeAudio, $ionicHistory, $ionicPopup, $cordovaNetwork, $rootScope, AuthService, $state, $localStorage, $ionicNavBarDelegate) {
   $ionicPlatform.ready(function() {
+    screen.lockOrientation('landscape');
 
     
 

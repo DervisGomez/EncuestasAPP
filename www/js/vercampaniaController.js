@@ -44,7 +44,7 @@ angular.module('ionium').controller(
 				}
 
 				$ionicLoading.hide();
-			}, 100);
+			}, 10);
 
 			$scope.cantidaIndex=function(){
 				GuardarLocalService.abrirBD();
@@ -66,7 +66,7 @@ angular.module('ionium').controller(
 				GuardarLocalService.abrirBD();
 		 		//db = window.sqlitePlugin.openDatabase({name:'testsqlite.db', key:'test', iosDatabaseLocation:'Documents'});
 		      	db.transaction(function(tx) {
-		            tx.executeSql("SELECT id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario,background FROM campania where idsucursal='"+$stateParams.id+"'", [], function(tx, rs) {
+		            tx.executeSql("SELECT id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario,background,no_preguntas FROM campania where idsucursal='"+$stateParams.id+"'", [], function(tx, rs) {
 		               console.log('Registros encontrados: ' + rs.rows.length);
 		  				var itemsColl = [];
 		               //alert("lista: "+JSON.stringify(rs.rows.item(0).nombre));
@@ -85,6 +85,7 @@ angular.module('ionium').controller(
 		                    miItem.cintillo=rs.rows.item(i).cintillo;
 		                    miItem.idempresa=rs.rows.item(i).idempresa;
 		                    miItem.participantes_formulario=rs.rows.item(i).participantes_formulario;
+		                    miItem.no_preguntas=rs.rows.item(i).no_preguntas;
 		                    miItem.background=rs.rows.item(i).background;
 		                    console.log(rs.rows.item(i).background);
 		                    itemsColl.push(miItem);
@@ -154,7 +155,11 @@ angular.module('ionium').controller(
 				var siguiente=0;
 				$localStorage.siguiente={numero:siguiente} ;
 			}
-			$state.go('app.verpreguntas',{id:ids});
+			if($scope.dataCampania.no_preguntas=="1"){
+				$state.go('app.verformulario',{id:ids}, {reload:'app.formulario'});
+			}else{
+				$state.go('app.verpreguntas',{id:ids});
+			}			
 		}
 
 		$scope.salirCampania = function() {

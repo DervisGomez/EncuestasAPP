@@ -16,7 +16,7 @@ angular.module("ionium")
         db.transaction(function(tx) {
             tx.executeSql('CREATE TABLE IF NOT EXISTS respuesta (idpregunta,idcampaña,respuesta,idsucursal,nombre,fecha)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS sucursal (id,nombre)');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS campania (id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario,background)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS campania (id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario,background,no_preguntas)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS divice (nombre)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS pregunta (id,idempresa,pregunta,idcampania)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS formulario (idcampania,idempresa,nombreCompleto,celular,correo,fecha_nacimiento)');
@@ -186,7 +186,7 @@ angular.module("ionium")
 
     insertarCampana: function(data){
         db.transaction(function(tx) {
-            tx.executeSql('INSERT INTO campana VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [data.id,data.nombre,data.cintillo,data.fecha_inicio,data.fecha_final,data.descripcion,data.instrucciones,data.agradecimiento,data.captar_infopersonal,data.calificacion,data.estatus,data.duplicado,data.idconfiguraciones_campania,data.cod_inicial,data.cod_final,data.idempresa,data.idusuario,data.tipo_campania,data.plantilla_caritas,data.imagenpromocion,data.participantes,data.participantes_formulario]);
+            tx.executeSql('INSERT INTO campana VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [data.id,data.nombre,data.cintillo,data.fecha_inicio,data.fecha_final,data.descripcion,data.instrucciones,data.agradecimiento,data.captar_infopersonal,data.calificacion,data.estatus,data.duplicado,data.idconfiguraciones_campania,data.cod_inicial,data.cod_final,data.idempresa,data.idusuario,data.tipo_campania,data.plantilla_caritas,data.imagenpromocion,data.participantes,data.participantes_formulario,no_preguntas]);
         }, function(error) {
             console.log('ERROR: ' + error.message);
         }, function() {
@@ -213,13 +213,13 @@ angular.module("ionium")
         });
     },
 
-    insertarCampania: function(id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario,background){
+    insertarCampania: function(id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario,background,no_preguntas){
         db.transaction(function(tx) {
           tx.executeSql("SELECT id, nombre FROM campania where id='"+id+"'  AND idsucursal='"+idsucursal+"'", [], function(tx, rs) {
             if (rs.rows.length>0) {
               //alert("no guardado"+id);
             }else{
-              tx.executeSql('INSERT INTO campania VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)', [id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario,background]);
+              tx.executeSql('INSERT INTO campania VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [id,nombre,descripcion,instrucciones,agradecimiento,idsucursal,plantilla_caritas,captar_infopersonal,imagenpromocion,cintillo,idempresa,participantes_formulario,background,no_preguntas]);
             }
           });
         }, function(error) {

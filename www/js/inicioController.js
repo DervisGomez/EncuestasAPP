@@ -58,7 +58,7 @@ angular.module('ionium').controller(
 					GuardarLocalService.abrirBD();
 					for (var i = res.data.length - 1; i >= 0; i--) {
 						console.log(res.data[i].participantes_formulario);
-						GuardarLocalService.insertarCampania(res.data[i].id,res.data[i].nombre,res.data[i].descripcion,res.data[i].instrucciones,res.data[i].agradecimiento,res.data[i].idsucursal,res.data[i].plantilla_caritas,res.data[i].captar_infopersonal,res.data[i].imagenpromocion,res.data[i].cintillo,res.data[i].idempresa,res.data[i].participantes_formulario,res.data[i].background);
+						GuardarLocalService.insertarCampania(res.data[i].id,res.data[i].nombre,res.data[i].descripcion,res.data[i].instrucciones,res.data[i].agradecimiento,res.data[i].idsucursal,res.data[i].plantilla_caritas,res.data[i].captar_infopersonal,res.data[i].imagenpromocion,res.data[i].cintillo,res.data[i].idempresa,res.data[i].participantes_formulario,res.data[i].background,res.data[i].no_preguntas);
 					}
 				});
 				AuthService.getPreguntasAll ({idempresa:$localStorage.currentUser.rol}).then(function(res) {
