@@ -21,7 +21,7 @@ angular.module("ionium")
             tx.executeSql('CREATE TABLE IF NOT EXISTS pregunta (id,idempresa,pregunta,idcampania)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS formulario (idcampania,idempresa,nombreCompleto,celular,correo,fecha_nacimiento)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS cantidadcompania (nombre)');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS user (mail,token,rol,perfil,codigo)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS user (mail,token,rol,perfil,codigo,ver)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS conteo (fecha,idsucursal,idcampania,participantes_conteo)');
           
         }, function(error) {
@@ -92,9 +92,9 @@ angular.module("ionium")
             });
     },
 
-    insertarUser: function(mail,token,rol,perfil,codigo){
+    insertarUser: function(mail,token,rol,perfil,codigo,ver){
         db.transaction(function(tx) {
-            tx.executeSql('INSERT INTO user VALUES (?,?,?,?,?)', [mail,token,rol,perfil,codigo]);
+            tx.executeSql('INSERT INTO user VALUES (?,?,?,?,?,?)', [mail,token,rol,perfil,codigo,ver]);
         }, function(error) {
             console.log('ERROR: ' + error.message);
         }, function() {

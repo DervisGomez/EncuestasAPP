@@ -4,6 +4,8 @@ angular.module('ionium').controller(
 					// Active INK Effect
 			ionic.material.ink.displayEffect();
 
+			$scope.ver={logo:$localStorage.ver.logo};
+
 			$ionicLoading.show({
 				content: 'Loading',
 				template: 'Obteniendo campaña, espere...',

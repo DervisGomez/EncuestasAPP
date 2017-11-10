@@ -149,7 +149,7 @@ angular.module('ionium').controller(
 			$scope.entrarSin=function(){
 				GuardarLocalService.abrirBD();
 		      	db.transaction(function(tx) {
-		            tx.executeSql('SELECT mail,token,rol,perfil,codigo FROM user', [], function(tx, rs) {
+		            tx.executeSql('SELECT mail,token,rol,perfil,codigo,ver FROM user', [], function(tx, rs) {
 		               console.log('user encontrados: ' + rs.rows.length);
 		               if(rs.rows.length > 0){
 		               		if (rs.rows.item(0).mail==$scope.data.email&&rs.rows.item(0).codigo==$scope.data.password) {
@@ -160,6 +160,7 @@ angular.module('ionium').controller(
 											 perfil:rs.rows.item(0).perfil,
 											 codigo:rs.rows.item(0).codigo
 										 };
+								$localStorage.ver={logo:rs.rows.item(0).ver};
 								GuardarLocalService.abrirBD();
 								$scope.validarNombre();
 								$ionicLoading.hide();
@@ -186,11 +187,13 @@ angular.module('ionium').controller(
 						showDelay: 0
 					});
 					$timeout(function () {
+						var json=angular.fromJson(response.data);
 						$scope.result = angular.fromJson(response.data);
 						if($scope.result.Status == "Error"){
 							$ionicLoading.hide();
 							$scope.showAlert();
 						} else{
+							$localStorage.ver={logo:json.suscripcion[0].marcaAguaCintillo};
 							$localStorage.currentUser = {
 								mail: $scope.result.user['email'],
 								token: $scope.result.persist_code,
@@ -200,7 +203,7 @@ angular.module('ionium').controller(
 							};
 							GuardarLocalService.abrirBD();
 							GuardarLocalService.elimanarUser();
-							GuardarLocalService.insertarUser($scope.result.user['email'],$scope.result.persist_code,$scope.result.user.idempresa,$scope.result.user.idperfil,$scope.data.password);
+							GuardarLocalService.insertarUser($scope.result.user['email'],$scope.result.persist_code,$scope.result.user.idempresa,$scope.result.user.idperfil,$scope.data.password,json.suscripcion[0].marcaAguaCintillo);
 							console.log($scope.result);
 							console.log($localStorage.currentUser);
 									//  $scope.modal.remove();

@@ -2,6 +2,7 @@ angular.module('ionium').controller(
 		'formularioController',
 		function($scope, AuthService, GuardarLocalService, $ionicPlatform, $cordovaSocialSharing, $cordovaNetwork, $stateParams ,$http, $ionicPopup, $state, $timeout, $interval, $ionicLoading, $rootScope, $localStorage, $ionicSlideBoxDelegate,$ionicHistory) {
 
+			//$scope.ver={logo:$localStorage.ver.logo};
 			document.addEventListener("deviceready", onDeviceReady, false);
 			    function onDeviceReady() {
 			        document.addEventListener("backbutton", function (e) {

@@ -3,6 +3,8 @@ angular.module('ionium').controller(
 		function($scope, AuthService, GuardarLocalService, DatosService, $rootScope, $localStorage, $cordovaSocialSharing, $stateParams ,$http, $ionicPopup, $state, $timeout, $ionicLoading, $ionicSlideBoxDelegate,$ionicHistory, $ionicSideMenuDelegate, $ionicModal, $window, $ionicScrollDelegate, $cordovaLaunchNavigator, $cordovaGeolocation, $interval, $ionicPlatform) {
       console.log($stateParams.id);
 
+      $scope.ver={logo:$localStorage.ver.logo};
+
       // Active INK Effect
       ionic.material.ink.displayEffect();
       var audio = new Audio('sound/tap.mp3');

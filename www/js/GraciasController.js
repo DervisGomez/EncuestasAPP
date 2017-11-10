@@ -8,6 +8,8 @@ angular.module('ionium').controller(
 			    }, false );
 			}
 
+			$scope.ver={logo:$localStorage.ver.logo};
+
 			console.log($localStorage.campania.campania);
 			//var data = {id:$stateParams.id};
 			$scope.dataCintillo=$localStorage.campania.campania[$localStorage.actual.numero].cintillo;

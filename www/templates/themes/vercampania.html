@@ -89,9 +89,11 @@ input[placeholder], [placeholder], *[placeholder] {
 </style>
 <img src="http://sistemex.com/apps/taptap/source/img/campanias/{{dataCampania.background}}" style="width:100%;height:100vh;"/>
   <ion-content class="login">
+  <img ng-show="ver.logo" src="img/Logo_TapTap_Rojo.png" style="width:12%; position:absolute;top:16px;right:16px;z-index:100;opacity: 0.7;"/> 
     <ion-refresher pulling-text="Pull To Refresh" on-refresh="refreshTasks()"
             refreshing-text="Actualizando ..." refreshing-icon="ion-loading-b"
           ></ion-refresher>
+
 
     <div class="content">
         <img src="http://sistemex.com/apps/taptap/source/img/campanias/{{dataCampania.cintillo}}" />

@@ -5,6 +5,7 @@ angular.module('ionium').controller(
 			//$ionicHistory.clearCache();
 			//ionic.material.ink.displayEffect();
 			$scope.usuarioEmail=$localStorage.currentUser.mail;
+			$scope.ver={logo:$localStorage.ver.logo};
 			$ionicLoading.show({
 									content: 'Loading',
 									animation: 'fade-in',
