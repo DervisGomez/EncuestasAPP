@@ -82,6 +82,31 @@ angular.module('ionium').controller(
         $scope.CaritaUrl="img/plantillas/azul/blanco";
       }
 
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas == 9){
+        $scope.CaritaUrl="img/plantillas/Cielo_Outline/";
+      }
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas == 10){
+        $scope.CaritaUrl="img/plantillas/Morado_Outline/";
+      }
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas == 11){
+        $scope.CaritaUrl="img/plantillas/Naranjosas/";
+      }
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas == 12){
+        $scope.CaritaUrl="img/plantillas/Rojo_Outline/";
+      }
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas == 13){
+        $scope.CaritaUrl="img/plantillas/Verdes_Outline/";
+      }
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas == 14){
+        $scope.CaritaUrl="img/plantillas/amarillas_Outline/";
+      }
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas == 15){
+        $scope.CaritaUrl="img/plantillas/Emoticones/";
+      }
+      if($localStorage.campania.campania[$localStorage.actual.numero].plantilla_caritas == 16){
+        $scope.CaritaUrl="img/plantillas/Doodles/";
+      }
+
       $scope.validarNombre= function(){
         GuardarLocalService.abrirBD();
         db.transaction(function(tx) {
