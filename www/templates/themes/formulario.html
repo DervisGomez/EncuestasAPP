@@ -11,6 +11,7 @@
 
 input[placeholder], [placeholder], *[placeholder] {
     color: white !important;
+    padding-left: 4px;
     font-size: 20px;
 }
 
@@ -107,6 +108,9 @@ input[placeholder], [placeholder], *[placeholder] {
     transform:  translate(0, -50%);
     text-align: center;
 }
+input:invalid {
+    border: 1px solid red;
+  }
 </style>
 
 <img src="http://sistemex.com/apps/taptap/source/img/campanias/{{promocion}}" style="width:100%;height:100vh;"/>
@@ -123,7 +127,7 @@ input[placeholder], [placeholder], *[placeholder] {
              <label style="position: relative;" id="item16" class="item item-input">
                 <i style="position: relative;
                   left: 20px;" class="icon ion-person placeholder-icon"></i>
-                <input type="text"  style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;"  placeholder="NOMBRE" ng-readonly="prueba"  ng-model="nombreCompleto">
+                <input type="text" inputmode="verbatim" style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;"  placeholder="NOMBRE" ng-readonly="prueba"  ng-model="nombreCompleto">
             </label>
 
           </div>
@@ -132,7 +136,7 @@ input[placeholder], [placeholder], *[placeholder] {
              <label style="position: relative;" id="item16" class="item item-input">
                <i  style="position: relative;
                left: 20px;" class="icon fa fa-mobile placeholder-icon"></i>
-                 <input style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;" type="text" ng-readonly="prueba" placeholder="CELULAR" ng-model="celular">
+                 <input style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;" type="number" inputmode="numeric" pattern="[0-9]*" ng-readonly="prueba" placeholder="CELULAR" ng-model="celular">
              </label>
          </div>
 
@@ -140,7 +144,7 @@ input[placeholder], [placeholder], *[placeholder] {
        <label style="position: relative;" id="item16" class="item item-input">
          <i style="position: relative;
          left: 20px;" class="icon ion-android-mail placeholder-icon"></i>
-         <input type="email"  style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;" ng-readonly="prueba"  placeholder="CORREO ELECTRÓNICO"  ng-model="correo">
+         <input type="email" inputmode="email"  style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;" ng-readonly="prueba"  placeholder="CORREO ELECTRÓNICO"  ng-model="correo">
         </label>
 
      </div>
@@ -151,7 +155,7 @@ input[placeholder], [placeholder], *[placeholder] {
          <label style="position: relative;" id="item16" class="item item-input">
            <i  style="position: relative;
            left: 20px;" class="icon fa fa-birthday-cake placeholder-icon"></i>
-             <input   type="text" onfocus="(this.type='date')" style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;"  ng-readonly="prueba" placeholder="CUMPLEAÑOS" ng-model="fecha_nacimiento" id="date">
+             <input inputmode="verbatim" type="text" onfocus="(this.type='date')" style="border: none;border-radius: 52px;color: white;font-size:large;font-weight:bold;font-family: 'Roboto', sans-serif;"  ng-readonly="prueba" placeholder="CUMPLEAÑOS" ng-model="fecha_nacimiento" id="date">
          </label>
      </div>
 

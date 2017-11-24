@@ -76,14 +76,14 @@ input[placeholder], [placeholder], *[placeholder] {
         <div class="list" style="position: relative; width: 90%; max-width: 600px; margin: 0 auto">
             <i style="position: absolute;top: 16px; left: 16px;" class="icon ion-person placeholder-icon"></i>
            <label class="item item-input item-floating-label">
-           <input style="padding-left: 32px" type="email" placeholder="CORREO ELECTRÓNICO"  ng-model="data.email">
+           <input value="" style="padding-left: 32px" type="email" placeholder="CORREO ELECTRÓNICO"  ng-model="data.email">
            </label>
         </div>
 
         <div class="list" style="position: relative; width: 90%; max-width: 600px; margin: 10px auto">
             <i style="position: absolute;top: 16px; left: 16px;" class="icon ion-lock-combination placeholder-icon"></i>
            <label class="item item-input item-floating-label">
-           <input style="padding-left: 32px; padding-right: 32px" type="{{tipo}}" placeholder="CONTRASE&Ntilde;A" ng-model="data.password">
+           <input value="" style="padding-left: 32px; padding-right: 32px" type="{{tipo}}" placeholder="CONTRASE&Ntilde;A" ng-model="data.password">
            </label>
            <i ng-click=mostrar(); class="icon ion-eye-disabled placeholder-icon" style="z-index: 100; font-size: 24px; position: absolute;top: 16px; right: 16px; cursor: pointer;" ></i>
         </div>

@@ -39,9 +39,10 @@ angular.module('ionium').controller(
 
 			$scope.guardarFormulario = function(nombreCompleto,celular, correo,fecha_nacimiento){
 
-				if (nombreCompleto.length>0&&celular.length>0&&correo!=""&&fecha_nacimiento.length>0) {
+				if (nombreCompleto.length>0&&celular>0&&correo!=""&&fecha_nacimiento.length>0) {
 					$scope.data2 ={idcampania:$stateParams.id, idempresa:$localStorage.campania.campania[$localStorage.actual.numero].idempresa, nombreCompleto:nombreCompleto, celular:celular, correo:correo, fecha_nacimiento:fecha_nacimiento};
 					console.log($localStorage.campania.campania[$localStorage.actual.numero].idempresa);
+					console.log($stateParams.id+$localStorage.campania.campania[0].idempresa+nombreCompleto+celular+correo+fecha_nacimiento)
 					GuardarLocalService.insertarFormulario($stateParams.id,$localStorage.campania.campania[0].idempresa,nombreCompleto,celular,correo,fecha_nacimiento);
 					//AuthService.setFormulario($scope.data2);
 					$state.go('app.vergracias',{id:$stateParams.id}, {reload:'app.vergracias'});
